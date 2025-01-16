@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         archivo: ['Archivo', 'sans-serif'],
       },
+      fontWeight: {
+        light: '300',
+      },
     },
   },
   plugins: [],
