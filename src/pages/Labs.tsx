@@ -1,6 +1,15 @@
 import { ArrowRight } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 export default function Labs() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  }, []);
+
   const experiments = [
     {
       title: "AI Property Matchmaker",
@@ -20,20 +29,30 @@ export default function Labs() {
 
   return (
     <div>
-      <section 
-        className="h-[80vh] relative bg-cover bg-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80")'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative h-full flex items-center justify-center text-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-[56px] font-archivo font-bold text-white mb-6">
-              Luxcity Labs
+      {/* Hero Section */}
+      <section className="relative h-[80vh] overflow-hidden">
+        {/* Background Video */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/images/Teamwork-labs-720.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-indigo-900/50 to-blue-900/50"></div>
+        
+        <div className="relative z-10 h-full flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-[85px] font-archivo font-light leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-6 animate-fade-in">
+              Inventing The Future
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Exploring the future of real estate technology
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Experiments and groundbreaking solutions designed to transform how we live, work, and play. Bold ideas, advanced research, and transformative technologies.
             </p>
           </div>
         </div>

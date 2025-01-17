@@ -1,29 +1,41 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NewsPost } from '../types/content/NewsPost';
+import { getAllPosts } from '../utils/newsLoader';
+import ReactMarkdown from 'react-markdown';
 
 export default function Insights() {
-  const posts = [
-    {
-      title: "The Future of AI in Real Estate Valuation",
-      category: "Research Report",
-      date: "March 15, 2024",
-      description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400"
-    },
-    {
-      title: "Emerging Trends in Property Technology",
-      category: "Market Analysis",
-      date: "March 10, 2024",
-      description: "Exploring the latest technological innovations shaping the real estate industry and their impact on market dynamics.",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400"
-    },
-    {
-      title: "Sustainable Real Estate: A Data-Driven Approach",
-      category: "Industry Report",
-      date: "March 5, 2024",
-      description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400"
-    }
-  ];
+  const [posts, setPosts] = useState<NewsPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        console.log('Starting to load posts...');
+        const allPosts = await getAllPosts();
+        console.log('Loaded posts:', allPosts);
+        setPosts(allPosts);
+      } catch (error) {
+        console.error('Error loading posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPosts();
+  }, []);
+
+  console.log('Current posts state:', posts);
+  console.log('Loading state:', loading);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#DC5F12]"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -46,12 +58,11 @@ export default function Insights() {
         </div>
       </section>
 
-      {/* Rest of the component remains unchanged */}
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-12">
-            {posts.map((post, index) => (
-              <article key={index} className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            {posts.map((post) => (
+              <article key={post.id} className="bg-white rounded-2xl shadow-xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   <div className="relative h-64 lg:h-auto">
                     <img
@@ -61,17 +72,42 @@ export default function Insights() {
                     />
                   </div>
                   <div className="p-8 lg:p-12 space-y-6">
-                    <div>
-                      <span className="inline-block px-3 py-1 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-full">
-                        {post.category}
-                      </span>
-                      <time className="ml-4 text-sm text-gray-500">{post.date}</time>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="inline-block px-3 py-1 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-full">
+                          {post.category}
+                        </span>
+                        <time className="ml-4 text-sm text-gray-500">{post.date}</time>
+                      </div>
+                      {post.readingTime && (
+                        <span className="text-sm text-gray-500">{post.readingTime}</span>
+                      )}
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
                     <p className="text-gray-600">{post.description}</p>
-                    <button className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                    {post.author && (
+                      <div className="flex items-center space-x-4">
+                        {post.author.avatar && (
+                          <img
+                            src={post.author.avatar}
+                            alt={post.author.name}
+                            className="h-10 w-10 rounded-full object-cover"
+                          />
+                        )}
+                        <div>
+                          <div className="font-medium text-gray-900">{post.author.name}</div>
+                          {post.author.role && (
+                            <div className="text-sm text-gray-500">{post.author.role}</div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    <Link
+                      to={`/insights/${post.slug}`}
+                      className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                    >
                       Read More <ArrowRight className="ml-2 h-5 w-5" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </article>

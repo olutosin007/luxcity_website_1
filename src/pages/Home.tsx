@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Brain, ArrowRight, ChevronLeft, ChevronRight, Building2 } from 'lucide-react';
+import { Brain, ArrowRight, ChevronLeft, ChevronRight, Building2, ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import HeroBackground from '../components/HeroBackground';
 
 export default function Home() {
@@ -20,6 +21,30 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=600",
       title: "Streamline Property Operations",
       description: "Automate workflows and reduce costs with intelligent property management."
+    }
+  ];
+
+  const news = [
+    {
+      title: "The Future of AI in Real Estate Valuation",
+      category: "Research Report",
+      date: "March 15, 2024",
+      description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400"
+    },
+    {
+      title: "Emerging Trends in Property Technology",
+      category: "Market Analysis",
+      date: "March 10, 2024",
+      description: "Exploring the latest technological innovations shaping the real estate industry and their impact on market dynamics.",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400"
+    },
+    {
+      title: "Sustainable Real Estate: A Data-Driven Approach",
+      category: "Industry Report",
+      date: "March 5, 2024",
+      description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
+      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400"
     }
   ];
 
@@ -49,9 +74,12 @@ export default function Home() {
                 Harnessing cutting-edge Generative AI to deliver tailored solutions that enhance efficiency and sustainability in real estate and construction.
               </p>
               <div className="mt-10">
-                <button className="px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center">
+                <Link 
+                  to="/solutions" 
+                  className="px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center inline-flex"
+                >
                   Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -94,25 +122,30 @@ export default function Home() {
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900">Our Solutions</h2>
+            <h2 className="text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4">
+              Our Solutions
+            </h2>
             <p className="mt-4 text-gray-600">Leveraging technologies to streamline and accelerate every step of property transactions</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800&h=500",
-                title: "AI-Powered Property Matching",
-                description: "AI tailors property choices to fit your needs and lifestyle."
+                image: "/images/Robot-hands-and-technology.jpg",
+                title: "AI-Powered Home Search",
+                description: "AI tailors property choices to perfectlyfit your evolving needs and lifestyle.",
+                link: "/solutions#ai-search-section"
               },
               {
-                image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=800&h=500",
+                image: "/images/Person-using-smartphone.jpg",
                 title: "Predictive Market Insights",
-                description: "AI-driven analytics for trends, pricing, and investment."
+                description: "AI-driven analytics for trends, pricing dynamics, and investment strategies.",
+                link: "/solutions#market-insights-section"
               },
               {
-                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800&h=500",
+                image: "/images/Robotic_Person.jpg",
                 title: "Virtual Agents and Assistants",
-                description: "AI agents helping users with a wide variety of requests."
+                description: "AI agents seamlessly helping users with a wide variety of complex requests.",
+                link: "/solutions#virtual-agents-section"
               }
             ].map((feature, index) => (
               <div key={index} className="group">
@@ -124,7 +157,49 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <p className="text-gray-600">
+                  {feature.description}{' '}
+                  <Link 
+                    to={feature.link} 
+                    className="inline-flex items-center text-[#DC5F12] hover:text-[#c45510] transition-colors duration-300"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const targetPath = feature.link.split('#')[0];
+                      const targetId = feature.link.split('#')[1];
+                      
+                      if (window.location.pathname !== targetPath) {
+                        window.location.href = feature.link;
+                        setTimeout(() => {
+                          const element = document.getElementById(targetId);
+                          if (element) {
+                            const headerOffset = 80;
+                            const elementPosition = element.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                            window.scrollTo({
+                              top: offsetPosition,
+                              behavior: 'smooth'
+                            });
+                          }
+                        }, 100);
+                      } else {
+                        const element = document.getElementById(targetId);
+                        if (element) {
+                          const headerOffset = 80;
+                          const elementPosition = element.getBoundingClientRect().top;
+                          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                          window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }
+                    }}
+                  >
+                    Learn More <ArrowUpRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </p>
               </div>
             ))}
           </div>
@@ -135,12 +210,15 @@ export default function Home() {
       <section 
         className="h-[600px] relative bg-cover bg-center flex items-center"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80")'
+          backgroundImage: 'url("/images/cta-background.jpg")'
         }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Building2 className="h-16 w-16 text-white mx-auto mb-6" />
+          <img 
+            src="/images/proptii_logo_wht_05.png" 
+            alt="Proptii Logo" 
+            className="h-24 w-auto mx-auto mb-6" 
+          />
           <p className="text-2xl text-white mb-3">
             Introducing Proptii: Your AI-Powered Home Search Solution
           </p>
@@ -148,8 +226,52 @@ export default function Home() {
             Discover your next home faster, smarter, and stress-free. AI-driven simplicity for renters and buyers seeking their ideal space.
           </p>
           <button className="px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center mx-auto">
-            Get Started <ArrowRight className="ml-2 h-5 w-5" />
+            Contact Us <ArrowRight className="ml-2 h-5 w-5" />
           </button>
+        </div>
+      </section>
+
+      {/* News & Insights section */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4">
+              News & Insights
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Stay updated with the latest trends and insights in real estate technology
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {news.map((item, index) => (
+              <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="mb-3">
+                    <span className="text-sm font-medium text-indigo-600">{item.category}</span>
+                    <span className="text-sm text-gray-500 mx-2">•</span>
+                    <span className="text-sm text-gray-500">{item.date}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-2">
+                    {item.description}
+                  </p>
+                  <Link to="/insights" className="inline-flex items-center text-indigo-600 hover:text-indigo-700">
+                    Read More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>
