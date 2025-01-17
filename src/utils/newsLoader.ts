@@ -10,11 +10,11 @@ let posts: NewsPost[] = [
     category: "Research Report",
     date: "2024-03-15",
     description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
-    image: "/images/ai-valuation.jpg",
+    image: "/images/Robot-hands-and-technology.jpg",
     author: {
       name: "Dr. Sarah Chen",
       role: "Chief Data Scientist",
-      avatar: "/images/team/sarah-chen.jpg"
+      avatar: "/images/team/sarah-chen-ai-headshot.jpg"
     },
     content: `# The Future of AI in Real Estate Valuation
 
@@ -60,7 +60,7 @@ The future of property valuation is here, and it's powered by artificial intelli
     author: {
       name: "Michael Rodriguez",
       role: "Chief Technology Officer",
-      avatar: "/images/team/michael-rodriguez.jpg"
+      avatar: "/images/team/michael-rodriguez-ai-headshot.jpg"
     },
     content: `# Emerging Trends in Property Technology
 
@@ -100,6 +100,51 @@ The future of real estate technology looks promising, with continued innovation 
 - Smart City Integration`,
     tags: ["PropTech", "Innovation", "Digital Transformation"],
     readingTime: "6 min read"
+  },
+  {
+    id: 'sustainable-real-estate-data',
+    title: "Sustainable Real Estate: A Data-Driven Approach",
+    slug: "sustainable-real-estate-data",
+    category: "Industry Report",
+    date: "2024-03-05",
+    description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
+    image: "/images/Modern-home-interior-of-living-room-with-glass-wall.jpg",
+    author: {
+      name: "Dr. Thomas Lane",
+      role: "Chief Data Scientist",
+      avatar: "/images/team/thomas-lane-ai-headshot.jpg"
+    },
+    content: `# Sustainable Real Estate: A Data-Driven Approach
+
+Data analytics and artificial intelligence (AI) are transforming how property developers and investors approach sustainability. By leveraging advanced technologies, the real estate industry is making smarter, more sustainable decisions that benefit both businesses and the environment.
+
+## How Data is Driving Sustainability
+
+Traditional approaches to sustainability in real estate relied on static metrics, assumptions, and manual audits. However, the rise of data analytics and AI has introduced dynamic, real-time insights that allow for more informed decision-making at every stage of the property lifecycle.
+
+AI and data analytics enable:
+- **Energy Efficiency Modeling**: Identifying ways to reduce energy consumption and optimize building systems.
+- **Site Selection**: Choosing locations with minimal environmental impact and proximity to sustainable resources.
+- **Material Optimization**: Evaluating sustainable building materials and their long-term effects.
+- **Carbon Footprint Analysis**: Accurately measuring and minimizing greenhouse gas emissions from properties.
+
+## Key Benefits
+
+1. **Smarter Investments**: Developers and investors can prioritize projects with long-term sustainability and profitability.
+2. **Reduced Environmental Impact**: Real-time data helps identify areas where energy, water, and materials can be conserved.
+3. **Enhanced Compliance**: Staying ahead of regulations and achieving green certifications becomes seamless with predictive analytics.
+4. **Market Appeal**: Sustainable properties attract eco-conscious tenants, buyers, and investors.
+
+## Looking Ahead
+
+As data analytics and AI continue to evolve, the real estate sector can expect:
+- **Advanced Predictive Models**: Forecasting long-term sustainability outcomes for projects.
+- **Integrated IoT Systems**: Using smart sensors for real-time monitoring and optimization.
+- **Community Impact Analysis**: Measuring how developments contribute to sustainable urban ecosystems.
+
+The future of sustainable real estate lies in harnessing data to make better choices. With the right tools and insights, developers and investors can create properties that are not only profitable but also environmentally responsible.`,
+    tags: ["Sustainability", "AI", "Real Estate", "Data Analytics"],
+    readingTime: "7 min read"
   }
 ];
 

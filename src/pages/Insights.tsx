@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { NewsPost } from '../types/content/NewsPost';
 import { getAllPosts } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 export default function Insights() {
   const [posts, setPosts] = useState<NewsPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -24,6 +25,10 @@ export default function Insights() {
     };
 
     loadPosts();
+
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
   }, []);
 
   console.log('Current posts state:', posts);
@@ -39,19 +44,26 @@ export default function Insights() {
 
   return (
     <div>
-      <section 
-        className="h-[80vh] relative bg-cover bg-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80")'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative h-full flex items-center justify-center text-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-[56px] font-archivo font-bold text-white mb-6">
+      <section className="relative h-[80vh] overflow-hidden">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/images/team-discussion-720.mp4" type="video/mp4" />
+        </video>
+
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-indigo-900/50 to-blue-900/50"></div>
+        
+        <div className="relative z-10 h-full flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-[85px] font-archivo font-light leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-6 animate-fade-in">
               Insights
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               Expert analysis, research, and perspectives on real estate technology
             </p>
           </div>

@@ -30,21 +30,24 @@ export default function Home() {
       category: "Research Report",
       date: "March 15, 2024",
       description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400"
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
+      slug: "ai-valuation-future"
     },
     {
       title: "Emerging Trends in Property Technology",
       category: "Market Analysis",
       date: "March 10, 2024",
       description: "Exploring the latest technological innovations shaping the real estate industry and their impact on market dynamics.",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400"
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400",
+      slug: "property-tech-trends"
     },
     {
       title: "Sustainable Real Estate: A Data-Driven Approach",
       category: "Industry Report",
       date: "March 5, 2024",
       description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400"
+      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400",
+      slug: "sustainable-real-estate-data"
     }
   ];
 
@@ -66,9 +69,9 @@ export default function Home() {
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-20">
-            <div className="animate-fade-in">
-              <h1 className="text-[85px] font-archivo font-light leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-indigo-200">
-                AI-Powered Solutions for Real Estate
+            <div className="animate-fade-in pt-20">
+              <h1 className="text-[75px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-indigo-200">
+                AI-Powered Solutions for Real&nbsp;Estate
               </h1>
               <p className="mt-6 text-xl text-gray-200 leading-relaxed">
                 Harnessing cutting-edge Generative AI to deliver tailored solutions that enhance efficiency and sustainability in real estate and construction.
@@ -244,7 +247,32 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {news.map((item, index) => (
+            {[
+              {
+                title: "The Future of AI in Real Estate Valuation",
+                category: "Research Report",
+                date: "March 15, 2024",
+                description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
+                slug: "ai-valuation-future"
+              },
+              {
+                title: "Emerging Trends in Property Technology",
+                category: "Market Analysis",
+                date: "March 10, 2024",
+                description: "Exploring the latest technological innovations shaping the real estate industry and their impact on market dynamics.",
+                image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400",
+                slug: "property-tech-trends"
+              },
+              {
+                title: "Sustainable Real Estate: A Data-Driven Approach",
+                category: "Industry Report",
+                date: "March 5, 2024",
+                description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
+                image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400",
+                slug: "sustainable-real-estate-data"
+              }
+            ].map((item, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
                 <div className="relative h-48 overflow-hidden">
                   <img 
@@ -265,7 +293,13 @@ export default function Home() {
                   <p className="text-gray-600 mb-4 line-clamp-2">
                     {item.description}
                   </p>
-                  <Link to="/insights" className="inline-flex items-center text-indigo-600 hover:text-indigo-700">
+                  <Link 
+                    to={`/insights/${item.slug}`} 
+                    className="inline-flex items-center text-indigo-600 hover:text-indigo-700"
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                    }}
+                  >
                     Read More <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </div>

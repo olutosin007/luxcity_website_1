@@ -1,23 +1,14 @@
 import { ArrowRight } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 export default function Company() {
-  const team = [
-    {
-      name: "Sarah Chen",
-      role: "CEO & Founder",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&h=400"
-    },
-    {
-      name: "Michael Rodriguez",
-      role: "Chief Technology Officer",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&h=400"
-    },
-    {
-      name: "Emily Thompson",
-      role: "Head of AI Research",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400&h=400"
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play();
     }
-  ];
+  }, []);
 
   const values = [
     {
@@ -36,26 +27,34 @@ export default function Company() {
 
   return (
     <div>
-      <section 
-        className="h-[80vh] relative bg-cover bg-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80")'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative h-full flex items-center justify-center text-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-[56px] font-archivo font-bold text-white mb-6">
+      <section className="relative h-[80vh] overflow-hidden">
+        {/* Background Video */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/images/london-at-night.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-indigo-900/50 to-blue-900/50"></div>
+        
+        <div className="relative z-10 h-full flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-[85px] font-archivo font-light leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-6 animate-fade-in">
               About Luxcity
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               We're on a mission to transform the real estate industry through artificial intelligence and advanced technology
             </p>
           </div>
         </div>
       </section>
 
-      {/* Rest of the component remains unchanged */}
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Vision Section */}
@@ -91,27 +90,9 @@ export default function Company() {
             </div>
           </div>
 
-          {/* Team Section */}
-          <div className="mb-24">
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Leadership Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {team.map((member, index) => (
-                <div key={index} className="text-center">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-48 h-48 rounded-full mx-auto mb-4 object-cover"
-                  />
-                  <h3 className="text-xl font-semibold text-gray-900">{member.name}</h3>
-                  <p className="text-gray-600">{member.role}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* CTA Section */}
           <div className="bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-12 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Join Our Journey</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Join Us On Our Journey</h2>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
               We're always looking for talented individuals who share our vision of transforming the real estate industry through technology.
             </p>
