@@ -165,40 +165,6 @@ export default function Home() {
                   <Link 
                     to={feature.link} 
                     className="inline-flex items-center text-[#DC5F12] hover:text-[#c45510] transition-colors duration-300"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const targetPath = feature.link.split('#')[0];
-                      const targetId = feature.link.split('#')[1];
-                      
-                      if (window.location.pathname !== targetPath) {
-                        window.location.href = feature.link;
-                        setTimeout(() => {
-                          const element = document.getElementById(targetId);
-                          if (element) {
-                            const headerOffset = 80;
-                            const elementPosition = element.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                            window.scrollTo({
-                              top: offsetPosition,
-                              behavior: 'smooth'
-                            });
-                          }
-                        }, 100);
-                      } else {
-                        const element = document.getElementById(targetId);
-                        if (element) {
-                          const headerOffset = 80;
-                          const elementPosition = element.getBoundingClientRect().top;
-                          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                          window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                          });
-                        }
-                      }
-                    }}
                   >
                     Learn More <ArrowUpRight className="ml-1 h-4 w-4" />
                   </Link>

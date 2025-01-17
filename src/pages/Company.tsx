@@ -49,7 +49,7 @@ export default function Company() {
               About Luxcity
             </h1>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              We're on a mission to transform the real estate industry through artificial intelligence and advanced technology
+              We're on a mission to reshape and elevate the real estate industry by harnessing the power of artificial intelligence and advanced technologies to build a smarter future.
             </p>
           </div>
         </div>
