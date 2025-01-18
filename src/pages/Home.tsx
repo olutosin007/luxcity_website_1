@@ -64,48 +64,48 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
+      <section className="relative min-h-[100vh] overflow-hidden bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
         <HeroBackground />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-20">
-            <div className="animate-fade-in pt-20">
-              <h1 className="text-[75px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-indigo-200">
-                AI-Powered Solutions for Real&nbsp;Estate
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh] flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-[160px] pb-20 md:pt-[140px] md:pb-16">
+            <div className="animate-fade-in md:text-center lg:text-left">
+              <h1 className="text-[65px] sm:text-[55px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-indigo-200">
+                Real&nbsp;Estate Reimagined
               </h1>
-              <p className="mt-6 text-xl text-gray-200 leading-relaxed">
-                Harnessing cutting-edge Generative AI to deliver tailored solutions that enhance efficiency and sustainability in real estate and construction.
+              <p className="mt-4 md:mt-6 text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl md:mx-auto lg:mx-0">
+                Harnessing advanced techologies to deliver tailored solutions that enhance efficiency and sustainability in real estate and construction.
               </p>
-              <div className="mt-10">
+              <div className="mt-8 md:mt-10">
                 <Link 
                   to="/solutions" 
-                  className="px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center inline-flex"
+                  className="px-6 md:px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center inline-flex min-h-[44px] md:mx-auto lg:mx-0"
                 >
                   Get Started <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
             </div>
 
-            <div className="relative animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="relative animate-fade-in hidden sm:block md:mt-12 lg:mt-0" style={{ animationDelay: '0.3s' }}>
               <div className="relative rounded-2xl overflow-hidden bg-white/10 backdrop-blur-strong border border-white/20">
                 <img 
                   src={slides[currentSlide].image}
                   alt={slides[currentSlide].title}
-                  className="w-full h-[450px] object-cover transition-all duration-700 ease-in-out transform scale-105"
+                  className="w-full h-[300px] md:h-[400px] lg:h-[450px] object-cover transition-all duration-700 ease-in-out transform scale-105"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8 text-center">
-                  <h3 className="text-white text-xl font-semibold">{slides[currentSlide].title}</h3>
-                  <p className="text-white/90 mt-2">{slides[currentSlide].description}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8 text-center">
+                  <h3 className="text-lg md:text-xl font-semibold text-white">{slides[currentSlide].title}</h3>
+                  <p className="text-sm md:text-base text-white/90 mt-2">{slides[currentSlide].description}</p>
                 </div>
                 <button 
                   onClick={prevSlide}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px]"
                 >
                   <ChevronLeft className="h-6 w-6 text-white" />
                 </button>
                 <button 
                   onClick={nextSlide}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px]"
                 >
                   <ChevronRight className="h-6 w-6 text-white" />
                 </button>
@@ -122,15 +122,15 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 sm:py-24">
+      <section className="py-12 sm:py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-[32px] sm:text-[38px] md:text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4">
               Our Solutions
             </h2>
-            <p className="mt-4 text-gray-600">Leveraging technologies to streamline and accelerate every step of property transactions</p>
+            <p className="mt-4 text-base md:text-lg text-gray-600">Leveraging technologies to streamline and accelerate every step of property transactions</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 image: "/images/Robot-hands-and-technology.jpg",
@@ -201,18 +201,18 @@ export default function Home() {
       </section>
 
       {/* News & Insights section */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-[32px] sm:text-[38px] md:text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4">
               News & Insights
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Stay updated with the latest trends and insights in real estate technology
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 title: "The Future of AI in Real Estate Valuation",

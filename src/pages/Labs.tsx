@@ -30,7 +30,7 @@ export default function Labs() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-[80vh] overflow-hidden">
+      <section className="relative h-[100vh] sm:h-[100vh] md:h-[80vh] overflow-hidden pt-[80px] sm:pt-[80px] md:pt-[120px]">
         {/* Background Video */}
         <video
           ref={videoRef}
@@ -48,20 +48,20 @@ export default function Labs() {
         
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-[85px] font-archivo font-light leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-6 animate-fade-in">
+            <h1 className="text-[65px] sm:text-[55px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-4 sm:mb-6 animate-fade-in">
               Inventing The Future
             </h1>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               Experiments and groundbreaking solutions designed to transform how we live, work, and play. Bold ideas, advanced research, and transformative technologies.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Rest of the component remains unchanged */}
-      <div className="py-16">
+      {/* Rest of the component */}
+      <div className="py-16 sm:py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-16">
+          <div className="grid grid-cols-1 gap-12 sm:gap-8 md:gap-16">
             {experiments.map((experiment, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">

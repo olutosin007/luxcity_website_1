@@ -45,7 +45,7 @@ export default function Company() {
         
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-[85px] font-archivo font-light leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-6 animate-fade-in">
+            <h1 className="text-[65px] sm:text-[55px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-6 animate-fade-in">
               About Luxcity
             </h1>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
@@ -65,7 +65,7 @@ export default function Company() {
                 At Luxcity, we envision a future where real estate decisions are powered by intelligent technology, making property transactions more efficient, transparent, and accessible to everyone.
               </p>
               <p className="text-lg text-gray-600">
-                Founded in 2023, we've quickly become a leading force in PropTech innovation, combining artificial intelligence with deep real estate expertise.
+               We are quickly becoming a leading force in PropTech innovation, combining artificial intelligence with deep real estate expertise.
               </p>
             </div>
             <div>
