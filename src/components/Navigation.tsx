@@ -36,6 +36,7 @@ export default function Navigation() {
             <Link to="/labs" className={`${isActive('/labs')} transition-colors duration-200`}>Labs</Link>
             <Link to="/insights" className={`${isActive('/insights')} transition-colors duration-200`}>Insights</Link>
             <Link to="/company" className={`${isActive('/company')} transition-colors duration-200`}>Company</Link>
+            <Link to="/contact" className={`${isActive('/contact')} transition-colors duration-200`}>Contact</Link>
           </div>
         </div>
 
@@ -82,6 +83,16 @@ export default function Navigation() {
                 }}
               >
                 Company
+              </Link>
+              <Link 
+                to="/contact" 
+                className={`${isActive('/contact')} block px-3 py-3 sm:py-4 text-base font-medium transition-colors duration-200`}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Contact
               </Link>
             </div>
           </div>

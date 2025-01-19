@@ -8,6 +8,7 @@ import Insights from './pages/Insights';
 import Company from './pages/Company';
 import InsightPost from './pages/InsightPost';
 import InsightsManager from './pages/admin/InsightsManager';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/insights/:slug" element={<InsightPost />} />
           <Route path="/admin/insights" element={<InsightsManager />} />
           <Route path="/company" element={<Company />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
       <Footer />
