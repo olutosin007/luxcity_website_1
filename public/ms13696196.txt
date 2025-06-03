@@ -1,0 +1,5 @@
+﻿{
+  "Description": "Domain ownership verification file for Microsoft 365 - place in the website root",
+  "Domain": "luxcity.tech",
+  "Id": "04c6bc7b-128c-420c-8385-3695ba68261f"
+}
