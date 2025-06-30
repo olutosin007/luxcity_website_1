@@ -8,7 +8,7 @@ let posts: NewsPost[] = [
     title: "Renting in 2025? Here's How to Stay Ahead and Stress-Free",
     slug: "Renting in 2025",
     category: "Industry News",
-    date: "28/05/2025",
+    date: "2025/05/28",
     description: "This week’s blog explores how overwhelmed renters are ditching outdated search methods and turning to AI tools to move faster, smarter, and with less stress.",
     image: "/images/house-image.jpg",
     author: {
@@ -43,7 +43,7 @@ Renting should feel like a step forward, not a setback. And while the system mig
     title: "Smart Buildings, Cleaner Future:Proptech’s Role in Decarbonizing the UK Built Environment",
     slug: "Smart Buildings, Cleaner Future",
     category: "Industry News",
-    date: "04/05/2025",
+    date: "2025/06/04",
     description: "In 2024, UK emissions fell 4% to 371 MtCO₂e—but it’s still far from the 68% cut promised under the Paris Agreement.",
     image: "/images/realistic-image-of-a-clean-and-green-urban.png",
     author: {
@@ -99,7 +99,7 @@ We don’t need to wait for futuristic cities to start cutting emissions. The te
     title: "The New Language of Safety in Renting",
     slug: "The New Language of Safety",
     category: "Industry News",
-    date: "11/06/2025",
+    date: "2025/06/11",
     description: "The article explores how the definition of safety in the UK rental market is expanding beyond traditional physical measures like locks and ​alarms.",
     image: "/images/blog-3.png",
     author: {
@@ -140,7 +140,7 @@ As the UK rental market evolves, safety is being redefined in ways that go beyon
     title: "Digital Twins: The Next Frontier for Property Previews",
     slug: "Digital Twins",
     category: "Industry News",
-    date: "18/06/2025",
+    date: "2025/06/18",
     description: "As proptech advances, digital twins are set to become a standard in real estate, offering immersive and personalized property exploration experiences.",
     image: "/images/blog-4.png",
     author: {
