@@ -130,7 +130,7 @@ export default function Insights() {
               <div className="relative">
                 <input
                   type="date"
-                  className="pl-4 pr-2 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
+                  className="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
                   value={startDate ? startDate.toISOString().split('T')[0] : ''}
                   onChange={e => setStartDate(e.target.value ? new Date(e.target.value) : null)}
                   placeholder="Start date"
@@ -140,7 +140,7 @@ export default function Insights() {
               <div className="relative">
                 <input
                   type="date"
-                  className="pl-4 pr-2 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
+                  className="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
                   value={endDate ? endDate.toISOString().split('T')[0] : ''}
                   min={startDate ? startDate.toISOString().split('T')[0] : ''}
                   onChange={e => setEndDate(e.target.value ? new Date(e.target.value) : null)}
