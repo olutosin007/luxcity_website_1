@@ -5,11 +5,7 @@ export function getUser() {
     id = crypto.randomUUID();
     localStorage.setItem('user_id', id);
   }
-  if (!name) {
-    name = 'Anonymous or Bolu J';
-    localStorage.setItem('user_name', name);
-  }
-  return { id, name };
+  return { id, name: name || '' };
 }
 
 export function setUserName(name: string) {
