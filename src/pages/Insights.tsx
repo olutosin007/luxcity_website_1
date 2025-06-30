@@ -47,8 +47,11 @@ export default function Insights() {
   console.log('Current posts state:', posts);
   console.log('Loading state:', loading);
 
+  // Sort posts from latest to oldest before filtering
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   // Filtered posts logic
-  const filteredPosts = posts.filter(post => {
+  const filteredPosts = sortedPosts.filter(post => {
     // Search term filter
     const matchesSearch =
       searchTerm.trim() === '' ||
@@ -57,8 +60,8 @@ export default function Insights() {
       (post.category && post.category.toLowerCase().includes(searchTerm.toLowerCase()));
     // Date filter
     const postDate = new Date(post.date);
-    const matchesStart = !startDate || postDate >= startDate;
-    const matchesEnd = !endDate || postDate <= endDate;
+    const matchesStart = !startDate || postDate >= new Date(startDate);
+    const matchesEnd = !endDate || postDate <= new Date(endDate);
     // Category filter
     const matchesCategory = !selectedCategory || post.category === selectedCategory;
     return matchesSearch && matchesStart && matchesEnd && matchesCategory;
