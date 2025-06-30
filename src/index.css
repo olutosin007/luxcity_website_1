@@ -103,3 +103,20 @@
 .feature-item:hover {
   background: rgba(99, 102, 241, 0.05);
 }
+
+/* Hide browser default date icon for custom date filter fields */
+.hide-date-icon::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+}
+.hide-date-icon::-webkit-input-placeholder {
+  color: #9ca3af;
+}
+.hide-date-icon::placeholder {
+  color: #9ca3af;
+}
+
+/* Ensure react-datepicker popup appears above all content */
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}

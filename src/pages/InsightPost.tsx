@@ -4,6 +4,7 @@ import { NewsPost } from '../types/content/NewsPost';
 import { getPostBySlug } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
 import { ArrowLeft } from 'lucide-react';
+import CommentSection from '../components/comments/CommentSection';
 
 export default function InsightPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -113,6 +114,9 @@ export default function InsightPost() {
               </div>
             </div>
           )}
+
+          {/* Comment Section */}
+          {post && <CommentSection postId={post.id} />}
         </div>
       </section>
     </div>
