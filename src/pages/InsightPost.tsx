@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { NewsPost } from '../types/content/NewsPost';
 import { getPostBySlug } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
-import { ArrowLeft, Twitter, Facebook, Linkedin, Share2 } from 'lucide-react';
+import { ArrowLeft, Twitter, Facebook, Linkedin, Share2, Link as LinkIcon } from 'lucide-react';
 import CommentSection from '../components/comments/CommentSection';
 
 export default function InsightPost() {
@@ -48,6 +48,16 @@ export default function InsightPost() {
   // Generate share URLs
   const postUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareText = encodeURIComponent(post.title);
+  
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(postUrl);
+      // You could add a toast notification here
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
+
   const shareLinks = [
     {
       name: 'Twitter',
@@ -108,20 +118,31 @@ export default function InsightPost() {
               </div>
             )}
             {/* Social Share Bar */}
-            <div className="flex justify-center gap-4 mt-6">
-              {shareLinks.map(link => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full w-10 h-10 flex items-center justify-center bg-white/20 border border-white hover:bg-white/40 transition text-white"
-                  title={`Share on ${link.name}`}
+            <div className="mt-6">
+              <p className="text-white text-sm font-medium mb-3 text-center">Share this post</p>
+              <div className="flex justify-center gap-3">
+                {shareLinks.map(link => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full w-8 h-8 flex items-center justify-center bg-white/20 border border-white hover:bg-white transition-colors group"
+                    title={`Share on ${link.name}`}
+                  >
+                    {React.cloneElement(link.icon, { className: 'w-4 h-4 text-white group-hover:text-[#DC5F12] transition-colors' })}
+                    <span className="sr-only">{link.name}</span>
+                  </a>
+                ))}
+                <button
+                  onClick={handleCopyLink}
+                  className="rounded-full w-8 h-8 flex items-center justify-center bg-white/20 border border-white hover:bg-white transition-colors group"
+                  title="Copy link"
                 >
-                  {React.cloneElement(link.icon, { className: 'w-5 h-5 text-white' })}
-                  <span className="sr-only">{link.name}</span>
-                </a>
-              ))}
+                  <LinkIcon className="w-4 h-4 text-white group-hover:text-[#DC5F12] transition-colors" />
+                  <span className="sr-only">Copy link</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
