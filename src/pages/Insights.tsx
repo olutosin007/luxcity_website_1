@@ -1,4 +1,4 @@
-import { ArrowRight, Search, Calendar, Filter, XCircle } from 'lucide-react';
+import { ArrowRight, Search, Calendar, Filter, XCircle, Twitter, Facebook, Linkedin, Share2, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { NewsPost } from '../types/content/NewsPost';
@@ -57,7 +57,8 @@ export default function Insights() {
       searchTerm.trim() === '' ||
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (post.category && post.category.toLowerCase().includes(searchTerm.toLowerCase()));
+      (post.category && post.category.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (post.author && post.author.name && post.author.name.toLowerCase().includes(searchTerm.toLowerCase()));
     // Date filter
     const postDate = new Date(post.date);
     const matchesStart = !startDate || postDate >= new Date(startDate);
@@ -219,7 +220,7 @@ export default function Insights() {
                     <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
                     <p className="text-gray-600">{post.description}</p>
                     {post.author && (
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-4 mb-4">
                         {post.author.avatar && (
                           <img
                             src={post.author.avatar}
@@ -235,12 +236,54 @@ export default function Insights() {
                         </div>
                       </div>
                     )}
-                    <Link
-                      to={`/insights/${post.slug}`}
-                      className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-                    >
-                      Read More <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
+                    {/* Actions Row: Read More + Social Share Bar */}
+                    <div className="flex items-center justify-between mt-6">
+                      <Link
+                        to={`/insights/${post.slug}`}
+                        className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                      >
+                        Read More <ArrowRight className="ml-2 h-5 w-5" />
+                      </Link>
+                      <div className="flex flex-col items-end">
+                        <span className="text-xs text-gray-400 mb-1 tracking-wide">Share post</span>
+                        <div className="flex gap-3">
+                          {[
+                            {
+                              name: 'Twitter',
+                              url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}&text=${encodeURIComponent(post.title)}`,
+                              icon: <Twitter className="w-4 h-4" />,
+                              isCopy: false,
+                            },
+                            {
+                              name: 'Facebook',
+                              url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}`,
+                              icon: <Facebook className="w-4 h-4" />,
+                              isCopy: false,
+                            },
+                            {
+                              name: 'LinkedIn',
+                              url: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}&title=${encodeURIComponent(post.title)}`,
+                              icon: <Linkedin className="w-4 h-4" />,
+                              isCopy: false,
+                            },
+                            {
+                              name: 'WhatsApp',
+                              url: `https://wa.me/?text=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}`,
+                              icon: <Share2 className="w-4 h-4" />,
+                              isCopy: false,
+                            },
+                            {
+                              name: 'Copy Link',
+                              url: window.location.origin + '/insights/' + post.slug,
+                              icon: <LinkIcon className="w-4 h-4" />,
+                              isCopy: true,
+                            },
+                          ].map(link => (
+                            <ShareButton key={link.name} link={link} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -249,5 +292,33 @@ export default function Insights() {
         </div>
       </div>
     </div>
+  );
+}
+
+function ShareButton({ link }) {
+  const [copied, setCopied] = useState(false);
+  const handleClick = async (e) => {
+    if (link.isCopy) {
+      e.preventDefault();
+      await navigator.clipboard.writeText(link.url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    }
+  };
+  return (
+    <a
+      href={link.isCopy ? '#' : link.url}
+      target={link.isCopy ? undefined : '_blank'}
+      rel={link.isCopy ? undefined : 'noopener noreferrer'}
+      className="relative rounded-full w-9 h-9 flex items-center justify-center hover:bg-gray-100 transition border border-gray-200 text-gray-600"
+      title={link.name}
+      onClick={handleClick}
+    >
+      {link.icon}
+      <span className="sr-only">{link.name}</span>
+      {link.isCopy && copied && (
+        <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 shadow">Copied!</span>
+      )}
+    </a>
   );
 }

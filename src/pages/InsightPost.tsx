@@ -1,9 +1,10 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { NewsPost } from '../types/content/NewsPost';
 import { getPostBySlug } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Twitter, Facebook, Linkedin, Share2 } from 'lucide-react';
 import CommentSection from '../components/comments/CommentSection';
 
 export default function InsightPost() {
@@ -44,6 +45,32 @@ export default function InsightPost() {
 
   if (!post) return null;
 
+  // Generate share URLs
+  const postUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareText = encodeURIComponent(post.title);
+  const shareLinks = [
+    {
+      name: 'Twitter',
+      url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${shareText}`,
+      icon: <Twitter className="w-5 h-5" />,
+    },
+    {
+      name: 'Facebook',
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`,
+      icon: <Facebook className="w-5 h-5" />,
+    },
+    {
+      name: 'LinkedIn',
+      url: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(postUrl)}&title=${shareText}`,
+      icon: <Linkedin className="w-5 h-5" />,
+    },
+    {
+      name: 'WhatsApp',
+      url: `https://wa.me/?text=${encodeURIComponent(postUrl)}`,
+      icon: <Share2 className="w-5 h-5" />,
+    },
+  ];
+
   return (
     <div>
       {/* Hero Section */}
@@ -80,6 +107,22 @@ export default function InsightPost() {
                 </div>
               </div>
             )}
+            {/* Social Share Bar */}
+            <div className="flex justify-center gap-4 mt-6">
+              {shareLinks.map(link => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full w-10 h-10 flex items-center justify-center bg-white/20 border border-white hover:bg-white/40 transition text-white"
+                  title={`Share on ${link.name}`}
+                >
+                  {React.cloneElement(link.icon, { className: 'w-5 h-5 text-white' })}
+                  <span className="sr-only">{link.name}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>
