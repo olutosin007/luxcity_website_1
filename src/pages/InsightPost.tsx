@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { NewsPost } from '../types/content/NewsPost';
 import { getPostBySlug } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
-import { ArrowLeft, Twitter, Facebook, Linkedin, Share2, Link as LinkIcon } from 'lucide-react';
+import { ArrowLeft, Twitter, Facebook, Linkedin, MessageCircle, Link as LinkIcon } from 'lucide-react';
 import CommentSection from '../components/comments/CommentSection';
 
 export default function InsightPost() {
@@ -77,7 +77,7 @@ export default function InsightPost() {
     {
       name: 'WhatsApp',
       url: `https://wa.me/?text=${encodeURIComponent(postUrl)}`,
-      icon: <Share2 className="w-5 h-5" />,
+      icon: <MessageCircle className="w-5 h-5 transform scale-x-[-1]" />,
     },
   ];
 

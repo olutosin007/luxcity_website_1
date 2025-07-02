@@ -1,4 +1,4 @@
-import { ArrowRight, Search, Calendar, Filter, XCircle, Twitter, Facebook, Linkedin, Share2, Link as LinkIcon } from 'lucide-react';
+import { ArrowRight, Search, Calendar, Filter, XCircle, Twitter, Facebook, Linkedin, MessageCircle, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { NewsPost } from '../types/content/NewsPost';
@@ -269,7 +269,7 @@ export default function Insights() {
                             {
                               name: 'WhatsApp',
                               url: `https://wa.me/?text=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}`,
-                              icon: <Share2 className="w-4 h-4" />,
+                              icon: <MessageCircle className="w-4 h-4 transform scale-x-[-1]" />,
                               isCopy: false,
                             },
                             {
