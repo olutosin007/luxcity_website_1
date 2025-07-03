@@ -115,23 +115,25 @@ export default function Insights() {
       </section>
 
       <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Filter Section */}
-          <div className="bg-white/80 backdrop-blur-md rounded-xl max-w-7xl mx-auto -mt-16 mb-12 px-6 py-6 flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0 animate-fade-in">
-            {/* Search Input */}
-            <div className="flex-1 relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><Search className="w-5 h-5" /></span>
-              <input
-                type="text"
-                placeholder="Search insights..."
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-300 focus:outline-none text-gray-700 bg-white"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-              />
-            </div>
-            {/* Date Range */}
-            <div className="flex items-center space-x-2">
-              <div className="relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-8 items-start">
+          {/* Filter Sidebar */}
+          <div className="w-full md:w-80 flex-shrink-0">
+            {/* Filter Section */}
+            <div className="bg-white/80 backdrop-blur-md rounded-xl max-w-xs mx-auto mb-12 px-6 py-6 flex flex-col animate-fade-in">
+              <h2 className="text-2xl font-semibold mb-4">Filter</h2>
+              {/* Search Input */}
+              <div className="relative mb-4">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><Search className="w-5 h-5" /></span>
+                <input
+                  type="text"
+                  placeholder="Search insights..."
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-300 focus:outline-none text-gray-700 bg-white"
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                />
+              </div>
+              {/* Date Range */}
+              <div className="flex flex-col gap-2 mb-4">
                 <input
                   type="date"
                   className="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
@@ -139,9 +141,6 @@ export default function Insights() {
                   onChange={e => setStartDate(e.target.value ? new Date(e.target.value) : null)}
                   placeholder="Start date"
                 />
-              </div>
-              <span className="text-gray-500">to</span>
-              <div className="relative">
                 <input
                   type="date"
                   className="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
@@ -151,143 +150,120 @@ export default function Insights() {
                   placeholder="End date"
                 />
               </div>
-            </div>
-            {/* Category Dropdown */}
-            <div className="relative min-w-[180px]">
+              {/* Category Dropdown */}
+              <div className="relative mb-4">
+                <button
+                  type="button"
+                  className="w-full flex items-center px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  <Filter className="w-5 h-5 mr-2 text-gray-400" />
+                  <span className={categoryOptions.find(opt => opt.value === selectedCategory)?.color || 'text-gray-700'}>
+                    {categoryOptions.find(opt => opt.value === selectedCategory)?.label}
+                  </span>
+                  <svg className="ml-auto w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute z-20 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+                    {categoryOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        className={`w-full flex items-center px-4 py-2 hover:bg-gray-100 transition text-left ${opt.color}`}
+                        onClick={() => { setSelectedCategory(opt.value); setDropdownOpen(false); }}
+                        type="button"
+                      >
+                        {opt.dot && <span className={`inline-block w-2 h-2 rounded-full mr-2 ${opt.dot}`}></span>}
+                        {opt.icon || null}
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {/* Clear Filters Button */}
               <button
                 type="button"
-                className="w-full flex items-center px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={clearFilters}
+                className={`mt-2 flex items-center px-4 py-3 rounded-lg border font-medium transition
+                  ${isFilterActive ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100' : 'border-gray-200 bg-gray-50 text-gray-400'}`}
+                disabled={!isFilterActive}
               >
-                <Filter className="w-5 h-5 mr-2 text-gray-400" />
-                <span className={categoryOptions.find(opt => opt.value === selectedCategory)?.color || 'text-gray-700'}>
-                  {categoryOptions.find(opt => opt.value === selectedCategory)?.label}
-                </span>
-                <svg className="ml-auto w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                <XCircle className={`w-5 h-5 mr-2 ${isFilterActive ? 'text-gray-400' : 'text-gray-300'}`} />
+                {isFilterActive ? 'Clear Filters' : 'No filters applied'}
               </button>
-              {dropdownOpen && (
-                <div className="absolute z-20 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
-                  {categoryOptions.map(opt => (
-                    <button
-                      key={opt.value}
-                      className={`w-full flex items-center px-4 py-2 hover:bg-gray-100 transition text-left ${opt.color}`}
-                      onClick={() => { setSelectedCategory(opt.value); setDropdownOpen(false); }}
-                      type="button"
-                    >
-                      {opt.dot && <span className={`inline-block w-2 h-2 rounded-full mr-2 ${opt.dot}`}></span>}
-                      {opt.icon || null}
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
-            {/* Clear Filters Button */}
-            <button
-              type="button"
-              onClick={clearFilters}
-              className={`flex items-center px-4 py-3 rounded-lg border font-medium transition
-                ${isFilterActive ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100' : 'border-gray-200 bg-gray-50 text-gray-400'}`}
-              disabled={!isFilterActive}
-            >
-              <XCircle className={`w-5 h-5 mr-2 ${isFilterActive ? 'text-gray-400' : 'text-gray-300'}`} />
-              {isFilterActive ? 'Clear Filters' : 'No filters applied'}
-            </button>
           </div>
-          <div className="grid grid-cols-1 gap-12">
-            {filteredPosts.map((post) => (
-              <article key={post.id} className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <div className="relative h-64 lg:h-auto">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-8 lg:p-12 space-y-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="inline-block px-3 py-1 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-full">
-                          {post.category}
-                        </span>
-                        <time className="ml-4 text-sm text-gray-500">{post.date}</time>
-                      </div>
-                      {post.readingTime && (
-                        <span className="text-sm text-gray-500">{post.readingTime}</span>
-                      )}
+          {/* Insights Posts */}
+          <div className="flex-1">
+            <div className="grid grid-cols-1 gap-12">
+              {filteredPosts.map((post) => (
+                <article key={post.id} className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                  <div className="grid grid-cols-1 lg:grid-cols-2">
+                    <div className="relative h-64 lg:h-auto">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
-                    <p className="text-gray-600">{post.description}</p>
-                    {post.author && (
-                      <div className="flex items-center space-x-4 mb-4">
-                        {post.author.avatar && (
-                          <img
-                            src={post.author.avatar}
-                            alt={post.author.name}
-                            className="h-10 w-10 rounded-full object-cover"
-                          />
-                        )}
-                        <div>
-                          <div className="font-medium text-gray-900">{post.author.name}</div>
-                          {post.author.role && (
-                            <div className="text-sm text-gray-500">{post.author.role}</div>
+                    <div className="p-8 lg:p-12 flex flex-col h-full">
+                      <div className="space-y-6 flex-1">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="inline-block px-3 py-1 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-full">
+                              {post.category}
+                            </span>
+                            <time className="ml-4 text-sm text-gray-500">{post.date}</time>
+                          </div>
+                          {post.readingTime && (
+                            <span className="text-sm text-gray-500">{post.readingTime}</span>
                           )}
                         </div>
+                        <h2 className="text-2xl font-bold text-gray-900">{post.title}</h2>
+                        <p className="text-gray-600">{post.description}</p>
+                        {post.author && (
+                          <div className="flex items-center space-x-4 mb-4">
+                            {post.author.avatar && (
+                              <img
+                                src={post.author.avatar}
+                                alt={post.author.name}
+                                className="h-10 w-10 rounded-full object-cover"
+                              />
+                            )}
+                            <div>
+                              <div className="font-medium text-gray-900">{post.author.name}</div>
+                              {post.author.role && (
+                                <div className="text-sm text-gray-500">{post.author.role}</div>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    )}
-                    {/* Actions Row: Read More + Social Share Bar */}
-                    <div className="flex items-center justify-between mt-6">
-                      <Link
-                        to={`/insights/${post.slug}`}
-                        className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-                      >
-                        Read More <ArrowRight className="ml-2 h-5 w-5" />
-                      </Link>
-                      <div className="flex flex-col items-end">
-                        <span className="text-xs text-gray-400 mb-1 tracking-wide">Share post</span>
-                        <div className="flex gap-3">
-                          {[
-                            {
-                              name: 'Twitter',
-                              url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}&text=${encodeURIComponent(post.title)}`,
-                              icon: <Twitter className="w-4 h-4" />,
-                              isCopy: false,
-                            },
-                            {
-                              name: 'Facebook',
-                              url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}`,
-                              icon: <Facebook className="w-4 h-4" />,
-                              isCopy: false,
-                            },
-                            {
-                              name: 'LinkedIn',
-                              url: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}&title=${encodeURIComponent(post.title)}`,
-                              icon: <Linkedin className="w-4 h-4" />,
-                              isCopy: false,
-                            },
-                            {
-                              name: 'WhatsApp',
-                              url: `https://wa.me/?text=${encodeURIComponent(window.location.origin + '/insights/' + post.slug)}`,
-                              icon: <MessageCircle className="w-4 h-4 transform scale-x-[-1]" />,
-                              isCopy: false,
-                            },
-                            {
+                      {/* Actions Row: Read More + Social Share Bar */}
+                      <div className="flex items-center justify-between mt-auto pt-6">
+                        <Link
+                          to={`/insights/${post.slug}`}
+                          className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                        >
+                          Read More <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-400 tracking-wide">Copy link</span>
+                          <ShareButton 
+                            link={{
                               name: 'Copy Link',
                               url: window.location.origin + '/insights/' + post.slug,
                               icon: <LinkIcon className="w-4 h-4" />,
                               isCopy: true,
-                            },
-                          ].map(link => (
-                            <ShareButton key={link.name} link={link} />
-                          ))}
+                            }} 
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -295,9 +271,16 @@ export default function Insights() {
   );
 }
 
-function ShareButton({ link }) {
+interface ShareLink {
+  name: string;
+  url: string;
+  icon: React.ReactNode;
+  isCopy: boolean;
+}
+
+function ShareButton({ link }: { link: ShareLink }) {
   const [copied, setCopied] = useState(false);
-  const handleClick = async (e) => {
+  const handleClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (link.isCopy) {
       e.preventDefault();
       await navigator.clipboard.writeText(link.url);
