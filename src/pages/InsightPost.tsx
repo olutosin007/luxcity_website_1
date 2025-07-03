@@ -60,6 +60,11 @@ export default function InsightPost() {
 
   const shareLinks = [
     {
+      name: 'LinkedIn',
+      url: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(postUrl)}&title=${shareText}`,
+      icon: <Linkedin className="w-5 h-5" />,
+    },
+    {
       name: 'Twitter',
       url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${shareText}`,
       icon: <Twitter className="w-5 h-5" />,
@@ -70,95 +75,99 @@ export default function InsightPost() {
       icon: <Facebook className="w-5 h-5" />,
     },
     {
-      name: 'LinkedIn',
-      url: `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(postUrl)}&title=${shareText}`,
-      icon: <Linkedin className="w-5 h-5" />,
-    },
-    {
       name: 'WhatsApp',
       url: `https://wa.me/?text=${encodeURIComponent(postUrl)}`,
       icon: <MessageCircle className="w-5 h-5 transform scale-x-[-1]" />,
     },
   ];
 
+  // Category color mapping
+  const categoryColorMap: Record<string, string> = {
+    'Industry News': 'text-blue-600 bg-blue-50',
+    'Company Updates': 'text-green-600 bg-green-50',
+    'Product News': 'text-purple-700 bg-purple-50',
+  };
+
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative h-[60vh] bg-cover bg-center" style={{ backgroundImage: `url(${post.image})` }}>
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative h-full flex items-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="flex items-center justify-center space-x-4 mb-6">
-              <span className="px-3 py-1 text-sm font-medium text-white bg-indigo-600 rounded-full">
-                {post.category}
-              </span>
-              <time className="text-sm text-gray-300">{post.date}</time>
-              {post.readingTime && (
-                <span className="text-sm text-gray-300">{post.readingTime}</span>
-              )}
+      {/* Hero Section - rearranged for clean, left-aligned layout */}
+      <section className="pt-32 pb-4 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Top Row: Category Badge & Back Button */}
+          <div className="flex items-center justify-between mb-6">
+            <div
+              className={`inline-block px-3 py-1 text-sm font-medium rounded-full uppercase tracking-wide ${categoryColorMap[post.category] || 'text-gray-500 bg-gray-100'}`}
+            >
+              {post.category}
             </div>
-            <h1 className="text-4xl md:text-5xl font-archivo font-bold text-white mb-6">
-              {post.title}
-            </h1>
-            {post.author && (
-              <div className="flex items-center justify-center space-x-4">
-                {post.author.avatar && (
-                  <img
-                    src={post.author.avatar}
-                    alt={post.author.name}
-                    className="h-12 w-12 rounded-full object-cover"
-                  />
-                )}
-                <div className="text-left">
-                  <div className="font-medium text-white">{post.author.name}</div>
-                  {post.author.role && (
-                    <div className="text-sm text-gray-300">{post.author.role}</div>
-                  )}
-                </div>
-              </div>
-            )}
-            {/* Social Share Bar */}
-            <div className="mt-6">
-              <p className="text-white text-sm font-medium mb-3 text-center">Share this post</p>
-              <div className="flex justify-center gap-3">
-                {shareLinks.map(link => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full w-8 h-8 flex items-center justify-center bg-white/20 border border-white hover:bg-white transition-colors group"
-                    title={`Share on ${link.name}`}
-                  >
-                    {React.cloneElement(link.icon, { className: 'w-4 h-4 text-white group-hover:text-[#DC5F12] transition-colors' })}
-                    <span className="sr-only">{link.name}</span>
-                  </a>
-                ))}
-                <button
-                  onClick={handleCopyLink}
-                  className="rounded-full w-8 h-8 flex items-center justify-center bg-white/20 border border-white hover:bg-white transition-colors group"
-                  title="Copy link"
+            <button
+              onClick={() => navigate('/insights')}
+              className="flex items-center text-gray-600 hover:text-gray-900 text-sm font-medium"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Insights
+            </button>
+          </div>
+          {/* Title */}
+          <h1 className="text-4xl md:text-5xl font-archivo font-bold text-gray-900 mb-6 leading-tight">
+            {post.title}
+          </h1>
+          {/* Author, Date, Share Row */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <div className="flex items-center gap-3">
+              {post.author?.avatar && (
+                <img
+                  src={post.author.avatar}
+                  alt={post.author.name}
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              )}
+              <span className="font-medium text-gray-900">{post.author?.name}</span>
+              <span className="text-gray-400">|</span>
+              <time className="text-gray-600">{post.date}</time>
+            </div>
+            {/* Social Share Icons + Copy Link */}
+            <div className="flex items-center gap-3">
+              {shareLinks.map(link => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 bg-white text-gray-400 hover:text-[#DC5F12] transition-colors group"
+                  title={`Share on ${link.name}`}
                 >
-                  <LinkIcon className="w-4 h-4 text-white group-hover:text-[#DC5F12] transition-colors" />
-                  <span className="sr-only">Copy link</span>
-                </button>
-              </div>
+                  {React.cloneElement(link.icon, { className: 'w-4 h-4 group-hover:text-[#DC5F12] transition-colors' })}
+                  <span className="sr-only">{link.name}</span>
+                </a>
+              ))}
+              <button
+                onClick={handleCopyLink}
+                className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 bg-white text-gray-400 hover:text-[#DC5F12] transition-colors group"
+                title="Copy link"
+              >
+                <LinkIcon className="w-4 h-4 group-hover:text-[#DC5F12] transition-colors" />
+                <span className="sr-only">Copy link</span>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Post Image */}
+      {post.image && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-0 mb-10">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full rounded-2xl object-cover"
+          />
+        </div>
+      )}
+
       {/* Content Section */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <button
-            onClick={() => navigate('/insights')}
-            className="flex items-center text-gray-600 hover:text-gray-900 mb-8"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Insights
-          </button>
-          
           <div className="prose prose-lg max-w-none">
             <ReactMarkdown>{post.content}</ReactMarkdown>
           </div>
