@@ -93,20 +93,14 @@ export default function InsightPost() {
       {/* Hero Section - rearranged for clean, left-aligned layout */}
       <section className="pt-32 pb-4 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Top Row: Category Badge & Back Button */}
+          {/* Top Row: Category Badge */}
           <div className="flex items-center justify-between mb-6">
             <div
               className={`inline-block px-3 py-1 text-sm font-medium rounded-full uppercase tracking-wide ${categoryColorMap[post.category] || 'text-gray-500 bg-gray-100'}`}
             >
               {post.category}
             </div>
-            <button
-              onClick={() => navigate('/insights')}
-              className="flex items-center text-gray-600 hover:text-gray-900 text-sm font-medium"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Insights
-            </button>
+            {/* Removed Back to Insights button from here */}
           </div>
           {/* Title */}
           <h1 className="text-4xl md:text-5xl font-archivo font-bold text-gray-900 mb-6 leading-tight">
@@ -170,6 +164,17 @@ export default function InsightPost() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
             <ReactMarkdown>{post.content}</ReactMarkdown>
+          </div>
+
+          {/* Back to Insights button aligned left, just above tags */}
+          <div className="mt-12">
+            <button
+              onClick={() => navigate('/insights')}
+              className="flex items-center text-gray-600 hover:text-gray-900 text-sm font-medium"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Insights
+            </button>
           </div>
 
           {post.tags && post.tags.length > 0 && (
