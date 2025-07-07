@@ -13,7 +13,9 @@ export default function Insights() {
   const [searchTerm, setSearchTerm] = useState('');
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  // Restore single-category dropdown state
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const categoryOptions = [
@@ -64,7 +66,9 @@ export default function Insights() {
     const matchesStart = !startDate || postDate >= new Date(startDate);
     const matchesEnd = !endDate || postDate <= new Date(endDate);
     // Category filter
-    const matchesCategory = !selectedCategory || post.category === selectedCategory;
+    const matchesDropdown = !selectedCategory || post.category === selectedCategory;
+    const matchesCheckboxes = selectedCategories.length === 0 || (post.category && selectedCategories.includes(post.category));
+    const matchesCategory = (selectedCategory && matchesDropdown) || (selectedCategories.length > 0 && matchesCheckboxes) || (!selectedCategory && selectedCategories.length === 0);
     return matchesSearch && matchesStart && matchesEnd && matchesCategory;
   });
 
@@ -74,9 +78,10 @@ export default function Insights() {
     setStartDate(null);
     setEndDate(null);
     setSelectedCategory('');
+    setSelectedCategories([]);
   };
 
-  const isFilterActive = searchTerm || startDate || endDate || selectedCategory;
+  const isFilterActive = searchTerm || startDate || endDate || selectedCategory || selectedCategories.length > 0;
 
   if (loading) {
     return (
@@ -151,7 +156,7 @@ export default function Insights() {
                 />
               </div>
               {/* Category Dropdown */}
-              <div className="relative mb-4">
+              <div className="relative mb-2">
                 <button
                   type="button"
                   className="w-full flex items-center px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
@@ -179,6 +184,29 @@ export default function Insights() {
                     ))}
                   </div>
                 )}
+              </div>
+              {/* Add checkboxes below dropdown */}
+              <div className="mb-4">
+                <h3 className="font-semibold mb-2">Category Type</h3>
+                {categoryOptions
+                  .filter(opt => opt.value) // skip "All Categories"
+                  .map(opt => (
+                    <label key={opt.value} className="flex items-center mb-1 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={selectedCategories.includes(opt.value)}
+                        onChange={e => {
+                          if (e.target.checked) {
+                            setSelectedCategories([...selectedCategories, opt.value]);
+                          } else {
+                            setSelectedCategories(selectedCategories.filter(cat => cat !== opt.value));
+                          }
+                        }}
+                      />
+                      {opt.label}
+                    </label>
+                  ))}
               </div>
               {/* Clear Filters Button */}
               <button
