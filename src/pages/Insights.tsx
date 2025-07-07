@@ -133,22 +133,29 @@ export default function Insights() {
                 />
               </div>
               {/* Date Range */}
-              <div className="flex flex-col gap-2 mb-4">
-                <input
-                  type="date"
-                  className="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
-                  value={startDate ? startDate.toISOString().split('T')[0] : ''}
-                  onChange={e => setStartDate(e.target.value ? new Date(e.target.value) : null)}
-                  placeholder="Start date"
-                />
-                <input
-                  type="date"
-                  className="px-4 py-3 rounded-lg border border-gray-300 text-gray-700 bg-white min-w-[140px]"
-                  value={endDate ? endDate.toISOString().split('T')[0] : ''}
-                  min={startDate ? startDate.toISOString().split('T')[0] : ''}
-                  onChange={e => setEndDate(e.target.value ? new Date(e.target.value) : null)}
-                  placeholder="End date"
-                />
+              <div className="flex items-center gap-2 mb-4 w-full">
+                <div className="relative w-1/2 max-w-[200px]">
+                  <input
+                    type="date"
+                    className="w-full pl-4 pr-2 py-3 rounded-lg border border-gray-300 text-gray-600 bg-white focus:ring-2 focus:ring-indigo-300 focus:outline-none text-small"
+                    value={startDate ? startDate.toISOString().split('T')[0] : ''}
+                    onChange={e => setStartDate(e.target.value ? new Date(e.target.value) : null)}
+                    placeholder="Start date"
+                  />
+                 
+                </div>
+                <span className="text-xl text-gray-400 select-none">-</span>
+                <div className="relative w-1/2 max-w-[200px]">
+                  <input
+                    type="date"
+                    className="w-full pl-4 pr-2 py-3 rounded-lg border border-gray-300 text-gray-600 bg-white focus:ring-2 focus:ring-indigo-300 focus:outline-none text-small"
+                    value={endDate ? endDate.toISOString().split('T')[0] : ''}
+                    min={startDate ? startDate.toISOString().split('T')[0] : ''}
+                    onChange={e => setEndDate(e.target.value ? new Date(e.target.value) : null)}
+                    placeholder="End date"
+                  />
+                  
+                </div>
               </div>
               {/* Category Dropdown */}
               <div className="relative mb-4">
