@@ -46,6 +46,10 @@ export default function Insights() {
     }
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   console.log('Current posts state:', posts);
   console.log('Loading state:', loading);
 

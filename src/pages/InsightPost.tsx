@@ -35,6 +35,10 @@ export default function InsightPost() {
     loadPost();
   }, [slug, navigate]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
