@@ -242,7 +242,7 @@ Whether you’re a kid, a busy parent, or a grandparent, smart homes have someth
     slug: "Beyond Square Footage and Pricing",
     category: "Industry News",
     date: "2025/07/09",
-    description: "At Luxcity, we believe great real estate experiences are built on empathy, not just efficiency. We're using technology to simplify the home-search process—through smart filters, virtual tours, instant messaging, and online bookings—while keeping the human touch front and center. ",
+    description: "At Luxcity, we believe great real estate experiences are built on empathy, not just efficiency. We're using technology to simplify the home-search process, through smart filters, virtual tours, instant messaging, and online bookings while keeping the human touch front and center. ",
     image: "/images/blog-6.png",
     author: {
       name: "Tomi Adebayo",
