@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Brain, ArrowRight, ChevronLeft, ChevronRight, Building2, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroBackground from '../components/HeroBackground';
+import { getRecentPosts } from '../utils/newsLoader';
+import { NewsPost } from '../types/content/NewsPost';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -24,32 +26,15 @@ export default function Home() {
     }
   ];
 
-  const news = [
-    {
-      title: "The Future of AI in Real Estate Valuation",
-      category: "Research Report",
-      date: "March 15, 2024",
-      description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
-      slug: "ai-valuation-future"
-    },
-    {
-      title: "Emerging Trends in Property Technology",
-      category: "Market Analysis",
-      date: "March 10, 2024",
-      description: "Exploring the latest technological innovations shaping the real estate industry and their impact on market dynamics.",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400",
-      slug: "property-tech-trends"
-    },
-    {
-      title: "Sustainable Real Estate: A Data-Driven Approach",
-      category: "Industry Report",
-      date: "March 5, 2024",
-      description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400",
-      slug: "sustainable-real-estate-data"
-    }
-  ];
+  const [latestPosts, setLatestPosts] = useState<NewsPost[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await getRecentPosts(3);
+      setLatestPosts(posts);
+    };
+    fetchPosts();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -213,32 +198,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[
-              {
-                title: "The Future of AI in Real Estate Valuation",
-                category: "Research Report",
-                date: "March 15, 2024",
-                description: "An in-depth analysis of how artificial intelligence is transforming property valuation methods and improving accuracy.",
-                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
-                slug: "ai-valuation-future"
-              },
-              {
-                title: "Emerging Trends in Property Technology",
-                category: "Market Analysis",
-                date: "March 10, 2024",
-                description: "Exploring the latest technological innovations shaping the real estate industry and their impact on market dynamics.",
-                image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=400",
-                slug: "property-tech-trends"
-              },
-              {
-                title: "Sustainable Real Estate: A Data-Driven Approach",
-                category: "Industry Report",
-                date: "March 5, 2024",
-                description: "How data analytics and AI are helping property developers and investors make sustainable decisions.",
-                image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=400",
-                slug: "sustainable-real-estate-data"
-              }
-            ].map((item, index) => (
+            {latestPosts.map((item, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
                 <div className="relative h-48 overflow-hidden">
                   <img 
