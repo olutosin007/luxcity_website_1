@@ -11,16 +11,16 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-[80px] md:h-[120px]">
-          <Link to="/" className="flex items-center">
-            <img 
-              src="/images/luxcity_logo_clr_6.png" 
-              alt="Luxcity Logo" 
-              className="h-8 md:h-12 w-auto" 
-            />
-          </Link>
+    <nav className="fixed w-full z-50 flex justify-center items-start pt-4">
+      <div className="max-w-7xl w-full mx-auto flex justify-between items-center px-12 py-4 rounded-full bg-white/60 backdrop-blur-lg shadow-md border border-white/30">
+        {/* Logo in pill-shaped white bg */}
+        <Link to="/" className="flex items-center">
+          <img 
+            src="/images/luxcity_logo_clr_6.png" 
+            alt="Luxcity Logo" 
+            className="h-8 md:h-10 w-auto" 
+          />
+        </Link>
 
           {/* Mobile menu button */}
           <button
@@ -30,15 +30,15 @@ export default function Navigation() {
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
 
-          {/* Desktop menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/solutions" className={`${isActive('/solutions')} transition-colors duration-200`}>Solutions</Link>
-            <Link to="/labs" className={`${isActive('/labs')} transition-colors duration-200`}>Labs</Link>
-            <Link to="/insights" className={`${isActive('/insights')} transition-colors duration-200`}>Insights</Link>
-            <Link to="/company" className={`${isActive('/company')} transition-colors duration-200`}>Company</Link>
-            <Link to="/contact" className={`${isActive('/contact')} transition-colors duration-200`}>Contact</Link>
-          </div>
+        {/* Desktop menu */}
+        <div className="hidden md:flex items-center space-x-8 pr-2">
+          <Link to="/solutions" className="font-medium transition-colors duration-200" style={{ color: '#374957' }} onMouseOver={e => e.currentTarget.style.color = '#DC5F12'} onMouseOut={e => e.currentTarget.style.color = '#374957'}>Solutions</Link>
+          <Link to="/labs" className="font-medium transition-colors duration-200" style={{ color: '#374957' }} onMouseOver={e => e.currentTarget.style.color = '#DC5F12'} onMouseOut={e => e.currentTarget.style.color = '#374957'}>Labs</Link>
+          <Link to="/insights" className="font-medium transition-colors duration-200" style={{ color: '#374957' }} onMouseOver={e => e.currentTarget.style.color = '#DC5F12'} onMouseOut={e => e.currentTarget.style.color = '#374957'}>Insights</Link>
+          <Link to="/company" className="font-medium transition-colors duration-200" style={{ color: '#374957' }} onMouseOver={e => e.currentTarget.style.color = '#DC5F12'} onMouseOut={e => e.currentTarget.style.color = '#374957'}>Company</Link>
+          <Link to="/contact" className="font-medium transition-colors duration-200" style={{ color: '#374957' }} onMouseOver={e => e.currentTarget.style.color = '#DC5F12'} onMouseOut={e => e.currentTarget.style.color = '#374957'}>Contact</Link>
         </div>
+      </div>
 
         {/* Mobile menu */}
         {isMenuOpen && (
@@ -97,7 +97,6 @@ export default function Navigation() {
             </div>
           </div>
         )}
-      </div>
     </nav>
   );
 }
