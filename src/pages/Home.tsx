@@ -94,7 +94,7 @@ export default function Home() {
           </div>
         </div>
         <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh] flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-[260px] pb-20 md:pt-[140px] md:pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-[320px] pb-20 md:pt-[140px] md:pb-16">
             <div className="animate-fade-in md:text-center lg:text-left z-30 relative">
               {/* Multimodal AI Tools badge */}
               <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-strong p-3 rounded-xl border border-white/20 group transition-all duration-300 hover:bg-white/20 mb-6">
@@ -105,7 +105,9 @@ export default function Home() {
                 Real&nbsp;Estate Reimagined
               </h1>
               <p className="mt-4 md:mt-6 text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl md:mx-auto lg:mx-0">
-                Harnessing advanced techologies to deliver tailored solutions that enhance efficiency and sustainability in real estate and construction.
+                Harnessing advanced techologies to deliver tailored solutions 
+                that enhance efficiency and sustainability in real estate 
+                and construction.
               </p>
               <div className="mt-8 md:mt-10">
                 <Link 

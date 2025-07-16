@@ -12,7 +12,7 @@ export default function Navigation() {
 
   return (
     <nav className="fixed w-full z-50 flex justify-center items-start pt-4">
-      <div className="max-w-7xl w-full mx-auto flex justify-between items-center px-12 py-4 rounded-full bg-white/60 backdrop-blur-lg shadow-md border border-white/30">
+      <div className="max-w-7xl w-full mx-auto flex justify-between items-center px-12 py-4 rounded-full bg-white/70 backdrop-blur-lg shadow-md border border-white/30">
         {/* Logo in pill-shaped white bg */}
         <Link to="/" className="flex items-center">
           <img 
