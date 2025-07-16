@@ -52,62 +52,27 @@ export default function Home() {
       <section 
         className="relative min-h-[100vh] overflow-hidden flex items-center"
         style={{
-          backgroundImage: 'url(/images/Sandwichbot.png)',
+          backgroundImage: 'url(/images/Heroseckbg1.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       >
-        {/* Full hero overlay image, above slide, below text */}
-        <img
-          src="/images/Sandwichtop.png"
-          alt="Sandwich Top Overlay"
-          className="absolute top-0 left-0 w-full h-full z-20 pointer-events-none"
-          style={{ objectFit: 'cover' }}
-        />
-        <div 
-          className="hidden lg:block absolute top-0 right-0 h-full w-1/2 animate-fade-in" 
-          style={{ animationDelay: '0.3s', zIndex: 15 }}
-        >
-          <div className="relative h-full w-full">
-              <img 
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                className="w-full h-full object-cover transition-all duration-700 ease-in-out z-10"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8 text-center z-30">
-                <h3 className="text-lg md:text-xl font-semibold text-white">{slides[currentSlide].title}</h3>
-                <p className="text-sm md:text-base text-white/90 mt-2">{slides[currentSlide].description}</p>
-              </div>
-              <button 
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px] z-30"
-              >
-                <ChevronLeft className="h-6 w-6 text-white" />
-              </button>
-              <button 
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px] z-30"
-              >
-                <ChevronRight className="h-6 w-6 text-white" />
-              </button>
-          </div>
-        </div>
-        <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh] flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-[320px] pb-20 md:pt-[140px] md:pb-16">
+        <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 w-full pt-[260px] pb-20 md:pt-[140px] md:pb-16">
             <div className="animate-fade-in md:text-center lg:text-left z-30 relative">
               {/* Multimodal AI Tools badge */}
-              <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-strong p-3 rounded-xl border border-white/20 group transition-all duration-300 hover:bg-white/20 mb-6">
-                <Brain className="h-6 w-6 text-white group-hover:scale-110 transition-transform duration-300" />
-                <span className="font-medium text-white">Multimodal AI Tools</span>
+              <div className="inline-flex items-center space-x-2 p-3 rounded-xl border border-white/20 group transition-all duration-300 mb-6" style={{ backgroundColor: '#CEE9FF' }}>
+                <Brain className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" style={{ color: '#374957' }} />
+                <span className="font-medium" style={{ color: '#374957' }}>Multimodal AI Tools</span>
               </div>
-              <h1 className="text-[57px] sm:text-[47px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-indigo-200">
+              <h1 className="text-[57px] sm:text-[47px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1]" style={{ color: '#374957' }}>
                 Real&nbsp;Estate Reimagined
               </h1>
-              <p className="mt-4 md:mt-6 text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl md:mx-auto lg:mx-0">
+              <p className="mt-4 md:mt-6 text-lg md:text-xl leading-relaxed max-w-2xl md:mx-auto lg:mx-0" style={{ color: '#374957' }}>
                 Harnessing advanced techologies to deliver tailored solutions 
                 that enhance efficiency and sustainability in real estate 
-                and construction.
+                and construction. 
               </p>
               <div className="mt-8 md:mt-10">
                 <Link 
