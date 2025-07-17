@@ -10,17 +10,17 @@ export default function Home() {
 
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800&h=600",
+      image: "/images/Slide-1.png",
       title: "Personalised Home Discovery",
       description: "Let AI find your ideal rental match based on your lifestyle and preferences."
     },
     {
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=600",
+      image: "/images/Slide-2.png",
       title: "AI-Powered Market Intelligence",
       description: "Make data-driven decisions with real-time market insights and predictive analytics."
     },
     {
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=600",
+      image: "/images/Slide-3.png",
       title: "Streamline Property Operations",
       description: "Automate workflows and reduce costs with intelligent property management."
     }
@@ -66,7 +66,7 @@ export default function Home() {
           style={{ objectFit: 'cover' }}
         />
         <div 
-          className="hidden lg:block absolute top-0 right-0 h-full w-1/2 animate-fade-in" 
+          className="hidden lg:block absolute top-0 right-0 h-full w-2/3 animate-fade-in" 
           style={{ animationDelay: '0.3s', zIndex: 15 }}
         >
           <div className="relative h-full w-full">
@@ -79,18 +79,6 @@ export default function Home() {
                 <h3 className="text-lg md:text-xl font-semibold text-white">{slides[currentSlide].title}</h3>
                 <p className="text-sm md:text-base text-white/90 mt-2">{slides[currentSlide].description}</p>
               </div>
-              <button 
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px] z-30"
-              >
-                <ChevronLeft className="h-6 w-6 text-white" />
-              </button>
-              <button 
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px] z-30"
-              >
-                <ChevronRight className="h-6 w-6 text-white" />
-              </button>
           </div>
         </div>
         <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh] flex items-center">
