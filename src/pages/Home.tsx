@@ -50,7 +50,7 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <section 
-        className="relative min-h-[100vh] overflow-hidden flex items-center"
+        className="relative min-h-[100vh] overflow-hidden"
         style={{
           backgroundImage: 'url(/images/Heroseckbg1.png)',
           backgroundSize: 'cover',
