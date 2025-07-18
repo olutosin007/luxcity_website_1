@@ -6,6 +6,9 @@ import { getPostBySlug } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
 import { ArrowLeft, Twitter, Facebook, Linkedin, MessageCircle, Link as LinkIcon } from 'lucide-react';
 import CommentSection from '../components/comments/CommentSection';
+import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 export default function InsightPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -92,11 +95,40 @@ export default function InsightPost() {
     'Product News': 'text-purple-700 bg-purple-50',
   };
 
+  // Format date for SEO
+  const formatDateForSEO = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toISOString();
+  };
+
   return (
     <div>
+      <SEO 
+        title={`${post.title} | Luxcity Insights`}
+        description={post.description}
+        canonical={`/insights/${post.slug}`}
+        image={post.image}
+        type="article"
+        publishedTime={formatDateForSEO(post.date)}
+        modifiedTime={formatDateForSEO(post.date)}
+        author={post.author?.name}
+        tags={post.tags || []}
+        category={post.category}
+        readingTime={post.readingTime}
+      />
+
       {/* Hero Section - rearranged for clean, left-aligned layout */}
       <section className="pt-32 pb-4 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumbs */}
+          <Breadcrumbs 
+            items={[
+              { label: 'Insights', path: '/insights' },
+              { label: post.category },
+              { label: post.title }
+            ]} 
+          />
+          
           {/* Top Row: Category Badge */}
           <div className="flex items-center justify-between mb-6">
             <div
@@ -155,10 +187,11 @@ export default function InsightPost() {
       {/* Post Image */}
       {post.image && (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-0 mb-10">
-          <img
+          <OptimizedImage
             src={post.image}
-            alt={post.title}
+            alt={`${post.title} - Featured image`}
             className="w-full rounded-2xl object-cover"
+            priority={true}
           />
         </div>
       )}

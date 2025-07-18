@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://luxcity.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow important pages
+Allow: /insights/
+Allow: /solutions/
+Allow: /labs/
+Allow: /company/
+Allow: /contact/
+
+# Crawl delay (optional)
+Crawl-delay: 1 

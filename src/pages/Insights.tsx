@@ -6,6 +6,8 @@ import { getAllPosts } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
 
 export default function Insights() {
   const [posts, setPosts] = useState<NewsPost[]>([]);
@@ -97,6 +99,15 @@ export default function Insights() {
 
   return (
     <div>
+      <SEO 
+        title="Insights & News | Luxcity - Real Estate Technology"
+        description="Stay updated with the latest trends, research, and insights in real estate technology. Expert analysis on AI, PropTech, market intelligence, and industry innovations."
+        canonical="/insights"
+        image="/images/team-discussion-720.mp4"
+        type="website"
+        tags={['real estate technology', 'PropTech', 'AI', 'market insights', 'industry news']}
+      />
+      
       <section className="relative h-[80vh] overflow-hidden">
         <video
           ref={videoRef}
@@ -232,10 +243,11 @@ export default function Insights() {
                 <article key={post.id} className="bg-white rounded-2xl shadow-xl overflow-hidden">
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     <div className="relative h-64 lg:h-auto">
-                      <img
+                      <OptimizedImage
                         src={post.image}
-                        alt={post.title}
+                        alt={`${post.title} - ${post.category}`}
                         className="absolute inset-0 w-full h-full object-cover"
+                        priority={false}
                       />
                     </div>
                     <div className="p-8 lg:p-12 flex flex-col h-full">
