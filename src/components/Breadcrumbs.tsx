@@ -13,8 +13,8 @@ interface BreadcrumbsProps {
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb" className="mb-6">
-      <ol className="flex items-center space-x-2 text-sm text-gray-600">
-        <li>
+      <ol className="flex items-center space-x-2 text-sm text-gray-600 flex-nowrap overflow-x-auto">
+        <li className="flex-shrink-0">
           <Link 
             to="/" 
             className="flex items-center hover:text-[#DC5F12] transition-colors"
@@ -23,19 +23,21 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
             <Home className="h-4 w-4" />
           </Link>
         </li>
-        
         {items.map((item, index) => (
-          <li key={index} className="flex items-center">
-            <ChevronRight className="h-4 w-4 mx-2 text-gray-400" />
+          <li key={index} className="flex items-center flex-shrink-0">
+            <ChevronRight className="h-4 w-4 mx-2 text-gray-400 flex-shrink-0" />
             {item.path ? (
               <Link 
                 to={item.path}
-                className="hover:text-[#DC5F12] transition-colors"
+                className="hover:text-[#DC5F12] transition-colors truncate overflow-hidden whitespace-nowrap max-w-[180px] block"
+                title={item.label}
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-gray-900 font-medium">{item.label}</span>
+              <span className="text-gray-900 font-medium truncate overflow-hidden whitespace-nowrap max-w-[180px] block" title={item.label}>
+                {item.label}
+              </span>
             )}
           </li>
         ))}
