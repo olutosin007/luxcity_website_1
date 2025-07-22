@@ -10,17 +10,17 @@ export default function Home() {
 
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800&h=600",
+      image: "/images/Slide-1.png",
       title: "Personalised Home Discovery",
       description: "Let AI find your ideal rental match based on your lifestyle and preferences."
     },
     {
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800&h=600",
+      image: "/images/Slide-2.png",
       title: "AI-Powered Market Intelligence",
       description: "Make data-driven decisions with real-time market insights and predictive analytics."
     },
     {
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800&h=600",
+      image: "/images/Slide-3.png",
       title: "Streamline Property Operations",
       description: "Automate workflows and reduce costs with intelligent property management."
     }
@@ -49,17 +49,53 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[100vh] overflow-hidden bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
-        <HeroBackground />
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh] flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-[160px] pb-20 md:pt-[140px] md:pb-16">
-            <div className="animate-fade-in md:text-center lg:text-left">
+      <section 
+        className="relative min-h-[100vh] overflow-hidden flex items-center"
+        style={{
+          backgroundImage: 'url(/images/Sandwichbot.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Full hero overlay image, above slide, below text */}
+        <img
+          src="/images/Sandwichtop.png"
+          alt="Sandwich Top Overlay"
+          className="absolute top-0 left-0 w-full h-full z-20 pointer-events-none"
+          style={{ objectFit: 'cover' }}
+        />
+        <div 
+          className="hidden lg:block absolute top-0 right-0 h-full w-2/3 animate-fade-in" 
+          style={{ animationDelay: '0.3s', zIndex: 15 }}
+        >
+          <div className="relative h-full w-full">
+              <img 
+                src={slides[currentSlide].image}
+                alt={slides[currentSlide].title}
+                className="w-full h-full object-cover transition-all duration-700 ease-in-out z-10"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8 text-center z-30">
+                <h3 className="text-lg md:text-xl font-semibold text-white">{slides[currentSlide].title}</h3>
+                <p className="text-sm md:text-base text-white/90 mt-2">{slides[currentSlide].description}</p>
+              </div>
+          </div>
+        </div>
+        <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[100vh] flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full pt-[320px] pb-20 md:pt-[140px] md:pb-16">
+            <div className="animate-fade-in md:text-center lg:text-left z-30 relative">
+              {/* Multimodal AI Tools badge */}
+              <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-strong p-3 rounded-xl border border-white/20 group transition-all duration-300 hover:bg-white/20 mb-6">
+                <Brain className="h-6 w-6 text-white group-hover:scale-110 transition-transform duration-300" />
+                <span className="font-medium text-white">Multimodal AI Tools</span>
+              </div>
               <h1 className="text-[57px] sm:text-[47px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-indigo-200">
                 Real&nbsp;Estate Reimagined
               </h1>
               <p className="mt-4 md:mt-6 text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl md:mx-auto lg:mx-0">
-                Harnessing advanced techologies to deliver tailored solutions that enhance efficiency and sustainability in real estate and construction.
+                Harnessing advanced techologies to deliver tailored solutions 
+                that enhance efficiency and sustainability in real estate 
+                and construction.
               </p>
               <div className="mt-8 md:mt-10">
                 <Link 
@@ -68,38 +104,6 @@ export default function Home() {
                 >
                   Get Started <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
-              </div>
-            </div>
-
-            <div className="relative animate-fade-in hidden sm:block md:mt-12 lg:mt-0" style={{ animationDelay: '0.3s' }}>
-              <div className="relative rounded-2xl overflow-hidden bg-white/10 backdrop-blur-strong border border-white/20">
-                <img 
-                  src={slides[currentSlide].image}
-                  alt={slides[currentSlide].title}
-                  className="w-full h-[300px] md:h-[400px] lg:h-[450px] object-cover transition-all duration-700 ease-in-out transform scale-105"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8 text-center">
-                  <h3 className="text-lg md:text-xl font-semibold text-white">{slides[currentSlide].title}</h3>
-                  <p className="text-sm md:text-base text-white/90 mt-2">{slides[currentSlide].description}</p>
-                </div>
-                <button 
-                  onClick={prevSlide}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px]"
-                >
-                  <ChevronLeft className="h-6 w-6 text-white" />
-                </button>
-                <button 
-                  onClick={nextSlide}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-strong p-3 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 min-h-[44px] min-w-[44px]"
-                >
-                  <ChevronRight className="h-6 w-6 text-white" />
-                </button>
-              </div>
-              <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-strong p-4 rounded-xl border border-white/20 group transition-all duration-300 hover:bg-white/20">
-                <div className="flex items-center space-x-2">
-                  <Brain className="h-6 w-6 text-white group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-medium text-white">Multimodal AI Tools</span>
-                </div>
               </div>
             </div>
           </div>
