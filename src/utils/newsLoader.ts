@@ -376,7 +376,7 @@ As platforms like Luxcity help shape the future of UK renting, this idea is more
     author: {
       name: "Tosin Lanipekun",
       role: "Head - Product Innovation",
-      avatar: "/images/team/tomi-adebayo-headshot.png"
+      avatar: "/images/team/tosin-lanipekun-headshot.jpg"
     },
     content: `
  
@@ -406,7 +406,7 @@ From referencing to contracts to communication, property services are still larg
 
 ## The Role of PropTech: From Efficiency to Equity
 
-This is where PropTech has a critical role to play, not just as a facilitator of operational efficiency, but as a catalyst for fairer, smarter, and more accessible housing outcomes.
+This is where PropTech has a critical role to play, not just as a facilitator of operational efficiency, but as a catalyst for **fairer, smarter, and more accessible housing outcomes.**
 
 At Luxcity, we’re building a platform that integrates AI and automation across the rental and purchase journey; connecting the dots between people, properties, and providers.
 
