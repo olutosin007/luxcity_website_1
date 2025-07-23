@@ -372,7 +372,7 @@ As platforms like Luxcity help shape the future of UK renting, this idea is more
     category: "Industry News",
     date: "2025/07/23",
     description: "This post examines how NatWest’s £500M social housing fund can unlock real impact when combined with digital innovation, and how platforms like Luxcity are driving a smarter, fairer, tech-enabled future for UK housing. ",
-    image: "/images/blog-7.png",
+    image: "/images/blog-8.png",
     author: {
       name: "Tosin Lanipekun",
       role: "Head - Product Innovation",
