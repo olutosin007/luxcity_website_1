@@ -12,6 +12,8 @@ interface SEOProps {
   tags?: string[];
   category?: string;
   readingTime?: string;
+  keywords?: string[];
+  relatedTerms?: string[];
 }
 
 export default function SEO({
@@ -25,11 +27,25 @@ export default function SEO({
   author,
   tags = [],
   category,
-  readingTime
+  readingTime,
+  keywords = [],
+  relatedTerms = []
 }: SEOProps) {
-  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxcity.com';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxcity.tech';
   const fullUrl = canonical ? `${siteUrl}${canonical}` : window.location.href;
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+  // Combine all keywords for meta tags
+  const allKeywords = [
+    ...keywords,
+    ...relatedTerms,
+    ...tags,
+    'real estate technology',
+    'PropTech',
+    'AI real estate',
+    'property search',
+    'Luxcity'
+  ].filter((keyword, index, arr) => arr.indexOf(keyword) === index); // Remove duplicates
 
   // Generate structured data for articles
   const generateStructuredData = () => {
@@ -60,7 +76,11 @@ export default function SEO({
         },
         ...(category && { articleSection: category }),
         ...(tags.length > 0 && { keywords: tags.join(', ') }),
-        ...(readingTime && { wordCount: readingTime })
+        ...(readingTime && { wordCount: readingTime }),
+        // Add related terms for better semantic understanding
+        ...(relatedTerms.length > 0 && { 
+          about: relatedTerms.map(term => ({ '@type': 'Thing', name: term }))
+        })
       };
     }
 
@@ -77,7 +97,11 @@ export default function SEO({
           '@type': 'ImageObject',
           url: `${siteUrl}/images/luxcity_logo_clr_6.png`
         }
-      }
+      },
+      // Add related terms for better semantic understanding
+      ...(relatedTerms.length > 0 && { 
+        about: relatedTerms.map(term => ({ '@type': 'Thing', name: term }))
+      })
     };
   };
 
@@ -87,6 +111,12 @@ export default function SEO({
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={fullUrl} />
+
+      {/* Enhanced Keywords Meta Tags */}
+      <meta name="keywords" content={allKeywords.join(', ')} />
+      <meta name="subject" content={category || 'Real Estate Technology'} />
+      <meta name="classification" content="Technology, Real Estate, PropTech" />
+      <meta name="category" content={category || 'Real Estate Technology'} />
 
       {/* Open Graph Tags */}
       <meta property="og:title" content={title} />
@@ -120,7 +150,15 @@ export default function SEO({
       {/* Additional SEO Meta Tags */}
       <meta name="robots" content="index, follow" />
       <meta name="author" content={author || 'Luxcity Team'} />
-      {tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
+      <meta name="language" content="English" />
+      <meta name="revisit-after" content="7 days" />
+      <meta name="distribution" content="global" />
+      <meta name="rating" content="general" />
+
+      {/* Related terms for semantic search */}
+      {relatedTerms.length > 0 && (
+        <meta name="related" content={relatedTerms.join(', ')} />
+      )}
 
       {/* Structured Data */}
       <script type="application/ld+json">

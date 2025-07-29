@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://luxcity.com/sitemap.xml
+Sitemap: https://luxcity.tech/sitemap.xml
 
 # Disallow admin areas
 Disallow: /admin/

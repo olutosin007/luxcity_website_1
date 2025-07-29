@@ -9,6 +9,7 @@ import CommentSection from '../components/comments/CommentSection';
 import SEO from '../components/SEO';
 import OptimizedImage from '../components/OptimizedImage';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { generatePostKeywords } from '../utils/keywordGenerator';
 
 export default function InsightPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -101,6 +102,14 @@ export default function InsightPost() {
     return date.toISOString();
   };
 
+  // Generate dynamic keywords based on post content
+  const { keywords, relatedTerms } = generatePostKeywords({
+    title: post.title,
+    description: post.description,
+    category: post.category,
+    tags: post.tags
+  });
+
   return (
     <div>
       <SEO 
@@ -115,6 +124,8 @@ export default function InsightPost() {
         tags={post.tags || []}
         category={post.category}
         readingTime={post.readingTime}
+        keywords={keywords}
+        relatedTerms={relatedTerms}
       />
 
       {/* Hero Section - rearranged for clean, left-aligned layout */}
