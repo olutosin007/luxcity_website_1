@@ -82,6 +82,14 @@ readingTime: "X min read"
 - Use `*text*` for italic
 - Use `![Alt text description](/images/your-image.jpg)` for images
 
+### Markdown for Tables
+| Column Title 1 | Column Title 2 |
+|:-----|:-----------|
+| All-in-one facilities | Excessive fire alarms (“3am every Thursday”) |
+| On-site security      | Poor maintenance response (“reported broken heater 3x”) |
+| Communal spaces       | Loud partying, no quiet hours             |
+| Modern interiors      | Rent hikes during renewal (“£70/month more, same room”) |
+
 
 ### Categories
 Current categories include:

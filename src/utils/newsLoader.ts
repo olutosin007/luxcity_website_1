@@ -450,8 +450,8 @@ If you’re part of a housing association, local authority, or real estate netwo
     slug: "the-state-of-student-housing-in-the-uk-2022-2025",
     category: "Industry News",
     date: "2025/08/07",
-    description: "In 2024, UK emissions fell 4% to 371 MtCO₂e—but it’s still far from the 68% cut promised under the Paris Agreement.",
-    image: "/images/realistic-image-of-a-clean-and-green-urban.png",
+    description: "Accommodation challenges in the UK are becoming increasingly severe, as demand continues to outpace supply and it's anyone's guess how deep the crisis will go. ",
+    image: "/images/uk-student-housing.png",
     author: {
       name: "Seye Jimo",
       role: "Head of Product",
@@ -480,10 +480,9 @@ The different housing types pose different types of issues. Here’s a breakdown
 
 | Pros | Complaints |
 |:-----|:-----------|
-| All-in-one facilities| Excessive fire alarms (“3am every Thursday”)    |
-| On-site security     | Poor maintenance response (“reported broken heater 3x”) |
-| Communal spaces      | Loud partying, no quiet hours                   |
-| Modern interiors     | Rent hikes during renewal (“£70/month more, same room”) |
+| Typically close to campus | Black mould, water leaks, outdated buildings    |
+| Managed by the university     | Slow or dismissive staff response |
+| Easier contracts      | Poor cleanliness in kitchens or bathrooms                   |
 
 ### Private Rented Houses (HMOs)
 
@@ -493,25 +492,61 @@ The different housing types pose different types of issues. Here’s a breakdown
 | More independence    | Landlords entering without notice ("my landlord just walked in!") |
 | Flexible options     | No repairs done on time, heating issues    |
 
+## Frequency of Student Housing Issues by Housing Type
+Here's a concise bar chart comparing the severity of common student housing issues across three housing types: PBSA, University Halls, and Private Houses.
+
 ![Alt text description](/images/frequency-student-housing.png)
 
-###  
-Smart meters and environmental sensors are no longer novelties they’re necessities. They give landlords and building managers instant visibility into how energy is used, where it’s wasted, and what needs fixing. From tweaking HVAC systems to spotting poor insulation, data is doing a better job than guesswork ever could.
-**Example: [Arbnco](https://www.arbnco.com/)**
+### Key Insights:
+- **Private Houses** have the most severe issues across nearly all categories.
+- **PBSA** performs best for pests and deposits but scores poorly on fire alarms and noise.
+- **University Halls** show medium-level issues across the board, with peaks in fire alarms and maintenance delays.
 
-### 2.  Digital Twins
-Though still emerging in mainstream UK construction, digital twins are digital replicas of buildings that can simulate how design changes or upgrades will affect performance before a single brick is moved. This means fewer costly mistakes on site and lower carbon footprints.
-**Example: [Willow](https://www.willowinc.com/)**
+## Actual Quotes from Student Forums
+- “They said it was luxury, but I’ve had mice in my room three times. I pay £190/week.” – Reddit, PBSA complaint
+- “There was no fire escape plan. I reported it, they emailed me back 6 weeks later.” – Student Room, Uni halls
+- “Our house was damp, dark, and they refused to fix the leaking pipes until the ceiling fell in.” – Quora, private HMO
+- “iQ made me pay £250 to reserve a room, then told me it wasn’t available.” – Reddit, PBSA
+- “It’s hard enough adjusting to UK life, but not being able to sleep due to constant alarms is wild.”  Reddit, international student
 
-### 3.  Predictive Maintenance and Automation
-When systems fail, they often do so inefficiently. With predictive tools, building operators can spot trouble before it snowballs—reducing energy waste and the need for high-emission emergency repairs or replacements.
-**Example: [Facilio](https://facilio.com/),[Planon(https://planonsoftware.com/)**
 
-### 4.  Building Performance and ESG Reporting
-More tenants and investors now expect transparency on sustainability. PropTech platforms that track and report on carbon metrics help create a more climate-conscious marketplace—and put pressure on underperforming properties to step up.
-**Example: [Measurabl](https://www.measurabl.com/)**
+## Root Causes Behind Complaints
+| Cause | Impact |
+|:-----|:-----------|
+| High demand → low availability    | Forces students into poor-quality options          |
+| Landlord leniency in enforcement   | Repeat issues in shared houses (e.g., late-night noise) |
+| Lack of student rights education   | Many don’t know how to dispute deposits or get repairs done    |
+| Rapid PBSA expansion → less oversight | Mass complaints about noise, alarms, and rent hikes   |
 
-We don’t need to wait for futuristic cities to start cutting emissions. The tech is already here ready to retrofit, ready to monitor, ready to optimise. PropTech may not be the only answer to the climate crisis, but when it comes to decarbonising our buildings, it's one of the smartest tools we’ve got.
+## Recommendations for Students
+1. **Inspect physically or virtually before paying.** Ask about fire alarm policies, pest treatment, and damp history.
+2. **Request maintenance logs or past tenant reviews.**
+3. **Use deposit protection schemes** and get everything in writing.
+4. **Research local neighborhood forums** for red flags (e.g., r/Nottingham, r/Leeds, r/Glasgow).
+5. **Report rogue landlords** to local councils and universities (especially HMOs).
+6. **Read the contracts** to understand student and landlord obligations before signing.
+
+## Opportunity for Investors
+
+The significant imbalance between the high demand and limited supply of student housing presents a compelling opportunity for investment. But beyond traditional profit-driven approaches, there is a growing need for socially conscious investors who prioritise both infrastructure and student wellbeing. These investors should aim to deliver not only quality accommodation but also responsive, solution oriented systems that proactively address student concerns. Integrating modern technology throughout the development and management phases can play a critical role in resolving common issues efficiently and enhancing the overall student living experience. 
+
+## What Luxcity is doing
+
+At Luxcity, we’re not only focused on building great products, we're also deeply committed to supporting renters through education, so that they are more informed, confident, and empowered in every decision they make.
+
+We understand that navigating the rental landscape, especially in this fast paced market, can be overwhelming particularly for first time renters, and international students. That’s why we’re investing in guides, tools, and community driven insights that go beyond listings, helping our users avoid common pitfalls and make choices that truly suit their needs. Because for us, a great rental experience starts with knowledge, not just keys.
+
+### Data Sources
+- Reddit: r/UniUK, r/LegalAdviceUK, r/StudentHousingUK, r/CasualUK
+- The Student Room (TSR)
+- Quora UK Student Housing Threads
+- Trustpilot & Google Reviews (for large providers: Unite Students, Student Roost, iQ, etc.)
+- Timeframe: Complaints from Jan 2022 – July 2025
+
+### Up Next
+In our next post, we will examine the other side of the coin to highlight the challenges that landlords and agents who own and manage student housing face. Stay tuned.
+
+
 
 `,
     tags: ["PropTech", "Innovation", "Digital Transformation"],
