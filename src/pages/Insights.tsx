@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { NewsPost } from '../types/content/NewsPost';
 import { getAllPosts } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SEO from '../components/SEO';

@@ -443,7 +443,80 @@ If you’re part of a housing association, local authority, or real estate netwo
 `,
     tags: ["HumanFirstHousing", "TechMeetsHome", "EmpathyInRealEstate", "SmartRenting", "RealEstateReimagined"],
     readingTime: "3 min read"
-  }
+  },
+  {
+    id: 'The State of Student Housing in the UK (2022–2025)',
+    title: "The State of Student Housing in the UK (2022–2025)",
+    slug: "the-state-of-student-housing-in-the-uk-2022-2025",
+    category: "Industry News",
+    date: "2025/08/07",
+    description: "In 2024, UK emissions fell 4% to 371 MtCO₂e—but it’s still far from the 68% cut promised under the Paris Agreement.",
+    image: "/images/realistic-image-of-a-clean-and-green-urban.png",
+    author: {
+      name: "Seye Jimo",
+      role: "Head of Product",
+      avatar: "/images/team/seye-jimoh- headshot.png"
+    },
+    content: `
+
+Accommodation challenges in the UK are becoming increasingly severe, as demand continues to outpace supply and it's anyone's guess how deep the crisis will go. Unfortunately, student housing is no exception. In fact, it’s one of the areas feeling the pressure the most. To understand the reality on the ground, we explored various online platforms where students openly share their experiences. Focusing on posts from 2022 to 2025, we gathered a wide range of complaints and what we found paints a revealing picture for students to be aware of and opportunities for investors. 
+
+
+## Housing Types & Unique Issues
+The different housing types pose different types of issues. Here’s a breakdown of the pros and common complaints students have made about each type.
+
+### Purpose-Built Student Accommodation (PBSA)
+
+| Pros | Complaints |
+|:-----|:-----------|
+| All-in-one facilities | Excessive fire alarms (“3am every Thursday”) |
+| On-site security      | Poor maintenance response (“reported broken heater 3x”) |
+| Communal spaces       | Loud partying, no quiet hours             |
+| Modern interiors      | Rent hikes during renewal (“£70/month more, same room”) |
+
+
+
+### University-Owned Halls
+
+| Pros | Complaints |
+|:-----|:-----------|
+| All-in-one facilities| Excessive fire alarms (“3am every Thursday”)    |
+| On-site security     | Poor maintenance response (“reported broken heater 3x”) |
+| Communal spaces      | Loud partying, no quiet hours                   |
+| Modern interiors     | Rent hikes during renewal (“£70/month more, same room”) |
+
+### Private Rented Houses (HMOs)
+
+| Pros | Complaints |
+|:-----|:-----------|
+| Cheaper than PBSA    | Mold, mice, non-refunded deposits          |
+| More independence    | Landlords entering without notice ("my landlord just walked in!") |
+| Flexible options     | No repairs done on time, heating issues    |
+
+![Alt text description](/images/frequency-student-housing.png)
+
+###  
+Smart meters and environmental sensors are no longer novelties they’re necessities. They give landlords and building managers instant visibility into how energy is used, where it’s wasted, and what needs fixing. From tweaking HVAC systems to spotting poor insulation, data is doing a better job than guesswork ever could.
+**Example: [Arbnco](https://www.arbnco.com/)**
+
+### 2.  Digital Twins
+Though still emerging in mainstream UK construction, digital twins are digital replicas of buildings that can simulate how design changes or upgrades will affect performance before a single brick is moved. This means fewer costly mistakes on site and lower carbon footprints.
+**Example: [Willow](https://www.willowinc.com/)**
+
+### 3.  Predictive Maintenance and Automation
+When systems fail, they often do so inefficiently. With predictive tools, building operators can spot trouble before it snowballs—reducing energy waste and the need for high-emission emergency repairs or replacements.
+**Example: [Facilio](https://facilio.com/),[Planon(https://planonsoftware.com/)**
+
+### 4.  Building Performance and ESG Reporting
+More tenants and investors now expect transparency on sustainability. PropTech platforms that track and report on carbon metrics help create a more climate-conscious marketplace—and put pressure on underperforming properties to step up.
+**Example: [Measurabl](https://www.measurabl.com/)**
+
+We don’t need to wait for futuristic cities to start cutting emissions. The tech is already here ready to retrofit, ready to monitor, ready to optimise. PropTech may not be the only answer to the climate crisis, but when it comes to decarbonising our buildings, it's one of the smartest tools we’ve got.
+
+`,
+    tags: ["PropTech", "Innovation", "Digital Transformation"],
+    readingTime: "6 min read"
+  },
 ];
 
 export async function getAllPosts(): Promise<NewsPost[]> {

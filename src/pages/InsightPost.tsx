@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { NewsPost } from '../types/content/NewsPost';
 import { getPostBySlug } from '../utils/newsLoader';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ArrowLeft, Twitter, Facebook, Linkedin, MessageCircle, Link as LinkIcon } from 'lucide-react';
 import CommentSection from '../components/comments/CommentSection';
 import SEO from '../components/SEO';
@@ -211,7 +212,7 @@ export default function InsightPost() {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
           </div>
 
           {/* Back to Insights button aligned left, just above tags */}
