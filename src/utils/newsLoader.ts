@@ -561,7 +561,7 @@ In our next post, we will examine the other side of the coin to highlight the ch
     description: "This post provides essential financial tips for UK university students, helping them navigate their finances effectively during their studies.",
     image: "/images/diverse_students.png",
     author: {
-      name: "Blouwatife Oyinloye",
+      name: "Boluwatife Oyinloye",
       role: "UX Strategist",
       avatar: "/images/team/blouwatife-oyinloye-headshot.png"
     },
@@ -679,12 +679,14 @@ Student life doesn’t have to mean constant financial stress. With a bit of pla
 
 Try one or two of these tips this week, and you’ll already be moving towards a healthier financial future.
 
-##FAQs
+## FAQs
 
 **Q: How much does the average UK student spend weekly?**
  On average, students spend between £200–£250 per week, depending on rent, travel, and lifestyle choices.
+
 **Q: What’s the cheapest supermarket for students in the UK?**
  Aldi and Lidl are usually the cheapest, but Tesco and ASDA offer good value if you use loyalty cards.
+ 
 **Q: Which student bank account is best in 2025?**
  It depends on your needs, Santander is great for travel (free railcard), while NatWest offers popular lifestyle perks. Always compare overdraft limits too.
 
