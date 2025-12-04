@@ -225,8 +225,8 @@ export default function Solutions() {
             ))}
           </div>
 
-          <button className="px-6 sm:px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center mx-auto text-base sm:text-lg min-h-[44px]">
-            Get Started Today <ArrowRight className="ml-2 h-5 w-5" />
+          <button className="group px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 flex items-center mx-auto text-base sm:text-lg min-h-[44px]">
+            Get Started Today <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>
       </section>

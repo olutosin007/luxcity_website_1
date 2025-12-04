@@ -32,6 +32,7 @@ export default function Navigation() {
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link to="/" className={`${isActive('/')} transition-colors duration-200`}>Home</Link>
             <Link to="/solutions" className={`${isActive('/solutions')} transition-colors duration-200`}>Solutions</Link>
             <Link to="/labs" className={`${isActive('/labs')} transition-colors duration-200`}>Labs</Link>
             <Link to="/insights" className={`${isActive('/insights')} transition-colors duration-200`}>Insights</Link>
@@ -44,6 +45,16 @@ export default function Navigation() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+              <Link 
+                to="/" 
+                className={`${isActive('/')} block px-3 py-3 sm:py-4 text-base font-medium transition-colors duration-200`}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Home
+              </Link>
               <Link 
                 to="/solutions" 
                 className={`${isActive('/solutions')} block px-3 py-3 sm:py-4 text-base font-medium transition-colors duration-200`}

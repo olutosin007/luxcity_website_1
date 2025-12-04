@@ -14,9 +14,11 @@ export default function Labs() {
     {
       title: "AI Property Matchmaker",
       status: "Alpha Testing",
-      description: "Using neural networks to match buyers with their ideal properties based on behavioral patterns and preferences.",
+      description: ["Proptii is an AI-driven platform built to make real estate simpler, clearer, and more accessible for everyone. We use the power of artificial intelligence combined with real, practical insight into the property market to give tenants, landlords, and agents the information they need without the confusion or guesswork.", "With Proptii, everything is designed to be straightforward and convenient: smarter recommendations, faster processes, and transparent guidance that helps you make confident decisions at every step."],
       progress: 75,
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800&h=400"
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800&h=400",
+      link: "https://proptii-r1-1a-new.onrender.com/",
+      buttonText: "View product"
     },
     {
       title: "Virtual Property Staging",
@@ -72,7 +74,15 @@ export default function Labs() {
                         {experiment.status}
                       </span>
                     </div>
-                    <p className="text-gray-600">{experiment.description}</p>
+                    {Array.isArray(experiment.description) ? (
+                      <div className="space-y-3">
+                        {experiment.description.map((para, idx) => (
+                          <p key={idx} className="text-gray-600">{para}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-600">{experiment.description}</p>
+                    )}
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="text-gray-600">Development Progress</span>
@@ -85,9 +95,20 @@ export default function Labs() {
                         ></div>
                       </div>
                     </div>
-                    <button className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-                      Learn More <ArrowRight className="ml-2 h-5 w-5" />
-                    </button>
+                    {experiment.link ? (
+                      <a 
+                        href={experiment.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                      >
+                        {experiment.buttonText || "Learn More"} <ArrowRight className="ml-2 h-5 w-5" />
+                      </a>
+                    ) : (
+                      <button className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        Learn More <ArrowRight className="ml-2 h-5 w-5" />
+                      </button>
+                    )}
                   </div>
                   <div className="relative h-64 lg:h-auto">
                     <img

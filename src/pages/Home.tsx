@@ -141,13 +141,17 @@ export default function Home() {
               }
             ].map((feature, index) => (
               <div key={index} className="group">
-                <div className="overflow-hidden rounded-2xl mb-4 aspect-[4/3]">
+                <Link 
+                  to={feature.link}
+                  className="block overflow-hidden rounded-2xl mb-4 aspect-[4/3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DC5F12]"
+                >
+                  <span className="sr-only">View {feature.title}</span>
                   <img 
                     src={feature.image} 
                     alt={feature.title}
                     className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
                   />
-                </div>
+                </Link>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-gray-600">
                   {feature.description}{' '}

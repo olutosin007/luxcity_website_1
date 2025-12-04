@@ -11,6 +11,7 @@ import InsightPost from './pages/InsightPost';
 import InsightsManager from './pages/admin/InsightsManager';
 import Contact from './pages/Contact';
 import Sitemap from './pages/Sitemap';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                       <Route path="/admin/insights" element={<InsightsManager />} />
           <Route path="/company" element={<Company />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
           </Routes>
         </main>

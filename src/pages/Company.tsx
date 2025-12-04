@@ -1,14 +1,19 @@
-import { ArrowRight } from 'lucide-react';
-import { useRef, useEffect } from 'react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
 
 export default function Company() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.play();
     }
   }, []);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
   const values = [
     {
@@ -22,6 +27,33 @@ export default function Company() {
     {
       title: "Future-Ready",
       description: "We build solutions that anticipate and adapt to future market needs."
+    }
+  ];
+
+  const faqs = [
+    {
+      question: "What services does Luxcity offer?",
+      answer: "Luxcity offers a range of AI-powered real estate solutions including AI-Powered Home Search, Predictive Market Insights, and Virtual Agents & Assistants. Our technology helps streamline property transactions, provide data-driven insights, and enhance the overall real estate experience for tenants, landlords, and agents."
+    },
+    {
+      question: "How does AI technology improve real estate processes?",
+      answer: "Our AI technology automates workflows, provides intelligent property matching based on behavioral patterns, offers predictive analytics for market trends and pricing, and delivers 24/7 virtual assistance. This reduces manual work, speeds up decision-making, and helps users make more informed choices."
+    },
+    {
+      question: "Who can benefit from Luxcity's solutions?",
+      answer: "Our solutions are designed for a wide range of users including tenants looking for their ideal rental property, landlords managing their portfolios, real estate agents seeking to improve their services, and property investors needing market insights. We make real estate simpler and more accessible for everyone."
+    },
+    {
+      question: "Is Luxcity's technology secure and reliable?",
+      answer: "Yes, security and reliability are paramount to us. We use industry-standard security practices to protect user data and ensure our platforms are robust and dependable. Our solutions are built with enterprise-grade infrastructure to handle high volumes of transactions securely."
+    },
+    {
+      question: "How can I get started with Luxcity?",
+      answer: "You can get started by contacting us through our contact form, calling us at +44 (0) 203 189 1276, or emailing us at contactus@theluxcity.co.uk. Our team will work with you to understand your needs and recommend the best solutions for your specific requirements."
+    },
+    {
+      question: "Does Luxcity offer custom solutions for businesses?",
+      answer: "Yes, we work with businesses of all sizes to develop custom AI solutions tailored to their specific needs. Whether you're a property management company, a real estate agency, or a property developer, we can create bespoke solutions that integrate with your existing systems and workflows."
     }
   ];
 
@@ -85,6 +117,37 @@ export default function Company() {
                 <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
                   <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
                   <p className="text-gray-600">{value.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mb-24">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                  <button
+                    onClick={() => toggleFaq(index)}
+                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <span className="font-semibold text-gray-900 pr-4">{faq.question}</span>
+                    <ChevronDown
+                      className={`h-5 w-5 text-gray-600 flex-shrink-0 transition-transform duration-200 ${
+                        openFaq === index ? 'transform rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="px-6 pb-4 text-gray-600">
+                      {faq.answer}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

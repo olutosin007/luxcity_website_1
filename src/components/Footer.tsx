@@ -52,11 +52,22 @@ export default function Footer() {
             <div>
               <h3 className="text-lg font-semibold text-white mb-4">Get in touch</h3>
               <a 
-                href="mailto:contactus@luxcity.onmicrosoft.com" 
+                href="mailto:contactus@theluxcity.co.uk" 
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                contactus@luxcity.onmicrosoft.com
+                contactus@theluxcity.co.uk
               </a>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">Legal</h3>
+              <nav className="space-y-2">
+                <div>
+                  <Link to="/privacy-policy" className="text-gray-300 hover:text-white transition-colors text-sm">
+                    Privacy Policy
+                  </Link>
+                </div>
+              </nav>
             </div>
 
             <div>

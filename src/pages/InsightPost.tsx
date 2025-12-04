@@ -219,9 +219,9 @@ export default function InsightPost() {
           <div className="mt-12">
             <button
               onClick={() => navigate('/insights')}
-              className="flex items-center text-gray-600 hover:text-gray-900 text-sm font-medium"
+              className="group px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 flex items-center text-base sm:text-lg min-h-[44px]"
             >
-              <ArrowLeft className="h-5 w-5 mr-2" />
+              <ArrowLeft className="h-5 w-5 mr-2 transition-transform duration-300 group-hover:-translate-x-1" />
               Back to Insights
             </button>
           </div>

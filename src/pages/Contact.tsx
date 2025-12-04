@@ -1,6 +1,18 @@
 import React, { useState, useRef } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 
+interface FormErrors {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  companyName?: string;
+  interest?: string;
+  timeline?: string;
+  message?: string;
+  howDidYouHear?: string;
+}
+
 export default function Contact() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [formData, setFormData] = useState({
@@ -14,18 +26,196 @@ export default function Contact() {
     message: '',
     howDidYouHear: ''
   });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'firstName':
+        if (!value.trim()) {
+          return 'First name is required';
+        }
+        if (value.trim().length < 2) {
+          return 'First name must be at least 2 characters';
+        }
+        if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) {
+          return 'First name can only contain letters, spaces, hyphens, and apostrophes';
+        }
+        return '';
+      
+      case 'lastName':
+        if (!value.trim()) {
+          return 'Last name is required';
+        }
+        if (value.trim().length < 2) {
+          return 'Last name must be at least 2 characters';
+        }
+        if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) {
+          return 'Last name can only contain letters, spaces, hyphens, and apostrophes';
+        }
+        return '';
+      
+      case 'email':
+        if (!value.trim()) {
+          return 'Email is required';
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value.trim())) {
+          return 'Please enter a valid email address';
+        }
+        return '';
+      
+      case 'phone':
+        if (value.trim() && !/^[\d\s\-\+\(\)]+$/.test(value.trim())) {
+          return 'Please enter a valid phone number';
+        }
+        return '';
+      
+      case 'companyName':
+        if (!value.trim()) {
+          return 'Company name is required';
+        }
+        if (value.trim().length < 2) {
+          return 'Company name must be at least 2 characters';
+        }
+        return '';
+      
+      case 'interest':
+        if (!value) {
+          return 'Please select a product';
+        }
+        return '';
+      
+      case 'timeline':
+        if (!value) {
+          return 'Please select a timeline';
+        }
+        return '';
+      
+      case 'message':
+        if (!value.trim()) {
+          return 'Message is required';
+        }
+        if (value.trim().length < 10) {
+          return 'Message must be at least 10 characters';
+        }
+        return '';
+      
+      case 'howDidYouHear':
+        if (!value) {
+          return 'Please select how you heard about us';
+        }
+        return '';
+      
+      default:
+        return '';
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+    let isValid = true;
+
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key as keyof typeof formData]);
+      if (error) {
+        newErrors[key as keyof FormErrors] = error;
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error || undefined }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission to Azure backend
-    console.log('Form submitted:', formData);
+    
+    // Mark all fields as touched
+    const allTouched: Record<string, boolean> = {};
+    Object.keys(formData).forEach(key => {
+      allTouched[key] = true;
+    });
+    setTouched(allTouched);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      // Success
+      setSubmitStatus({ 
+        type: 'success', 
+        message: 'Thank you! Your message has been sent successfully. We\'ll get back to you soon.' 
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        companyName: '',
+        interest: '',
+        timeline: '',
+        message: '',
+        howDidYouHear: ''
+      });
+      setErrors({});
+      setTouched({});
+
+      // Scroll to top to show success message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (error: any) {
+      setSubmitStatus({ 
+        type: 'error', 
+        message: error.message || 'Something went wrong. Please try again later or contact us directly.' 
+      });
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
+    
+    // Validate on change if field has been touched
+    if (touched[name]) {
+      const error = validateField(name, value);
+      setErrors(prev => ({ ...prev, [name]: error || undefined }));
+    }
   };
 
   return (
@@ -81,7 +271,7 @@ export default function Contact() {
                   <Mail className="h-6 w-6 text-[#DC5F12] mt-1" />
                   <div className="ml-4">
                     <h3 className="font-semibold text-gray-900">Email us</h3>
-                    <p className="mt-1 text-gray-600">contactus@luxcity.onmicrosoft.com</p>
+                    <p className="mt-1 text-gray-600">contactus@theluxcity.co.uk</p>
                   </div>
                 </div>
 
@@ -101,6 +291,19 @@ export default function Contact() {
 
             {/* Contact Form */}
             <div className="lg:col-span-2">
+              {/* Success/Error Messages */}
+              {submitStatus.type && (
+                <div
+                  className={`mb-6 p-4 rounded-lg ${
+                    submitStatus.type === 'success'
+                      ? 'bg-green-50 border border-green-200 text-green-800'
+                      : 'bg-red-50 border border-red-200 text-red-800'
+                  }`}
+                >
+                  <p className="font-medium">{submitStatus.message}</p>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
@@ -114,8 +317,16 @@ export default function Contact() {
                       required
                       value={formData.firstName}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                      onBlur={handleBlur}
+                      className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                        errors.firstName && touched.firstName
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-gray-300'
+                      }`}
                     />
+                    {errors.firstName && touched.firstName && (
+                      <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
+                    )}
                   </div>
 
                   <div>
@@ -129,8 +340,16 @@ export default function Contact() {
                       required
                       value={formData.lastName}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                      onBlur={handleBlur}
+                      className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                        errors.lastName && touched.lastName
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-gray-300'
+                      }`}
                     />
+                    {errors.lastName && touched.lastName && (
+                      <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
+                    )}
                   </div>
                 </div>
 
@@ -146,8 +365,16 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                      onBlur={handleBlur}
+                      className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                        errors.email && touched.email
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-gray-300'
+                      }`}
                     />
+                    {errors.email && touched.email && (
+                      <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                    )}
                   </div>
 
                   <div>
@@ -160,8 +387,16 @@ export default function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                      onBlur={handleBlur}
+                      className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                        errors.phone && touched.phone
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-gray-300'
+                      }`}
                     />
+                    {errors.phone && touched.phone && (
+                      <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+                    )}
                   </div>
                 </div>
 
@@ -176,8 +411,16 @@ export default function Contact() {
                     required
                     value={formData.companyName}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                    onBlur={handleBlur}
+                    className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                      errors.companyName && touched.companyName
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
                   />
+                  {errors.companyName && touched.companyName && (
+                    <p className="mt-1 text-sm text-red-600">{errors.companyName}</p>
+                  )}
                 </div>
 
                 <div>
@@ -190,7 +433,12 @@ export default function Contact() {
                     required
                     value={formData.interest}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                    onBlur={handleBlur}
+                    className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                      errors.interest && touched.interest
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
                   >
                     <option value="">Please Select</option>
                     <option value="ai-search">AI-Powered Home Search</option>
@@ -198,6 +446,9 @@ export default function Contact() {
                     <option value="virtual-agents">Virtual Agents & Assistants</option>
                     <option value="other">Other</option>
                   </select>
+                  {errors.interest && touched.interest && (
+                    <p className="mt-1 text-sm text-red-600">{errors.interest}</p>
+                  )}
                 </div>
 
                 <div>
@@ -210,7 +461,12 @@ export default function Contact() {
                     required
                     value={formData.timeline}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                    onBlur={handleBlur}
+                    className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                      errors.timeline && touched.timeline
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
                   >
                     <option value="">Please Select</option>
                     <option value="immediate">Immediate</option>
@@ -219,6 +475,9 @@ export default function Contact() {
                     <option value="6-12-months">6-12 months</option>
                     <option value="12-months-plus">12+ months</option>
                   </select>
+                  {errors.timeline && touched.timeline && (
+                    <p className="mt-1 text-sm text-red-600">{errors.timeline}</p>
+                  )}
                 </div>
 
                 <div>
@@ -232,8 +491,16 @@ export default function Contact() {
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                    onBlur={handleBlur}
+                    className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                      errors.message && touched.message
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
                   ></textarea>
+                  {errors.message && touched.message && (
+                    <p className="mt-1 text-sm text-red-600">{errors.message}</p>
+                  )}
                 </div>
 
                 <div>
@@ -246,7 +513,12 @@ export default function Contact() {
                     required
                     value={formData.howDidYouHear}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200"
+                    onBlur={handleBlur}
+                    className={`mt-1 block w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-[#DC5F12] focus:border-transparent transition-colors duration-200 ${
+                      errors.howDidYouHear && touched.howDidYouHear
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
                   >
                     <option value="">Please Select</option>
                     <option value="search">Search Engine</option>
@@ -255,6 +527,9 @@ export default function Contact() {
                     <option value="event">Event</option>
                     <option value="other">Other</option>
                   </select>
+                  {errors.howDidYouHear && touched.howDidYouHear && (
+                    <p className="mt-1 text-sm text-red-600">{errors.howDidYouHear}</p>
+                  )}
                 </div>
 
                 <div className="flex items-start">
@@ -277,9 +552,24 @@ export default function Contact() {
                 <div>
                   <button
                     type="submit"
-                    className="w-full px-8 py-4 bg-[#DC5F12] text-white rounded-xl hover:bg-[#c45510] transition-all duration-300 flex items-center justify-center"
+                    disabled={isSubmitting}
+                    className={`w-full px-8 py-4 bg-[#DC5F12] text-white rounded-xl transition-all duration-300 flex items-center justify-center ${
+                      isSubmitting
+                        ? 'opacity-50 cursor-not-allowed'
+                        : 'hover:bg-[#c45510]'
+                    }`}
                   >
-                    Send message
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      'Send message'
+                    )}
                   </button>
                 </div>
               </form>
