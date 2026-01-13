@@ -93,21 +93,26 @@ export default function Solutions() {
             <div className="space-y-6 sm:space-y-8">
               <div>
                 <h2 className="text-[32px] sm:text-[36px] md:text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4 sm:mb-6">
-                  AI-Powered Home Search
+                  Proptii
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                  Our AI-Powered Home Search revolutionizes the way you find your ideal property. Leveraging advanced algorithms and real-time insights, we simplify your search process, delivering tailored results in seconds.
+                  Proptii is an AI-driven platform built to make real estate simpler, clearer, and more accessible for everyone. We use the power of artificial intelligence combined with real, practical insight into the property market to give tenants, landlords, and agents the information they need without the confusion or guesswork.
                 </p>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
-                  Start your journey to your dream home today.
+                  With Proptii, everything is designed to be straightforward and convenient: smarter recommendations, faster processes, and transparent guidance that helps you make confident decisions at every step.
                 </p>
               </div>
 
               <div className="pt-2 sm:pt-4">
-                <button className="group px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 flex items-center text-base sm:text-lg min-h-[44px]">
-                  Contact Us 
+                <a 
+                  href="https://proptii-r1-1a-new.onrender.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 items-center text-base sm:text-lg min-h-[44px]"
+                >
+                  View product 
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                </a>
               </div>
             </div>
 
@@ -124,15 +129,15 @@ export default function Solutions() {
         </div>
       </section>
 
-      {/* Predictive Market Insights Section */}
-      <section id="market-insights-section" className="min-h-[100vh] sm:min-h-[100vh] md:h-[672px] bg-[#F6F5F4] py-16 sm:py-12 md:py-0 flex items-center">
+      {/* Nest Quest Section */}
+      <section id="nest-quest-section" className="min-h-[100vh] sm:min-h-[100vh] md:h-[672px] bg-[#F6F5F4] py-16 sm:py-12 md:py-0 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-12 lg:gap-16 items-center">
             {/* Left Column - Image */}
             <div className="relative h-[300px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden bg-gray-100 order-2 lg:order-1">
               <img
                 src="/images/Person-using-smartphone.jpg"
-                alt="Person analyzing market insights"
+                alt="Nest Quest student property platform"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-indigo-900/40 to-blue-900/40"></div>
@@ -142,48 +147,53 @@ export default function Solutions() {
             <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
               <div>
                 <h2 className="text-[32px] sm:text-[36px] md:text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4 sm:mb-6">
-                  Predictive Market Insights
+                  Nest Quest
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                  Our Predictive Market Insights use AI analytics to reveal real estate trends, pricing, and opportunities. By analyzing data and market shifts, we empower you to make confident, informed decisions.
+                  A property matchmaker platform specifically designed for students, helping them find the perfect accommodation that matches their needs, budget, and lifestyle. Nest Quest simplifies the search process with intelligent matching algorithms tailored to student requirements.
                 </p>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
-                  Gain the edge you need to make smarter property decisions today.
+                  Find your perfect student accommodation today.
                 </p>
               </div>
 
               <div className="pt-2 sm:pt-4">
-                <button className="group px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 flex items-center text-base sm:text-lg min-h-[44px]">
-                  Contact Us 
+                <a 
+                  href="https://nest-quest-npp3.onrender.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 items-center text-base sm:text-lg min-h-[44px]"
+                >
+                  View product 
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Virtual Agents and Assistants Section */}
-      <section id="virtual-agents-section" className="min-h-[100vh] sm:min-h-[100vh] md:h-[672px] bg-white py-16 sm:py-12 md:py-0 flex items-center">
+      {/* Council Connect Section */}
+      <section id="council-connect-section" className="min-h-[100vh] sm:min-h-[100vh] md:h-[672px] bg-white py-16 sm:py-12 md:py-0 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-12 lg:gap-16 items-center">
             {/* Left Column - Text Content */}
             <div className="space-y-6 sm:space-y-8">
               <div>
                 <h2 className="text-[32px] sm:text-[36px] md:text-[42px] font-archivo font-bold text-[#2F7DB0] mb-4 sm:mb-6">
-                  Virtual Agents and Assistants
+                  Council Connect
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                  Our Virtual Agents and Assistants use advanced AI to seamlessly handle a wide range of complex requests, from answering queries to streamlining tasks. Whether you need support with property searches or transaction management, they're here to help.
+                  A comprehensive platform that connects government agencies with landlords and agents to streamline the provision of properties for council housing. Council Connect facilitates efficient communication, property management, and allocation processes to help councils meet housing needs more effectively.
                 </p>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
-                  Experience the future of real estate assistance today.
+                  Streamline council housing provision today.
                 </p>
               </div>
 
               <div className="pt-2 sm:pt-4">
                 <button className="group px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 flex items-center text-base sm:text-lg min-h-[44px]">
-                  Contact Us 
+                  View product 
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
@@ -193,7 +203,7 @@ export default function Solutions() {
             <div className="relative h-[300px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden bg-gray-100">
               <img
                 src="/images/Robotic_Person.jpg"
-                alt="AI virtual assistant interface"
+                alt="Council Connect platform"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-indigo-900/40 to-blue-900/40"></div>
