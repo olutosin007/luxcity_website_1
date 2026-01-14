@@ -15,7 +15,7 @@ export default function Labs() {
       title: "Proptii",
       status: "Beta",
       description: ["Proptii is an AI-driven platform built to make real estate simpler, clearer, and more accessible for everyone. We use the power of artificial intelligence combined with real, practical insight into the property market to give tenants, landlords, and agents the information they need without the confusion or guesswork.", "With Proptii, everything is designed to be straightforward and convenient: smarter recommendations, faster processes, and transparent guidance that helps you make confident decisions at every step."],
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800&h=400",
+      image: "/images/proptii_cover.png",
       link: "https://proptii-r1-1a-new.onrender.com/",
       buttonText: "View product"
     },
@@ -23,7 +23,7 @@ export default function Labs() {
       title: "Nest Quest",
       status: "In Development",
       description: "A property matchmaker platform specifically designed for students, helping them find the perfect accommodation that matches their needs, budget, and lifestyle. Nest Quest simplifies the search process with intelligent matching algorithms tailored to student requirements.",
-      image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800&h=400",
+      image: "/images/nest_quest cover image.png",
       link: "https://nest-quest-npp3.onrender.com/",
       buttonText: "View product"
     },
@@ -31,7 +31,7 @@ export default function Labs() {
       title: "Council Connect",
       status: "In Development",
       description: "A comprehensive platform that connects government agencies with landlords and agents to streamline the provision of properties for council housing. Council Connect facilitates efficient communication, property management, and allocation processes to help councils meet housing needs more effectively.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800&h=400"
+      image: "/images/council_connect cover.png"
     }
   ];
 
@@ -108,7 +108,7 @@ export default function Labs() {
                     <img
                       src={experiment.image}
                       alt={experiment.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className={`absolute inset-0 w-full h-full object-cover ${experiment.title === "Council Connect" ? "object-top" : ""}`}
                     />
                   </div>
                 </div>
