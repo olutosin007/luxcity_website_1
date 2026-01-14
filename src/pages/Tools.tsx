@@ -140,29 +140,28 @@ export default function Tools() {
               );
             })}
           </div>
-        </div>
 
-        {/* SEO Content Section */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
-          <div className="prose prose-lg max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Free UK Rental Application Tools</h2>
-            <p className="text-lg text-gray-700 mb-4">
-              Navigating the UK rental application process can be challenging, especially when applying to multiple properties. Our free rental application tools help you prepare, organize, and understand every step of the rental process.
-            </p>
-            <p className="text-lg text-gray-700 mb-4">
-              Whether you're a first-time renter or have experience with UK property rentals, these tools provide valuable insights into what letting agents check, what documents you need, and how long the rental application process typically takes.
-            </p>
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Why Use These Rental Tools?</h3>
-            <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4">
-              <li><strong>Save Time:</strong> Prepare all your rental documents and information before applying to properties</li>
-              <li><strong>Stay Organized:</strong> Track multiple property viewings and applications in one place</li>
-              <li><strong>Understand the Process:</strong> Learn what happens behind the scenes during rental applications</li>
-              <li><strong>Set Realistic Expectations:</strong> Get accurate timeline estimates based on your situation</li>
-              <li><strong>No Signup Required:</strong> All tools are free to use without creating an account</li>
-            </ul>
-            <p className="text-lg text-gray-700">
-              These rental application tools are designed to help UK renters navigate the property rental market more effectively. Use them to prepare for your rental applications, track your progress, and understand the rental process from application to decision.
-            </p>
+          {/* SEO Content Section */}
+          <div className="mt-16 mb-16">
+            <div className="prose prose-lg max-w-none text-left">
+              <p className="text-lg text-gray-700 mb-4 text-left">
+                Navigating the UK rental application process can be challenging, especially when applying to multiple properties. Our free rental application tools help you prepare, organize, and understand every step of the rental process.
+              </p>
+              <p className="text-lg text-gray-700 mb-4 text-left">
+                Whether you're a first-time renter or have experience with UK property rentals, these tools provide valuable insights into what letting agents check, what documents you need, and how long the rental application process typically takes.
+              </p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4 text-left">Why Use These Rental Tools?</h3>
+              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4 text-left">
+                <li><strong>Save Time:</strong> Prepare all your rental documents and information before applying to properties</li>
+                <li><strong>Stay Organized:</strong> Track multiple property viewings and applications in one place</li>
+                <li><strong>Understand the Process:</strong> Learn what happens behind the scenes during rental applications</li>
+                <li><strong>Set Realistic Expectations:</strong> Get accurate timeline estimates based on your situation</li>
+                <li><strong>No Signup Required:</strong> All tools are free to use without creating an account</li>
+              </ul>
+              <p className="text-lg text-gray-700 text-left">
+                These rental application tools are designed to help UK renters navigate the property rental market more effectively. Use them to prepare for your rental applications, track your progress, and understand the rental process from application to decision.
+              </p>
+            </div>
           </div>
         </div>
       </div>
