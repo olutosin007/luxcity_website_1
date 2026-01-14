@@ -119,8 +119,8 @@ export default function Solutions() {
             {/* Right Column - Image */}
             <div className="relative h-[300px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden bg-gray-100">
               <img
-                src="/images/proptii_cover.png"
-                alt="Proptii AI-powered home search platform"
+                src="/images/london-home-01.jpg"
+                alt="London home exterior"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-indigo-900/40 to-blue-900/40"></div>
@@ -136,7 +136,7 @@ export default function Solutions() {
             {/* Left Column - Image */}
             <div className="relative h-[300px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden bg-gray-100 order-2 lg:order-1">
               <img
-                src="/images/nest_quest cover image.png"
+                src="/images/Person-using-smartphone.jpg"
                 alt="Nest Quest student property platform"
                 className="w-full h-full object-cover"
               />
@@ -202,9 +202,9 @@ export default function Solutions() {
             {/* Right Column - Image */}
             <div className="relative h-[300px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden bg-gray-100">
               <img
-                src="/images/council_connect cover.png"
+                src="/images/Robotic_Person.jpg"
                 alt="Council Connect platform"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-indigo-900/40 to-blue-900/40"></div>
             </div>
