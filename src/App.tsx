@@ -12,6 +12,12 @@ import InsightsManager from './pages/admin/InsightsManager';
 import Contact from './pages/Contact';
 import Sitemap from './pages/Sitemap';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Tools from './pages/Tools';
+import ReadinessChecker from './pages/tools/ReadinessChecker';
+import DocumentTracker from './pages/tools/DocumentTracker';
+import ViewingTracker from './pages/tools/ViewingTracker';
+import ProcessSimulator from './pages/tools/ProcessSimulator';
+import TimelineGenerator from './pages/tools/TimelineGenerator';
 
 function App() {
   return (
@@ -28,6 +34,12 @@ function App() {
                       <Route path="/admin/insights" element={<InsightsManager />} />
           <Route path="/company" element={<Company />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/tools/readiness-checker" element={<ReadinessChecker />} />
+          <Route path="/tools/document-tracker" element={<DocumentTracker />} />
+          <Route path="/tools/viewing-tracker" element={<ViewingTracker />} />
+          <Route path="/tools/process-simulator" element={<ProcessSimulator />} />
+          <Route path="/tools/timeline-generator" element={<TimelineGenerator />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
           </Routes>
