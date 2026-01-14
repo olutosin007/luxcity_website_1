@@ -8,13 +8,21 @@ export async function getSitemapXML(): Promise<string> {
   } catch (error) {
     console.error('Error generating sitemap:', error);
     // Return a basic sitemap with static pages only
+    const currentDate = new Date().toISOString().split('T')[0];
     const staticUrls = [
-      { url: 'https://luxcity.com/', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly' as const, priority: 1.0 },
-      { url: 'https://luxcity.com/solutions', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly' as const, priority: 0.8 },
-      { url: 'https://luxcity.com/labs', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly' as const, priority: 0.8 },
-      { url: 'https://luxcity.com/insights', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily' as const, priority: 0.9 },
-      { url: 'https://luxcity.com/company', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly' as const, priority: 0.7 },
-      { url: 'https://luxcity.com/contact', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly' as const, priority: 0.6 }
+      { url: 'https://luxcity.tech/', lastmod: currentDate, changefreq: 'weekly' as const, priority: 1.0 },
+      { url: 'https://luxcity.tech/solutions', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.8 },
+      { url: 'https://luxcity.tech/labs', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.8 },
+      { url: 'https://luxcity.tech/insights', lastmod: currentDate, changefreq: 'daily' as const, priority: 0.9 },
+      { url: 'https://luxcity.tech/company', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.7 },
+      { url: 'https://luxcity.tech/contact', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.6 },
+      { url: 'https://luxcity.tech/tools', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.8 },
+      { url: 'https://luxcity.tech/tools/readiness-checker', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.7 },
+      { url: 'https://luxcity.tech/tools/document-tracker', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.7 },
+      { url: 'https://luxcity.tech/tools/viewing-tracker', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.7 },
+      { url: 'https://luxcity.tech/tools/process-simulator', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.7 },
+      { url: 'https://luxcity.tech/tools/timeline-generator', lastmod: currentDate, changefreq: 'monthly' as const, priority: 0.7 },
+      { url: 'https://luxcity.tech/privacy-policy', lastmod: currentDate, changefreq: 'yearly' as const, priority: 0.3 }
     ];
     return generateSitemapXML(staticUrls);
   }

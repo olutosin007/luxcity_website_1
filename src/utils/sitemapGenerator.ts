@@ -8,7 +8,7 @@ export interface SitemapUrl {
 }
 
 export async function generateSitemap(): Promise<SitemapUrl[]> {
-  const baseUrl = 'https://luxcity.com'; // Replace with your actual domain
+  const baseUrl = 'https://luxcity.tech'; // Replace with your actual domain
   const currentDate = new Date().toISOString().split('T')[0];
   
   // Static pages
@@ -48,6 +48,48 @@ export async function generateSitemap(): Promise<SitemapUrl[]> {
       lastmod: currentDate,
       changefreq: 'monthly',
       priority: 0.6
+    },
+    {
+      url: `${baseUrl}/tools`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.8
+    },
+    {
+      url: `${baseUrl}/tools/readiness-checker`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.7
+    },
+    {
+      url: `${baseUrl}/tools/document-tracker`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.7
+    },
+    {
+      url: `${baseUrl}/tools/viewing-tracker`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.7
+    },
+    {
+      url: `${baseUrl}/tools/process-simulator`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.7
+    },
+    {
+      url: `${baseUrl}/tools/timeline-generator`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.7
+    },
+    {
+      url: `${baseUrl}/privacy-policy`,
+      lastmod: currentDate,
+      changefreq: 'yearly',
+      priority: 0.3
     }
   ];
 
