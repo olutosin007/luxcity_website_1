@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowLeft, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../../components/SEO';
+import { jsPDF } from 'jspdf';
 
 export default function ReadinessChecker() {
   const [answers, setAnswers] = useState<Record<string, boolean | null>>({});
@@ -31,6 +32,71 @@ export default function ReadinessChecker() {
     if (percentage >= 75) setReadinessState('Mostly Ready');
     else if (percentage >= 50) setReadinessState('A Few Gaps');
     else setReadinessState('Needs Preparation');
+  };
+
+  const downloadChecklist = () => {
+    const doc = new jsPDF();
+    
+    // Set up styling
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    const maxWidth = pageWidth - (margin * 2);
+    let yPosition = margin + 20;
+
+    // Title
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Your Document Checklist', margin, yPosition);
+    yPosition += 15;
+
+    // Introduction text
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    const introText = 'To complete your referencing, have these documents ready for upload';
+    const introLines = doc.splitTextToSize(introText, maxWidth);
+    doc.text(introLines, margin, yPosition);
+    yPosition += 20;
+
+    // Checklist items
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    
+    const checklistItems = [
+      'Your passport or drivers license',
+      'Pay slips and employment contract',
+      'Your current residence utility bill',
+      '6 month\'s bank statement',
+      'Your guarantor\'s passport or drivers license'
+    ];
+
+    // Draw bullet points and text for each item
+    checklistItems.forEach((item) => {
+      // Check if we need a new page
+      if (yPosition > pageHeight - 30) {
+        doc.addPage();
+        yPosition = margin + 20;
+      }
+
+      // Add bullet point and item text
+      doc.setFont('helvetica', 'normal');
+      doc.text(`• ${item}`, margin, yPosition);
+      
+      yPosition += 12;
+    });
+
+    // Add footer with date
+    const date = new Date().toLocaleDateString('en-GB', { 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric' 
+    });
+    doc.setFontSize(10);
+    doc.setTextColor(128, 128, 128);
+    doc.text(`Generated on ${date}`, margin, pageHeight - 10);
+
+    // Save the PDF
+    doc.save('document-checklist.pdf');
   };
 
   return (
@@ -138,7 +204,10 @@ export default function ReadinessChecker() {
             <p className="text-gray-600 mb-6">
               This rental application readiness assessment doesn't decide your application outcome — it helps you prepare for what UK letting agents usually check during the rental application process.
             </p>
-            <button className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+            <button 
+              onClick={downloadChecklist}
+              className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            >
               <Download className="h-5 w-5 mr-2" />
               Download Checklist
             </button>
