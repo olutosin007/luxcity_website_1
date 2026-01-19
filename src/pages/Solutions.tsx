@@ -1,9 +1,19 @@
 import { ArrowRight, Brain, BarChart3, Users, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import InterestFormModal from '../components/InterestFormModal';
 
 export default function Solutions() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    productName: string;
+    productUrl: string;
+  }>({
+    isOpen: false,
+    productName: '',
+    productUrl: '',
+  });
 
   useEffect(() => {
     if (videoRef.current) {
@@ -104,15 +114,19 @@ export default function Solutions() {
               </div>
 
               <div className="pt-2 sm:pt-4">
-                <a 
-                  href="https://proptii-r1-1a-new.onrender.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => {
+                    setModalState({
+                      isOpen: true,
+                      productName: 'Proptii',
+                      productUrl: 'https://proptii-r1-1a-new.onrender.com/',
+                    });
+                  }}
                   className="group inline-flex px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 items-center text-base sm:text-lg min-h-[44px]"
                 >
                   View product 
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
+                </button>
               </div>
             </div>
 
@@ -158,15 +172,19 @@ export default function Solutions() {
               </div>
 
               <div className="pt-2 sm:pt-4">
-                <a 
-                  href="https://nest-quest-npp3.onrender.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => {
+                    setModalState({
+                      isOpen: true,
+                      productName: 'Nest Quest',
+                      productUrl: 'https://nest-quest-npp3.onrender.com/',
+                    });
+                  }}
                   className="group inline-flex px-6 sm:px-8 py-4 bg-white text-[#DC5F12] border-2 border-[#DC5F12] rounded-xl hover:bg-[#DC5F12] hover:text-white transition-all duration-300 items-center text-base sm:text-lg min-h-[44px]"
                 >
                   View product 
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -240,6 +258,14 @@ export default function Solutions() {
           </button>
         </div>
       </section>
+
+      {/* Interest Form Modal */}
+      <InterestFormModal
+        isOpen={modalState.isOpen}
+        onClose={() => setModalState({ isOpen: false, productName: '', productUrl: '' })}
+        productName={modalState.productName}
+        productUrl={modalState.productUrl}
+      />
     </div>
   );
 }

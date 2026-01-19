@@ -1,8 +1,18 @@
 import { ArrowRight } from 'lucide-react';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import InterestFormModal from '../components/InterestFormModal';
 
 export default function Labs() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    productName: string;
+    productUrl: string;
+  }>({
+    isOpen: false,
+    productName: '',
+    productUrl: '',
+  });
 
   useEffect(() => {
     if (videoRef.current) {
@@ -90,14 +100,18 @@ export default function Labs() {
                       <p className="text-gray-600">{experiment.description}</p>
                     )}
                     {experiment.link ? (
-                      <a 
-                        href={experiment.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => {
+                          setModalState({
+                            isOpen: true,
+                            productName: experiment.title,
+                            productUrl: experiment.link,
+                          });
+                        }}
                         className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
                       >
                         {experiment.buttonText || "Learn More"} <ArrowRight className="ml-2 h-5 w-5" />
-                      </a>
+                      </button>
                     ) : (
                       <button className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
                         Learn More <ArrowRight className="ml-2 h-5 w-5" />
@@ -117,6 +131,14 @@ export default function Labs() {
           </div>
         </div>
       </div>
+
+      {/* Interest Form Modal */}
+      <InterestFormModal
+        isOpen={modalState.isOpen}
+        onClose={() => setModalState({ isOpen: false, productName: '', productUrl: '' })}
+        productName={modalState.productName}
+        productUrl={modalState.productUrl}
+      />
     </div>
   );
 }
