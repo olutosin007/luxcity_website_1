@@ -34,11 +34,12 @@ export default function Footer() {
                   Labs
                 </Link>
               </div>
-              <div>
+              {/* Tools section temporarily hidden until tools are selected */}
+              {/* <div>
                 <Link to="/tools" className="text-gray-300 hover:text-white transition-colors">
                   Tools
                 </Link>
-              </div>
+              </div> */}
               <div>
                 <Link to="/insights" className="text-gray-300 hover:text-white transition-colors">
                   Insights

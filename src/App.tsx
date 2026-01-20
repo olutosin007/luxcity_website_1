@@ -35,13 +35,14 @@ function App() {
                       <Route path="/admin/insights" element={<InsightsManager />} />
           <Route path="/company" element={<Company />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/tools" element={<Tools />} />
+          {/* Tools section temporarily hidden until tools are selected */}
+          {/* <Route path="/tools" element={<Tools />} />
           <Route path="/tools/readiness-checker" element={<ReadinessChecker />} />
           <Route path="/tools/document-tracker" element={<DocumentTracker />} />
           <Route path="/tools/viewing-tracker" element={<ViewingTracker />} />
           <Route path="/tools/process-simulator" element={<ProcessSimulator />} />
           <Route path="/tools/timeline-generator" element={<TimelineGenerator />} />
-          <Route path="/tools/know-your-rights" element={<KnowYourRights />} />
+          <Route path="/tools/know-your-rights" element={<KnowYourRights />} /> */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
           </Routes>
