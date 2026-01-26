@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, CheckCircle, FileText, Calendar, HelpCircle, Clock, Download, Shield } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
 import RentalDocuments from './tools/RentalDocuments';
@@ -21,116 +21,82 @@ export default function Tools() {
 
   const tools = [
     {
-      id: 'readiness-checker',
-      title: 'Are You Ready to Apply?',
-      icon: CheckCircle,
-      description: 'Check what you\'re missing before agents do. Takes 2 minutes and shows what you need to prepare.',
-      link: '/tools/readiness-checker',
-      color: 'bg-blue-50 text-blue-600'
-    },
-    {
-      id: 'document-tracker',
-      title: 'Your Rental Documents',
-      icon: FileText,
-      description: 'Track what documents you already have. See the repetition before automation is introduced.',
-      link: '/tools/document-tracker',
-      color: 'bg-green-50 text-green-600'
-    },
-    {
-      id: 'viewing-tracker',
-      title: 'Track Your Property Viewings',
-      icon: Calendar,
-      description: 'When you\'re speaking to multiple agents, details get lost quickly. Keep everything in one place.',
-      link: '/tools/viewing-tracker',
+      id: 'ai-readiness-assessment',
+      title: 'AI Readiness Assessment',
+      icon: '/images/rediness checker icon.png',
+      description: 'Identify the best ways to use AI based on your growth journey. Get a personalized roadmap with ROI projections and case studies.',
+      link: '/tools/ai-readiness-assessment',
       color: 'bg-purple-50 text-purple-600'
     },
     {
-      id: 'process-simulator',
-      title: 'What Happens After You Apply?',
-      icon: HelpCircle,
-      description: 'Turn the black box into a clear system. Understand what usually takes place behind the scenes.',
-      link: '/tools/process-simulator',
-      color: 'bg-orange-50 text-orange-600'
+      id: 'regulatory-compliance-checker',
+      title: 'Regulatory Compliance Checker',
+      icon: '/images/compliance checker icon.png',
+      description: 'Ensure full compliance with UK property regulations. Clear checklist for rental, purchase, or current home properties.',
+      link: '/tools/regulatory-compliance-checker',
+      color: 'bg-red-50 text-red-600'
     },
     {
-      id: 'timeline-generator',
-      title: 'How Long Will This Take?',
-      icon: Clock,
-      description: 'Set realistic expectations. Get a realistic estimate based on your situation.',
-      link: '/tools/timeline-generator',
-      color: 'bg-indigo-50 text-indigo-600'
-    },
-    {
-      id: 'know-your-rights',
-      title: 'Know Your Rights',
-      icon: Shield,
-      description: 'Interactive guide to UK tenant rights and responsibilities. Based on the official DLUHC "How to Rent" guide.',
-      link: '/tools/know-your-rights',
-      color: 'bg-teal-50 text-teal-600'
+      id: 'roi-calculator-suite',
+      title: 'ROI Calculator Suite',
+      icon: '/images/roi calculator icon.png',
+      description: 'Calculate ROI for property improvements. Compare scenarios, analyze payback periods, and make data-driven investment decisions.',
+      link: '/tools/roi-calculator-suite',
+      color: 'bg-green-50 text-green-600'
     }
   ];
 
   return (
-    <div>
+    <div className="min-h-screen">
       <SEO
-        title="Free Rental Application Tools | UK Property Rental Tools - Luxcity"
-        description="Free UK rental application tools to help you navigate the property rental process. Check your readiness, track documents, manage viewings, understand tenant rights, and estimate timelines. Download official rental guides. No signup required."
+        title="B2B Property Tools | Free PropTech Assessment Tools - Luxcity"
+        description="Free B2B property tools for landlords, property managers, and real estate professionals. AI readiness assessment, regulatory compliance checker, and ROI calculator suite. Make data-driven property decisions."
         canonical="/tools"
         keywords={[
-          'rental application tools',
-          'UK rental tools',
-          'property rental tools',
-          'rental application checklist',
-          'rental document tracker',
-          'property viewing tracker',
-          'rental application process',
-          'rental timeline calculator',
-          'UK property rental',
-          'rental application help',
-          'letting agent tools',
-          'rental preparation tools',
-          'property application tools',
-          'rental readiness checker',
-          'rental documents UK',
-          'tenant rights UK',
-          'UK tenant rights guide',
-          'how to rent guide',
-          'rental application readiness',
-          'UK rental application process'
+          'B2B property tools',
+          'PropTech tools',
+          'property management tools',
+          'AI readiness assessment',
+          'property compliance checker',
+          'property ROI calculator',
+          'real estate tools',
+          'property investment tools',
+          'landlord tools',
+          'property manager tools',
+          'property assessment tools',
+          'UK property compliance',
+          'property ROI analysis',
+          'property technology assessment',
+          'real estate ROI calculator'
         ]}
         relatedTerms={[
-          'rental application process UK',
-          'how to apply for rental property',
-          'rental application documents',
-          'property viewing management',
-          'rental application timeline',
-          'UK rental market',
-          'rental property search',
-          'letting agent requirements',
-          'rental application checklist UK',
-          'property rental preparation',
-          'tenant rights and responsibilities',
-          'UK rental law',
-          'deposit protection UK',
-          'section 21 notice',
-          'right to rent check'
+          'property business tools',
+          'PropTech solutions',
+          'property management software',
+          'real estate technology',
+          'property investment analysis',
+          'UK property regulations',
+          'property compliance requirements',
+          'property ROI analysis',
+          'AI for property management',
+          'property technology assessment'
         ]}
-        category="Rental Tools"
+        category="B2B Tools"
       />
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'UK Rental Application Tools',
-            applicationCategory: 'UtilityApplication',
+            name: 'B2B Property Tools',
+            applicationCategory: 'BusinessApplication',
             operatingSystem: 'Web Browser',
             offers: {
               '@type': 'Offer',
               price: '0',
               priceCurrency: 'GBP'
             },
-            description: 'Free UK rental application tools to help tenants navigate the property rental process, check readiness, track documents, manage viewings, understand tenant rights, and estimate timelines.',
+            description: 'Free B2B property tools for landlords, property managers, and real estate professionals. AI readiness assessment, regulatory compliance checker, and ROI calculator suite.',
             url: typeof window !== 'undefined' ? window.location.href : 'https://luxcity.tech/tools',
             featureList: tools.map(tool => tool.title),
             aggregateRating: {
@@ -144,8 +110,8 @@ export default function Tools() {
           {JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            name: 'UK Rental Application Tools',
-            description: 'List of free tools for UK rental applications',
+            name: 'B2B Property Tools',
+            description: 'List of free B2B tools for property professionals',
             itemListElement: tools.map((tool, index) => ({
               '@type': 'ListItem',
               position: index + 1,
@@ -180,10 +146,10 @@ export default function Tools() {
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-[57px] sm:text-[47px] md:text-[70px] lg:text-[85px] font-archivo font-light leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-[#ffdbcc] via-purple-100 to-indigo-200 mb-4 sm:mb-6 animate-fade-in">
-              Rental Journey Tools
+              B2B Property Tools
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              Free UK rental application tools to help you navigate the property rental process. Check your readiness, track documents, manage viewings, understand the application process, and estimate timelines. No signup required - start using these rental tools today.
+            <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10 animate-fade-in font-archivo" style={{ animationDelay: '0.2s' }}>
+              Free B2B property tools for landlords, property managers, and real estate professionals. Assess your AI readiness, ensure regulatory compliance, and calculate ROI for property investments. Make data-driven decisions with our PropTech toolkit.
             </p>
           </div>
         </div>
@@ -200,13 +166,13 @@ export default function Tools() {
                   setActiveTab('tools');
                   window.history.replaceState(null, '', '/tools');
                 }}
-                className={`px-6 py-3 rounded-md font-medium transition-all ${
+                className={`px-6 py-3 rounded-md font-medium transition-all font-archivo ${
                   activeTab === 'tools'
                     ? 'bg-white text-indigo-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                Interactive Tools
+                <span className="font-archivo">Interactive Tools</span>
               </button>
               <button
                 onClick={() => {
@@ -228,29 +194,33 @@ export default function Tools() {
           {/* Tab Content */}
           {activeTab === 'tools' && (
             <section>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Free Rental Application Tools</h2>
-              <p className="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">
-                Use these free UK rental application tools to prepare for your property rental journey. Each interactive tool helps you understand and navigate different aspects of the rental process, from document preparation and readiness checks to timeline expectations and viewing management.
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center font-archivo">Free B2B Property Tools</h2>
+              <p className="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto font-archivo">
+                Professional property tools designed for landlords, property managers, and real estate businesses. 
+                Assess your capabilities, ensure compliance, and make informed investment decisions with our comprehensive PropTech toolkit.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {tools.map((tool) => {
-                  const IconComponent = tool.icon;
                   return (
                     <Link
                       key={tool.id}
                       to={tool.link}
                       className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-8 border border-gray-100 hover:border-indigo-200 group"
                     >
-                      <div className={`inline-flex p-3 rounded-lg ${tool.color} mb-4`}>
-                        <IconComponent className="h-6 w-6" />
+                      <div className={`inline-flex p-2 rounded-lg ${tool.color} mb-4`}>
+                        <img 
+                          src={tool.icon} 
+                          alt={`${tool.title} icon`}
+                          className="h-16 w-16 object-contain"
+                        />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors font-archivo">
                         {tool.title}
                       </h3>
-                      <p className="text-gray-600 mb-6">
+                      <p className="text-gray-600 mb-6 font-archivo">
                         {tool.description}
                       </p>
-                      <div className="flex items-center text-indigo-600 font-medium group-hover:translate-x-1 transition-transform">
+                      <div className="flex items-center text-indigo-600 font-medium group-hover:translate-x-1 transition-transform font-archivo">
                         Use tool <ArrowRight className="ml-2 h-5 w-5" />
                       </div>
                     </Link>
@@ -263,38 +233,35 @@ export default function Tools() {
           {activeTab === 'documents' && <RentalDocuments />}
 
           {/* SEO Content Section */}
-          <section className="mt-16 mb-16" aria-label="About rental application tools">
-            <div className="prose prose-lg max-w-none text-left">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 text-left">About UK Rental Application Tools</h2>
-              <p className="text-lg text-gray-700 mb-4 text-left">
-                Navigating the UK rental application process can be challenging, especially when applying to multiple properties. Our free rental application tools help you prepare, organize, and understand every step of the rental process, from initial property search to securing your tenancy.
+          <section className="mt-16 mb-16" aria-label="About B2B property tools">
+            <div className="prose prose-lg max-w-none text-left font-archivo">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 text-left font-archivo">About B2B Property Tools</h2>
+              <p className="text-lg text-gray-700 mb-4 text-left font-archivo">
+                Managing property portfolios and making informed investment decisions requires data-driven insights and comprehensive assessments. Our free B2B property tools help landlords, property managers, and real estate professionals assess capabilities, ensure compliance, and optimize investments.
               </p>
-              <p className="text-lg text-gray-700 mb-4 text-left">
-                Whether you're a first-time renter or have experience with UK property rentals, these tools provide valuable insights into what letting agents check, what documents you need, and how long the rental application process typically takes. All tools are based on real-world rental application processes and UK rental law.
+              <p className="text-lg text-gray-700 mb-4 text-left font-archivo">
+                Whether you're a small landlord with a few properties or managing a large portfolio, these tools provide valuable insights into AI readiness, regulatory compliance, and investment ROI. All tools are based on real-world property management practices and UK property regulations.
               </p>
-              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4 text-left">Why Use These Rental Tools?</h3>
-              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4 text-left">
-                <li><strong>Save Time:</strong> Prepare all your rental documents and information before applying to properties, reducing delays in your application process</li>
-                <li><strong>Stay Organized:</strong> Track multiple property viewings and applications in one place, preventing important details from getting lost</li>
-                <li><strong>Understand the Process:</strong> Learn what happens behind the scenes during rental applications, including referencing checks and decision-making timelines</li>
-                <li><strong>Set Realistic Expectations:</strong> Get accurate timeline estimates based on your situation, helping you plan your move effectively</li>
-                <li><strong>Know Your Rights:</strong> Understand your tenant rights and responsibilities with our interactive guide based on the official DLUHC "How to Rent" guide</li>
-                <li><strong>No Signup Required:</strong> All tools are free to use without creating an account - start using them immediately</li>
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4 text-left font-archivo">Why Use These B2B Property Tools?</h3>
+              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4 text-left font-archivo">
+                <li><strong>AI Readiness Assessment:</strong> Identify the best AI opportunities for your business stage and avoid costly wrong investments</li>
+                <li><strong>Regulatory Compliance:</strong> Ensure full compliance with UK property regulations and avoid fines or legal issues</li>
+                <li><strong>ROI Analysis:</strong> Compare multiple investment scenarios before spending money, prioritizing highest-return improvements</li>
+                <li><strong>Data-Driven Decisions:</strong> Make informed property management and investment decisions based on comprehensive analysis</li>
+                <li><strong>Save Time & Money:</strong> Identify gaps and opportunities quickly, reducing manual assessment time</li>
+                <li><strong>Professional Reports:</strong> Download detailed PDF reports with actionable recommendations and next steps</li>
               </ul>
-              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4 text-left">What Rental Tools Are Available?</h3>
-              <p className="text-lg text-gray-700 mb-4 text-left">
-                Our suite of rental application tools includes:
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4 text-left font-archivo">What B2B Property Tools Are Available?</h3>
+              <p className="text-lg text-gray-700 mb-4 text-left font-archivo">
+                Our suite of B2B property tools includes:
               </p>
-              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4 text-left">
-                <li><strong>Readiness Checker:</strong> Assess your rental application readiness and identify missing documents or requirements before letting agents check</li>
-                <li><strong>Document Tracker:</strong> Track which rental documents you already have, helping you see the repetition before automation is introduced</li>
-                <li><strong>Viewing Tracker:</strong> Keep track of multiple property viewings and agent communications in one organized place</li>
-                <li><strong>Process Simulator:</strong> Understand what happens after you apply, turning the black box into a clear system</li>
-                <li><strong>Timeline Generator:</strong> Get realistic timeline estimates based on your specific rental situation</li>
-                <li><strong>Know Your Rights:</strong> Interactive guide to UK tenant rights and responsibilities based on official government guidance</li>
+              <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4 text-left font-archivo">
+                <li><strong>AI Readiness Assessment:</strong> Assess your technology infrastructure, data maturity, team readiness, and budget to get a personalized AI adoption roadmap with ROI projections</li>
+                <li><strong>Regulatory Compliance Checker:</strong> Comprehensive checklist for rental properties, property purchases, and current homes with must-have requirements and nice-to-have recommendations</li>
+                <li><strong>ROI Calculator Suite:</strong> Calculate and compare ROI for property improvements including kitchen renovations, energy efficiency upgrades, smart home technology, and more</li>
               </ul>
-              <p className="text-lg text-gray-700 text-left">
-                These rental application tools are designed to help UK renters navigate the property rental market more effectively. Use them to prepare for your rental applications, track your progress, understand your tenant rights, and make informed decisions throughout the rental process from application to decision.
+              <p className="text-lg text-gray-700 text-left font-archivo">
+                These B2B property tools are designed to help property professionals make better decisions, ensure compliance, and optimize investments. Use them to assess your current state, identify opportunities, and plan strategic improvements for your property portfolio.
               </p>
             </div>
           </section>
