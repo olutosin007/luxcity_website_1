@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../../components/SEO';
 import { jsPDF } from 'jspdf';
 import DataCollectionForm from '../../components/DataCollectionForm';
+import { TOOL_SUBMISSION_URL } from '../../config/toolSubmission';
 
 interface ROIScenario {
   id: string;
@@ -137,12 +138,11 @@ export default function ROICalculatorSuite() {
     };
 
     try {
-      // Send to API with tool-specific data
-      await fetch('/api/tool-submission', {
+      // Send to Google Sheets Apps Script with tool-specific data.
+      // Use no-cors and no custom headers so the browser doesn't block the request.
+      await fetch(TOOL_SUBMISSION_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        mode: 'no-cors',
         body: JSON.stringify({
           ...formData,
           toolName: 'ROI Calculator Suite',
