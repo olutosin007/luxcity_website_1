@@ -1,8 +1,23 @@
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  deleteDoc,
+  query,
+  where,
+} from 'firebase/firestore';
 import { NewsPost } from '../types/content/NewsPost';
-import matter from 'gray-matter';
+import { getFirebaseDb, INSIGHTS_COLLECTION } from '../lib/firebase';
 
-// In-memory storage for posts
-let posts: NewsPost[] = [
+/** Doc ID from slug (URL-safe, used as Firestore document ID). */
+function toDocId(slug: string): string {
+  return slug.replace(/\s+/g, '-').toLowerCase();
+}
+
+/** In-memory fallback and seed source when Firestore is not configured. */
+let fallbackPosts: NewsPost[] = [
   {
     id: 'Renting in 2025',
     title: "Renting in 2025? Here's How to Stay Ahead and Stress-Free",
@@ -703,12 +718,44 @@ Set it up once, and you’ll always know where your money’s going, no more “
   }
 ];
 
+/** Returns the in-memory posts (for fallback and one-time seed to Firestore). */
+export function getSeedPosts(): NewsPost[] {
+  return [...fallbackPosts];
+}
+
+/** One-time: write an array of posts to Firestore. Skips if Firestore not configured. */
+export async function seedInsightsFromBackup(postsToSeed: NewsPost[]): Promise<number> {
+  const db = getFirebaseDb();
+  if (!db) return 0;
+  let count = 0;
+  for (const post of postsToSeed) {
+    const docId = toDocId(post.slug);
+    await setDoc(doc(db, INSIGHTS_COLLECTION, docId), post, { merge: true });
+    count++;
+  }
+  return count;
+}
+
 export async function getAllPosts(): Promise<NewsPost[]> {
+  const db = getFirebaseDb();
+  if (!db) {
+    return fallbackPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+  const snapshot = await getDocs(collection(db, INSIGHTS_COLLECTION));
+  const posts = snapshot.docs.map(d => d.data() as NewsPost);
   return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export async function getPostBySlug(slug: string): Promise<NewsPost | null> {
-  return posts.find(post => post.slug === slug) || null;
+  const db = getFirebaseDb();
+  if (!db) {
+    return fallbackPosts.find(post => post.slug === slug) || null;
+  }
+  const docId = toDocId(slug);
+  const ref = doc(db, INSIGHTS_COLLECTION, docId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return null;
+  return snap.data() as NewsPost;
 }
 
 export async function getRecentPosts(count: number = 3): Promise<NewsPost[]> {
@@ -716,19 +763,38 @@ export async function getRecentPosts(count: number = 3): Promise<NewsPost[]> {
 }
 
 export async function createPost(post: NewsPost): Promise<NewsPost> {
-  posts.push(post);
+  const db = getFirebaseDb();
+  if (!db) {
+    fallbackPosts.push(post);
+    return post;
+  }
+  const docId = toDocId(post.slug);
+  await setDoc(doc(db, INSIGHTS_COLLECTION, docId), post);
   return post;
 }
 
 export async function updatePost(post: NewsPost): Promise<NewsPost> {
-  const index = posts.findIndex(p => p.id === post.id);
-  if (index === -1) {
-    throw new Error('Post not found');
+  const db = getFirebaseDb();
+  if (!db) {
+    const index = fallbackPosts.findIndex(p => p.id === post.id);
+    if (index === -1) throw new Error('Post not found');
+    fallbackPosts[index] = post;
+    return post;
   }
-  posts[index] = post;
+  const docId = toDocId(post.slug);
+  await setDoc(doc(db, INSIGHTS_COLLECTION, docId), post, { merge: true });
   return post;
 }
 
 export async function deletePost(id: string): Promise<void> {
-  posts = posts.filter(post => post.id !== id);
+  const db = getFirebaseDb();
+  if (!db) {
+    fallbackPosts = fallbackPosts.filter(post => post.id !== id);
+    return;
+  }
+  const q = query(collection(db, INSIGHTS_COLLECTION), where('id', '==', id));
+  const snapshot = await getDocs(q);
+  for (const d of snapshot.docs) {
+    await deleteDoc(d.ref);
+  }
 } 

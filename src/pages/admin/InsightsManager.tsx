@@ -1,12 +1,57 @@
 import { useState, useEffect } from 'react';
 import { NewsPost } from '../../types/content/NewsPost';
-import { getAllPosts, createPost, updatePost, deletePost } from '../../utils/newsLoader';
-import { ArrowRight, Edit, Trash, Plus } from 'lucide-react';
+import { getAllPosts, createPost, updatePost, deletePost, getSeedPosts, seedInsightsFromBackup } from '../../utils/newsLoader';
+import { useAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { Edit, Trash, Plus, LogOut, Database, Search, ChevronDown, ChevronRight, X, ExternalLink } from 'lucide-react';
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+function parsePostDate(dateStr: string): { year: number; month: number } | null {
+  const d = new Date(dateStr.replace(/\//g, '-'));
+  if (Number.isNaN(d.getTime())) return null;
+  return { year: d.getFullYear(), month: d.getMonth() };
+}
+
+function groupPostsByYearMonth(postsList: NewsPost[]): { year: string; months: { monthKey: string; monthLabel: string; monthIndex: number; posts: NewsPost[] }[] }[] {
+  const byYear = new Map<string, Map<number, NewsPost[]>>();
+  for (const post of postsList) {
+    const parsed = parsePostDate(post.date);
+    if (!parsed) continue;
+    const { year, month } = parsed;
+    const y = String(year);
+    if (!byYear.has(y)) byYear.set(y, new Map());
+    const monthMap = byYear.get(y)!;
+    if (!monthMap.has(month)) monthMap.set(month, []);
+    monthMap.get(month)!.push(post);
+  }
+  const result: { year: string; months: { monthKey: string; monthLabel: string; monthIndex: number; posts: NewsPost[] }[] }[] = [];
+  const years = Array.from(byYear.keys()).sort((a, b) => Number(b) - Number(a));
+  for (const year of years) {
+    const monthMap = byYear.get(year)!;
+    const months = Array.from(monthMap.entries())
+      .map(([monthIndex, posts]) => ({
+        monthKey: `${year}-${monthIndex}`,
+        monthLabel: `${MONTH_NAMES[monthIndex]} ${year}`,
+        monthIndex,
+        posts: posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+      }))
+      .sort((a, b) => b.monthIndex - a.monthIndex);
+    result.push({ year, months });
+  }
+  return result;
+}
 
 export default function InsightsManager() {
+  const { user, signOut, isConfigured } = useAuth();
   const [posts, setPosts] = useState<NewsPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<NewsPost | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [seeding, setSeeding] = useState(false);
+  const [filterSearch, setFilterSearch] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+  const [selectedYear, setSelectedYear] = useState<string>('');
+  const [expandedMonthKey, setExpandedMonthKey] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -129,20 +174,105 @@ export default function InsightsManager() {
     });
   };
 
+  const filteredPosts = posts.filter(post => {
+    const matchesSearch =
+      !filterSearch.trim() ||
+      post.title.toLowerCase().includes(filterSearch.toLowerCase()) ||
+      (post.description && post.description.toLowerCase().includes(filterSearch.toLowerCase())) ||
+      (post.category && post.category.toLowerCase().includes(filterSearch.toLowerCase()));
+    const matchesCategory = !filterCategory || post.category === filterCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const categories = Array.from(new Set(posts.map(p => p.category).filter(Boolean))).sort();
+
+  const clearFilters = () => {
+    setFilterSearch('');
+    setFilterCategory('');
+  };
+
+  const hasActiveFilters = !!filterSearch.trim() || !!filterCategory;
+
+  const yearMonthGroups = groupPostsByYearMonth(filteredPosts);
+  const availableYears = yearMonthGroups.map(g => g.year);
+
+  useEffect(() => {
+    if (availableYears.length > 0 && !selectedYear) {
+      setSelectedYear(availableYears[0]);
+    }
+  }, [availableYears.length, selectedYear]);
+
+  const selectedYearData = yearMonthGroups.find(g => g.year === selectedYear);
+
+  const handleSeedFromBackup = async () => {
+    if (!window.confirm('Add all backup posts to Firestore? Existing posts with the same slug will be merged.')) return;
+    setSeeding(true);
+    try {
+      const seedPosts = getSeedPosts();
+      const count = await seedInsightsFromBackup(seedPosts);
+      alert(`Seeded ${count} posts to Firestore.`);
+      await loadPosts();
+    } catch (err) {
+      console.error('Seed failed:', err);
+      alert('Seed failed. Check console.');
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex justify-between items-center mb-8">
+    <div className="pt-28 md:pt-36 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {!isConfigured && (
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800" role="alert">
+          <p className="font-medium">Firebase not detected — using local data only.</p>
+          <p className="text-sm mt-1">
+            To use Firestore and the login: add <code className="bg-amber-100 px-1 rounded">.env</code> in the project root (same folder as <code className="bg-amber-100 px-1 rounded">package.json</code>) with your <code className="bg-amber-100 px-1 rounded">VITE_FIREBASE_*</code> variables (copy from <code className="bg-amber-100 px-1 rounded">.env.example</code>), then <strong>stop and restart</strong> the dev server (<code className="bg-amber-100 px-1 rounded">npm run dev</code>).
+          </p>
+        </div>
+      )}
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Insights Manager</h1>
-        <button
-          onClick={() => {
-            resetForm();
-            setIsEditing(false);
-          }}
-          className="bg-[#DC5F12] text-white px-4 py-2 rounded-lg flex items-center"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          New Post
-        </button>
+        <div className="flex items-center gap-2">
+          {isConfigured && (
+            <button
+              type="button"
+              onClick={handleSeedFromBackup}
+              disabled={seeding}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 flex items-center gap-2 disabled:opacity-50"
+              title="One-time: add backup posts to Firestore"
+            >
+              <Database className="w-4 h-4" />
+              {seeding ? 'Seeding…' : 'Seed from backup'}
+            </button>
+          )}
+          {isConfigured && user && (
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  await signOut();
+                } catch (e) {
+                  console.error('Sign out failed:', e);
+                  alert('Sign out failed. Try again.');
+                }
+              }}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign out
+            </button>
+          )}
+          <button
+            onClick={() => {
+              resetForm();
+              setIsEditing(false);
+            }}
+            className="bg-[#DC5F12] text-white px-4 py-2 rounded-lg flex items-center"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            New Post
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -300,30 +430,134 @@ export default function InsightsManager() {
         </div>
 
         {/* Posts List Section */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <h2 className="text-xl font-semibold">Published Posts</h2>
-          {posts.map(post => (
-            <div key={post.id} className="bg-white p-4 rounded-lg shadow flex justify-between items-start">
-              <div>
-                <h3 className="font-medium">{post.title}</h3>
-                <p className="text-sm text-gray-500">{post.date}</p>
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => handleEdit(post)}
-                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-md"
-                >
-                  <Edit className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => handleDelete(post.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-md"
-                >
-                  <Trash className="w-5 h-5" />
-                </button>
-              </div>
+
+          {/* Search & category filters */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative flex-1 min-w-[180px]">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by title, description, category..."
+                value={filterSearch}
+                onChange={e => setFilterSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-[#DC5F12] focus:border-[#DC5F12]"
+              />
             </div>
-          ))}
+            <select
+              value={filterCategory}
+              onChange={e => setFilterCategory(e.target.value)}
+              className="px-3 py-2 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-[#DC5F12] focus:border-[#DC5F12] bg-white min-w-[140px]"
+            >
+              <option value="">All categories</option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="inline-flex items-center gap-1 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                <X className="w-4 h-4" />
+                Clear filters
+              </button>
+            )}
+          </div>
+
+          {/* Year buttons */}
+          {availableYears.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm text-gray-600 self-center mr-1">Year:</span>
+              {availableYears.map(year => (
+                <button
+                  key={year}
+                  type="button"
+                  onClick={() => setSelectedYear(year)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedYear === year
+                      ? 'bg-[#DC5F12] text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {year}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Month accordions for selected year */}
+          {selectedYearData && selectedYearData.months.length > 0 ? (
+            <div className="space-y-2">
+              {selectedYearData.months.map(({ monthKey, monthLabel, posts: monthPosts }) => {
+                const isExpanded = expandedMonthKey === monthKey;
+                return (
+                  <div
+                    key={monthKey}
+                    className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setExpandedMonthKey(isExpanded ? null : monthKey)}
+                      className="w-full flex items-center gap-3 p-4 text-left hover:bg-gray-50 transition-colors"
+                    >
+                      {isExpanded ? (
+                        <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                      ) : (
+                        <ChevronRight className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                      )}
+                      <span className="font-medium text-gray-900">{monthLabel}</span>
+                      <span className="text-sm text-gray-500">
+                        {monthPosts.length} post{monthPosts.length !== 1 ? 's' : ''}
+                      </span>
+                    </button>
+                    {isExpanded && (
+                      <div className="border-t border-gray-200 bg-gray-50/80">
+                        <ul className="divide-y divide-gray-200">
+                          {monthPosts.map(post => (
+                            <li key={post.id} className="px-4 py-3 flex items-center justify-between gap-3 hover:bg-gray-100/80">
+                              <span className="font-medium text-gray-900 truncate flex-1 min-w-0">{post.title}</span>
+                              <div className="flex items-center gap-2 flex-shrink-0">
+                                <a
+                                  href={`/insights/${encodeURIComponent(post.slug)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-sm text-gray-700 hover:text-[#DC5F12] border border-gray-300 rounded-md hover:bg-white"
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                  View post
+                                </a>
+                                <button
+                                  onClick={() => handleEdit(post)}
+                                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md"
+                                >
+                                  <Edit className="w-4 h-4" />
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(post.id)}
+                                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-md"
+                                >
+                                  <Trash className="w-4 h-4" />
+                                  Delete
+                                </button>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">
+              {filteredPosts.length === 0 ? 'No posts match the filters.' : 'No posts for the selected year.'}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,11 @@
+rules_version = '2';
+// Insights collection: anyone can read; only authenticated users can write.
+// Deploy with: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /insights/{docId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null;
+    }
+  }
+}

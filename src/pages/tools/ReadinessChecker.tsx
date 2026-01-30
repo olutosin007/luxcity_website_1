@@ -4,34 +4,58 @@ import { Link } from 'react-router-dom';
 import SEO from '../../components/SEO';
 import { jsPDF } from 'jspdf';
 
+type AssessmentResult = {
+  label: string;
+  summary: string;
+  gaps: string[];
+  nextSteps: string[];
+  encouragement?: string;
+  fromAI: boolean;
+};
+
+const questions = [
+  { id: 'photo-id', text: 'Do you have valid photo ID?' },
+  { id: 'proof-income', text: 'Can you show recent proof of income?' },
+  { id: 'rented-before', text: 'Have you rented before in the UK?' },
+  { id: 'guarantor', text: 'Would you be able to provide a guarantor if asked?' },
+];
+
 export default function ReadinessChecker() {
   const [answers, setAnswers] = useState<Record<string, boolean | null>>({});
-  const [readinessState, setReadinessState] = useState<string | null>(null);
-
-  const questions = [
-    { id: 'photo-id', text: 'Do you have valid photo ID?' },
-    { id: 'proof-income', text: 'Can you show recent proof of income?' },
-    { id: 'rented-before', text: 'Have you rented before in the UK?' },
-    { id: 'guarantor', text: 'Would you be able to provide a guarantor if asked?' },
-  ];
+  const [result, setResult] = useState<AssessmentResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleAnswer = (id: string, value: boolean) => {
     setAnswers(prev => ({ ...prev, [id]: value }));
+    setResult(null);
+    setError(null);
   };
 
-  const calculateReadiness = () => {
+  const calculateReadiness = async () => {
     const answered = Object.values(answers).filter(a => a !== null);
     if (answered.length < questions.length) {
-      setReadinessState(null);
+      setResult(null);
       return;
     }
-    
-    const yesCount = Object.values(answers).filter(a => a === true).length;
-    const percentage = (yesCount / questions.length) * 100;
-    
-    if (percentage >= 75) setReadinessState('Mostly Ready');
-    else if (percentage >= 50) setReadinessState('A Few Gaps');
-    else setReadinessState('Needs Preparation');
+
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/readiness-assessment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Assessment failed');
+      setResult(data as AssessmentResult);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Try again.');
+      setResult(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const downloadChecklist = () => {
@@ -185,25 +209,57 @@ export default function ReadinessChecker() {
             ))}
           </div>
 
+          {error && (
+            <p className="mb-4 text-red-600 text-sm" role="alert">{error}</p>
+          )}
           <button
             onClick={calculateReadiness}
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition"
+            disabled={loading}
+            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Check Readiness
+            {loading ? 'Assessing…' : 'Check Readiness'}
           </button>
         </div>
 
-        {readinessState && (
+        {result && (
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Your Rental Application Readiness Assessment
             </h2>
             <div className="text-3xl font-bold text-indigo-600 mb-4">
-              {readinessState}
+              {result.label}
             </div>
-            <p className="text-gray-600 mb-6">
-              This rental application readiness assessment doesn't decide your application outcome — it helps you prepare for what UK letting agents usually check during the rental application process.
+            <p className="text-gray-600 mb-4">
+              {result.summary}
             </p>
+            {result.encouragement && (
+              <p className="text-gray-700 font-medium mb-4">{result.encouragement}</p>
+            )}
+            {result.gaps.length > 0 && (
+              <div className="mb-4">
+                <h3 className="text-sm font-semibold text-gray-700 mb-2">Gaps to address</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-1">
+                  {result.gaps.map((gap, i) => (
+                    <li key={i}>{gap}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {result.nextSteps.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-gray-700 mb-2">Next steps</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-1">
+                  {result.nextSteps.map((step, i) => (
+                    <li key={i}>{step}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {result.fromAI && (
+              <p className="text-xs text-gray-500 mb-4">
+                This assessment was personalised using AI based on your answers.
+              </p>
+            )}
             <button 
               onClick={downloadChecklist}
               className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"

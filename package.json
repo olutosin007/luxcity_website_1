@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/nodemailer": "^7.0.4",
     "@vercel/node": "^5.5.14",
+    "firebase": "^12.8.0",
     "gray-matter": "^4.0.3",
     "idb": "^8.0.3",
     "jspdf": "^4.0.0",
