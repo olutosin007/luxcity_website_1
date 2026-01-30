@@ -11,6 +11,9 @@ import SEO from '../components/SEO';
 import OptimizedImage from '../components/OptimizedImage';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { generatePostKeywords } from '../utils/keywordGenerator';
+import { recordView } from '../utils/insightsAnalytics';
+
+const VIEWED_KEY_PREFIX = 'insights_view_';
 
 export default function InsightPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -21,7 +24,7 @@ export default function InsightPost() {
   useEffect(() => {
     const loadPost = async () => {
       if (!slug) return;
-      
+
       try {
         const postData = await getPostBySlug(slug);
         if (!postData) {
@@ -29,6 +32,16 @@ export default function InsightPost() {
           return;
         }
         setPost(postData);
+
+        const viewKey = `${VIEWED_KEY_PREFIX}${postData.slug}`;
+        if (typeof sessionStorage !== 'undefined' && !sessionStorage.getItem(viewKey)) {
+          try {
+            await recordView(postData.slug, document.referrer || '');
+            sessionStorage.setItem(viewKey, '1');
+          } catch {
+            // ignore analytics errors
+          }
+        }
       } catch (error) {
         console.error('Error loading post:', error);
         navigate('/insights');

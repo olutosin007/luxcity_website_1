@@ -3,7 +3,8 @@ import { NewsPost } from '../../types/content/NewsPost';
 import { getAllPosts, createPost, updatePost, deletePost, getSeedPosts, seedInsightsFromBackup } from '../../utils/newsLoader';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { Edit, Trash, Plus, LogOut, Database, Search, ChevronDown, ChevronRight, X, ExternalLink } from 'lucide-react';
+import { Edit, Trash, Plus, LogOut, Database, Search, ChevronDown, ChevronRight, X, ExternalLink, BarChart2 } from 'lucide-react';
+import { getAnalytics, type InsightsAnalyticsData } from '../../utils/insightsAnalytics';
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -52,6 +53,9 @@ export default function InsightsManager() {
   const [filterCategory, setFilterCategory] = useState('');
   const [selectedYear, setSelectedYear] = useState<string>('');
   const [expandedMonthKey, setExpandedMonthKey] = useState<string | null>(null);
+  const [analyticsPost, setAnalyticsPost] = useState<NewsPost | null>(null);
+  const [analyticsData, setAnalyticsData] = useState<InsightsAnalyticsData | null>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -203,6 +207,26 @@ export default function InsightsManager() {
   }, [availableYears.length, selectedYear]);
 
   const selectedYearData = yearMonthGroups.find(g => g.year === selectedYear);
+
+  const openAnalytics = async (post: NewsPost) => {
+    setAnalyticsPost(post);
+    setAnalyticsData(null);
+    setAnalyticsLoading(true);
+    try {
+      const data = await getAnalytics(post.slug);
+      setAnalyticsData(data ?? null);
+    } catch (err) {
+      console.error('Analytics fetch failed:', err);
+      setAnalyticsData(null);
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  };
+
+  const closeAnalytics = () => {
+    setAnalyticsPost(null);
+    setAnalyticsData(null);
+  };
 
   const handleSeedFromBackup = async () => {
     if (!window.confirm('Add all backup posts to Firestore? Existing posts with the same slug will be merged.')) return;
@@ -529,6 +553,17 @@ export default function InsightsManager() {
                                   <ExternalLink className="w-4 h-4" />
                                   View post
                                 </a>
+                                {isConfigured && (
+                                  <button
+                                    type="button"
+                                    onClick={() => openAnalytics(post)}
+                                    className="inline-flex items-center gap-1 px-2.5 py-1.5 text-sm text-gray-700 hover:text-[#DC5F12] border border-gray-300 rounded-md hover:bg-gray-50"
+                                    title="View analytics"
+                                  >
+                                    <BarChart2 className="w-4 h-4" />
+                                    Analytics
+                                  </button>
+                                )}
                                 <button
                                   onClick={() => handleEdit(post)}
                                   className="inline-flex items-center gap-1 px-2.5 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md"
@@ -560,6 +595,77 @@ export default function InsightsManager() {
           )}
         </div>
       </div>
+
+      {/* Analytics modal */}
+      {analyticsPost && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          onClick={closeAnalytics}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="analytics-modal-title"
+        >
+          <div
+            className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h3 id="analytics-modal-title" className="text-lg font-semibold text-gray-900">
+                Post analytics
+              </h3>
+              <button
+                type="button"
+                onClick={closeAnalytics}
+                className="p-1 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 overflow-y-auto flex-1">
+              <p className="text-sm font-medium text-gray-700 mb-3 truncate" title={analyticsPost.title}>
+                {analyticsPost.title}
+              </p>
+              {analyticsLoading ? (
+                <p className="text-sm text-gray-500">Loading…</p>
+              ) : analyticsData ? (
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-sm font-medium text-gray-600">Total reads</span>
+                    <p className="text-2xl font-semibold text-gray-900">{analyticsData.viewCount}</p>
+                  </div>
+                  {analyticsData.lastUpdated && (
+                    <p className="text-xs text-gray-500">
+                      Last updated: {new Date(analyticsData.lastUpdated).toLocaleString()}
+                    </p>
+                  )}
+                  {Object.keys(analyticsData.referrers).length > 0 ? (
+                    <div>
+                      <span className="text-sm font-medium text-gray-600 block mb-2">Traffic sources</span>
+                      <ul className="space-y-1.5 text-sm">
+                        {Object.entries(analyticsData.referrers)
+                          .sort(([, a], [, b]) => b - a)
+                          .map(([source, count]) => (
+                            <li key={source} className="flex justify-between gap-2">
+                              <span className="text-gray-700 truncate" title={source}>
+                                {source === 'direct' ? 'Direct' : source}
+                              </span>
+                              <span className="font-medium text-gray-900 flex-shrink-0">{count}</span>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500">No referrer data yet.</p>
+                  )}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500">No analytics data for this post yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

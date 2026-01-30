@@ -35,8 +35,12 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="pt-28 md:pt-36 min-h-[60vh] flex items-center justify-center px-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-sm border border-gray-200">
+    <div
+      className="relative pt-28 md:pt-36 min-h-[calc(100vh-80px)] flex items-center justify-center px-4 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: 'url(/images/Luxcity-LondonCity-2.jpg)' }}
+    >
+      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+      <div className="relative z-10 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl p-8 w-full max-w-sm border border-gray-200">
         <h1 className="text-xl font-bold text-gray-900 mb-6">Admin sign in</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -84,3 +88,4 @@ export default function AdminLogin() {
     </div>
   );
 }
+
