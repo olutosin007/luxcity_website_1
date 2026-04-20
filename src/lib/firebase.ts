@@ -1,6 +1,7 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getAuth, type Auth } from 'firebase/auth';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -28,6 +29,7 @@ function hasFirebaseConfig(): boolean {
 let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
 let auth: Auth | null = null;
+let storage: FirebaseStorage | null = null;
 
 export function getFirebaseApp(): FirebaseApp | null {
   if (!hasFirebaseConfig()) return null;
@@ -53,6 +55,15 @@ export function getFirebaseAuth(): Auth | null {
     if (firebaseApp) auth = getAuth(firebaseApp);
   }
   return auth;
+}
+
+export function getFirebaseStorage(): FirebaseStorage | null {
+  if (!hasFirebaseConfig()) return null;
+  if (!storage) {
+    const firebaseApp = getFirebaseApp();
+    if (firebaseApp) storage = getStorage(firebaseApp);
+  }
+  return storage;
 }
 
 export const INSIGHTS_COLLECTION = 'insights';

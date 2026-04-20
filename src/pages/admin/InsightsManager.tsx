@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NewsPost } from '../../types/content/NewsPost';
 import { getAllPosts, createPost, updatePost, deletePost, getSeedPosts, seedInsightsFromBackup } from '../../utils/newsLoader';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { Edit, Trash, Plus, LogOut, Database, Search, ChevronDown, ChevronRight, X, ExternalLink, BarChart2 } from 'lucide-react';
+import { Edit, Trash, Plus, LogOut, Database, Search, ChevronDown, ChevronRight, X, ExternalLink, BarChart2, Upload, Bold, Italic, Link2, Heading1, List, Quote, Code, Eye, Edit3, Columns2, Eraser } from 'lucide-react';
 import { getAnalytics, type InsightsAnalyticsData } from '../../utils/insightsAnalytics';
+import { getFirebaseStorage } from '../../lib/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -56,6 +60,11 @@ export default function InsightsManager() {
   const [analyticsPost, setAnalyticsPost] = useState<NewsPost | null>(null);
   const [analyticsData, setAnalyticsData] = useState<InsightsAnalyticsData | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [isUploadingCoverImage, setIsUploadingCoverImage] = useState(false);
+  const [isUploadingInlineImage, setIsUploadingInlineImage] = useState(false);
+  const [editorMode, setEditorMode] = useState<'write' | 'preview' | 'split'>('split');
+  const contentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const inlineImageInputRef = useRef<HTMLInputElement | null>(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -123,6 +132,128 @@ export default function InsightsManager() {
     } catch (error) {
       console.error('Error saving post:', error);
       alert('Failed to save post. Please try again.');
+    }
+  };
+
+  const uploadImageToStorage = async (file: File): Promise<string> => {
+    const storage = getFirebaseStorage();
+    if (!storage) {
+      throw new Error('Firebase is not configured. Add env variables before uploading images.');
+    }
+    const safeFileName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '-');
+    const storageRef = ref(storage, `insights/${Date.now()}-${safeFileName}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
+  };
+
+  const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingCoverImage(true);
+    try {
+      const uploadedUrl = await uploadImageToStorage(file);
+      setFormData(prev => ({ ...prev, image: uploadedUrl }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Could not upload image. Please ensure Firebase Storage is configured.');
+    } finally {
+      setIsUploadingCoverImage(false);
+      e.target.value = '';
+    }
+  };
+
+  const updateContentWithSelection = (prefix: string, suffix: string, placeholder = '') => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+    const { selectionStart, selectionEnd, value } = textarea;
+    const selectedText = value.slice(selectionStart, selectionEnd);
+    const textForInsertion = selectedText || placeholder;
+    const insertion = `${prefix}${textForInsertion}${suffix}`;
+    const nextValue = `${value.slice(0, selectionStart)}${insertion}${value.slice(selectionEnd)}`;
+    setFormData(prev => ({ ...prev, content: nextValue }));
+
+    requestAnimationFrame(() => {
+      textarea.focus();
+      const cursorStart = selectionStart + prefix.length;
+      const cursorEnd = cursorStart + textForInsertion.length;
+      textarea.setSelectionRange(cursorStart, cursorEnd);
+    });
+  };
+
+  const clearMarkdownFormatting = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+    const { selectionStart, selectionEnd, value } = textarea;
+    const selectedText = value.slice(selectionStart, selectionEnd);
+    if (!selectedText) return;
+
+    const cleaned = selectedText
+      .replace(/(\*\*|__)(.*?)\1/g, '$2')
+      .replace(/(\*|_)(.*?)\1/g, '$2')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '$1')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+      .replace(/^>\s?/gm, '')
+      .replace(/^#{1,6}\s+/gm, '')
+      .replace(/^[-*+]\s+/gm, '');
+
+    const nextValue = `${value.slice(0, selectionStart)}${cleaned}${value.slice(selectionEnd)}`;
+    setFormData(prev => ({ ...prev, content: nextValue }));
+    requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(selectionStart, selectionStart + cleaned.length);
+    });
+  };
+
+  const insertLineAtCursor = (line: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+    const { selectionStart, selectionEnd, value } = textarea;
+    const insertion = `\n${line}\n`;
+    const nextValue = `${value.slice(0, selectionStart)}${insertion}${value.slice(selectionEnd)}`;
+    setFormData(prev => ({ ...prev, content: nextValue }));
+
+    requestAnimationFrame(() => {
+      textarea.focus();
+      const cursorPos = selectionStart + insertion.length;
+      textarea.setSelectionRange(cursorPos, cursorPos);
+    });
+  };
+
+  const insertLink = () => {
+    const url = window.prompt('Enter URL', 'https://');
+    if (!url) return;
+    updateContentWithSelection('[', `](${url})`, 'link text');
+  };
+
+  const handleInlineImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingInlineImage(true);
+    try {
+      const uploadedUrl = await uploadImageToStorage(file);
+      insertLineAtCursor(`![Image description](${uploadedUrl})`);
+    } catch (error) {
+      console.error('Error uploading inline image:', error);
+      alert('Could not upload inline image. Please ensure Firebase Storage is configured.');
+    } finally {
+      setIsUploadingInlineImage(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleContentKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    const key = e.key.toLowerCase();
+    if (key === 'b') {
+      e.preventDefault();
+      updateContentWithSelection('**', '**', 'bold text');
+    } else if (key === 'i') {
+      e.preventDefault();
+      updateContentWithSelection('*', '*', 'italic text');
+    } else if (key === 'k') {
+      e.preventDefault();
+      insertLink();
     }
   };
 
@@ -299,9 +430,9 @@ export default function InsightsManager() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="flex flex-col gap-8">
         {/* Form Section */}
-        <div className="bg-white p-6 rounded-xl shadow-lg">
+        <div className="order-2 bg-white p-6 md:p-8 rounded-xl shadow-lg w-full max-w-6xl">
           <h2 className="text-xl font-semibold mb-4">
             {isEditing ? 'Edit Post' : 'Create New Post'}
           </h2>
@@ -356,26 +487,136 @@ export default function InsightsManager() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700">Image URL</label>
-              <input
-                type="text"
-                name="image"
-                value={formData.image}
-                onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#DC5F12] focus:ring-[#DC5F12]"
-                required
-              />
+              <div className="mt-1 space-y-2">
+                <input
+                  type="text"
+                  name="image"
+                  value={formData.image}
+                  onChange={handleInputChange}
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#DC5F12] focus:ring-[#DC5F12]"
+                  required
+                />
+                <div className="flex items-center gap-3">
+                  <label className="inline-flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 text-gray-700">
+                    <Upload className="w-4 h-4" />
+                    {isUploadingCoverImage ? 'Uploading cover…' : 'Upload cover image'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleCoverImageUpload}
+                      disabled={isUploadingCoverImage}
+                    />
+                  </label>
+                  <span className="text-xs text-gray-500">Or paste an existing URL</span>
+                </div>
+              </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700">Content (Markdown)</label>
-              <textarea
-                name="content"
-                value={formData.content}
-                onChange={handleInputChange}
-                rows={10}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#DC5F12] focus:ring-[#DC5F12] font-mono"
-                required
-              />
+              <div className="mt-1 border border-gray-300 rounded-lg overflow-hidden">
+                <div className="bg-gray-50 border-b border-gray-200 p-2 flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex flex-wrap gap-2">
+                    <button type="button" onClick={() => updateContentWithSelection('**', '**', 'bold text')} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <Bold className="w-3.5 h-3.5" /> Bold
+                    </button>
+                    <button type="button" onClick={() => updateContentWithSelection('*', '*', 'italic text')} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <Italic className="w-3.5 h-3.5" /> Italic
+                    </button>
+                    <button type="button" onClick={() => updateContentWithSelection('`', '`', 'inline code')} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <Code className="w-3.5 h-3.5" /> Code
+                    </button>
+                    <button type="button" onClick={() => insertLineAtCursor('## Heading')} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <Heading1 className="w-3.5 h-3.5" /> Heading
+                    </button>
+                    <button type="button" onClick={() => insertLineAtCursor('- List item')} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <List className="w-3.5 h-3.5" /> List
+                    </button>
+                    <button type="button" onClick={() => insertLineAtCursor('> Quote')} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <Quote className="w-3.5 h-3.5" /> Quote
+                    </button>
+                    <button type="button" onClick={insertLink} className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50">
+                      <Link2 className="w-3.5 h-3.5" /> Link
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => inlineImageInputRef.current?.click()}
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50"
+                      disabled={isUploadingInlineImage}
+                    >
+                      <Upload className="w-3.5 h-3.5" />
+                      {isUploadingInlineImage ? 'Uploading image…' : 'Insert image'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={clearMarkdownFormatting}
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-300 rounded bg-white hover:bg-gray-50"
+                    >
+                      <Eraser className="w-3.5 h-3.5" /> Clear formatting
+                    </button>
+                    <input
+                      ref={inlineImageInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleInlineImageUpload}
+                      disabled={isUploadingInlineImage}
+                    />
+                  </div>
+                  <div className="flex items-center rounded-md border border-gray-300 bg-white overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setEditorMode('write')}
+                      className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-xs ${editorMode === 'write' ? 'bg-[#DC5F12] text-white' : 'text-gray-700 hover:bg-gray-50'}`}
+                    >
+                      <Edit3 className="w-3.5 h-3.5" /> Write
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditorMode('preview')}
+                      className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border-l border-gray-300 ${editorMode === 'preview' ? 'bg-[#DC5F12] text-white' : 'text-gray-700 hover:bg-gray-50'}`}
+                    >
+                      <Eye className="w-3.5 h-3.5" /> Preview
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditorMode('split')}
+                      className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-xs border-l border-gray-300 ${editorMode === 'split' ? 'bg-[#DC5F12] text-white' : 'text-gray-700 hover:bg-gray-50'}`}
+                    >
+                      <Columns2 className="w-3.5 h-3.5" /> Split
+                    </button>
+                  </div>
+                </div>
+
+                <div className={`grid gap-0 ${editorMode === 'split' ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
+                  {editorMode !== 'preview' && (
+                    <textarea
+                      ref={contentTextareaRef}
+                      name="content"
+                      value={formData.content}
+                      onChange={handleInputChange}
+                      onKeyDown={handleContentKeyDown}
+                      rows={14}
+                      className={`block w-full border-0 focus:ring-0 font-mono text-sm p-3 ${editorMode === 'split' ? 'md:border-r md:border-gray-200' : ''}`}
+                      required
+                    />
+                  )}
+
+                  {editorMode !== 'write' && (
+                    <div className="p-3 min-h-[336px] bg-white prose prose-sm max-w-none overflow-auto">
+                      {formData.content.trim() ? (
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{formData.content}</ReactMarkdown>
+                      ) : (
+                        <p className="text-sm text-gray-500">Markdown preview will appear here.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <p className="mt-2 text-xs text-gray-500">
+                Tip: select text then click a style button. Shortcuts: Ctrl/Cmd+B (bold), Ctrl/Cmd+I (italic), Ctrl/Cmd+K (link).
+              </p>
             </div>
 
             <div>
@@ -454,7 +695,7 @@ export default function InsightsManager() {
         </div>
 
         {/* Posts List Section */}
-        <div className="space-y-4">
+        <div className="order-1 bg-white p-6 rounded-xl shadow-lg space-y-4">
           <h2 className="text-xl font-semibold">Published Posts</h2>
 
           {/* Search & category filters */}
