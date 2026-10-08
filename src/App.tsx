@@ -8,6 +8,8 @@ import Solutions from './pages/Solutions';
 import Labs from './pages/Labs';
 import Insights from './pages/Insights';
 import Company from './pages/Company';
+import CaseStudies from './pages/CaseStudies';
+import CaseStudyDetail from './pages/CaseStudyDetail';
 import InsightPost from './pages/InsightPost';
 import AdminInsightsRoute from './pages/admin/AdminInsightsRoute';
 import Contact from './pages/Contact';
@@ -28,6 +30,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/solutions" element={<Solutions />} />
+              <Route path="/case-studies" element={<CaseStudies />} />
+              <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
               <Route path="/labs" element={<Labs />} />
               <Route path="/insights" element={<Insights />} />
               <Route path="/insights/:slug" element={<InsightPost />} />

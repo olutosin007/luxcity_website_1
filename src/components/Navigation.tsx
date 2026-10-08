@@ -11,14 +11,14 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="fixed w-full bg-white/60 backdrop-blur-sm z-50 border-b border-gray-200">
+    <nav className="fixed w-full bg-white/95 backdrop-blur-md z-50 border-b border-gray-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-[60px] md:h-[80px]">
+        <div className="flex justify-between items-center h-[56px] md:h-[64px]">
           <Link to="/" className="flex items-center">
             <img 
               src="/images/luxcity_logo_clr_6.png" 
               alt="Luxcity Logo" 
-              className="h-8 md:h-12 w-auto" 
+              className="h-7 md:h-8 w-auto" 
             />
           </Link>
 
@@ -34,6 +34,7 @@ export default function Navigation() {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className={`${isActive('/')} transition-colors duration-200`}>Home</Link>
             <Link to="/solutions" className={`${isActive('/solutions')} transition-colors duration-200`}>Solutions</Link>
+            <Link to="/case-studies" className={`${isActive('/case-studies')} transition-colors duration-200`}>Case Studies</Link>
             <Link to="/labs" className={`${isActive('/labs')} transition-colors duration-200`}>Labs</Link>
             <Link to="/tools" className={`${location.pathname.startsWith('/tools') ? 'text-indigo-600' : 'text-gray-700 hover:text-indigo-600'} transition-colors duration-200`}>Tools</Link>
             <Link to="/insights" className={`${isActive('/insights')} transition-colors duration-200`}>Insights</Link>
@@ -65,6 +66,16 @@ export default function Navigation() {
                 }}
               >
                 Solutions
+              </Link>
+              <Link 
+                to="/case-studies" 
+                className={`${isActive('/case-studies')} block px-3 py-3 sm:py-4 text-base font-medium transition-colors duration-200`}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Case Studies
               </Link>
               <Link 
                 to="/labs" 
