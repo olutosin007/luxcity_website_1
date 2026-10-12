@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 815 1005" fill="none">
+  <defs>
+    <clipPath id="house-silhouette-clip" clipPathUnits="userSpaceOnUse">
+      <path d="M 375 22 Q 407.5 0 440 22 L 795 285 Q 815 300 815 330 L 815 965 Q 815 1005 775 1005 L 40 1005 Q 0 1005 0 965 L 0 330 Q 0 300 20 285 Z" />
+    </clipPath>
+  </defs>
+  <path d="M 375 22 Q 407.5 0 440 22 L 795 285 Q 815 300 815 330 L 815 965 Q 815 1005 775 1005 L 40 1005 Q 0 1005 0 965 L 0 330 Q 0 300 20 285 Z" fill="#F4D3BC" />
+</svg>

@@ -53,34 +53,34 @@ const COLLAGE_LAYOUT = [
   { row: 3, col: 2, delay: 420 },
 ];
 
-// Sets of images for each of the 3 stages across all 7 card slots
+// Sets of images for each of the 3 stages across all 7 card slots (Harmonious Mix of Property Exteriors & Human Moments)
 const STAGE_IMAGES: Record<number, { src: string; alt: string; tag?: string }[]> = {
   0: [
-    { src: '/images/proptii-hero/tenant-yellow.jpg', alt: 'Tenant happy in sunlit flat', tag: 'Curated Match' },
-    { src: '/images/proptii-hero/man-terracotta.jpg', alt: 'Tenant holding new keys', tag: 'Verified Home' },
-    { src: '/images/proptii-hero/friends-lavender.jpg', alt: 'Friends enjoying new space', tag: 'Shared Living' },
-    { src: '/images/proptii-hero/woman-rose.jpg', alt: 'Woman relaxed in modern flat', tag: 'Lifestyle Fit' },
-    { src: '/images/proptii-hero/tenant-dog-owner.jpg', alt: 'Pet-friendly living space', tag: 'Pet Friendly' },
-    { src: '/images/proptii-hero/woman-sage.jpg', alt: 'Tenant drinking morning coffee', tag: 'Quiet Spaces' },
-    { src: '/images/proptii-hero/couple-coral.jpg', alt: 'Couple enjoying new home', tag: 'Top Matches' }
+    { src: '/images/proptii-hero/exteriors/exterior-01.jpg', alt: 'Renovated Victorian townhouse in London', tag: 'Victorian Townhouse' },
+    { src: '/images/proptii-hero/tenant-yellow.jpg', alt: 'Happy tenant in sunlit home', tag: 'Lifestyle Fit' },
+    { src: '/images/proptii-hero/exteriors/exterior-03.jpg', alt: 'Charming cobbled London mews house', tag: 'Cobbled Mews' },
+    { src: '/images/proptii-hero/tenant-dog-owner.jpg', alt: 'Pet-friendly living space with dog', tag: 'Pet Friendly' },
+    { src: '/images/proptii-hero/exteriors/exterior-04.jpg', alt: 'Stucco-fronted Georgian townhouses', tag: 'Georgian Terrace' },
+    { src: '/images/proptii-hero/couple-coral.jpg', alt: 'Couple enjoying new home', tag: 'Curated Match' },
+    { src: '/images/proptii-hero/exteriors/exterior-06.jpg', alt: 'Contemporary luxury residential townhouse', tag: 'Contemporary Design' }
   ],
   1: [
-    { src: '/images/proptii-hero/couple-moving.jpg', alt: 'Couple unpacking moving boxes', tag: 'Move-in Ready' },
-    { src: '/images/proptii-hero/friends-cheer-terra.jpg', alt: 'Friends cheering move-in day', tag: 'Direct Landlord' },
-    { src: '/images/proptii-hero/man-terracotta.jpg', alt: 'Quick key handover', tag: 'Instant Sign' },
-    { src: '/images/proptii-cover.png', alt: 'Digital lease verification platform', tag: 'Zero Paperwork' },
-    { src: '/images/proptii-hero/couple-coral.jpg', alt: 'Verified tenancy confirmed', tag: '100% Certified' },
-    { src: '/images/proptii-hero/tenant-yellow.jpg', alt: 'Smooth onboarding experience', tag: 'Fast Move-In' },
-    { src: '/images/Modern-home-interior-of-living-room-with-glass-wall.jpg', alt: 'Modern luxury flat', tag: 'Direct Listing' }
+    { src: '/images/proptii-hero/couple-moving.jpg', alt: 'Couple unpacking moving boxes into new flat', tag: 'Move-in Ready' },
+    { src: '/images/proptii-hero/exteriors/exterior-02.jpg', alt: 'Albion luxury residential development', tag: 'Build to Rent' },
+    { src: '/images/proptii-hero/friends-cheer-terra.jpg', alt: 'Friends cheering on move-in day', tag: 'Direct Landlord' },
+    { src: '/images/proptii-hero/exteriors/exterior-05.jpg', alt: 'Converted industrial warehouse lofts', tag: 'Warehouse Lofts' },
+    { src: '/images/proptii-hero/man-terracotta.jpg', alt: 'Tenant receiving new keys directly', tag: 'Instant Sign' },
+    { src: '/images/proptii-hero/exteriors/exterior-09.jpg', alt: 'Battersea riverside luxury apartments', tag: 'Riverside Living' },
+    { src: '/images/proptii-hero/exteriors/exterior-11.jpg', alt: 'Period red-brick mansion block', tag: 'Period Mansion Block' }
   ],
   2: [
-    { src: '/images/proptii-hero/woman-green-tablet.jpg', alt: 'Reviewing UK Flood Risk Map on tablet', tag: 'Flood Risk: Low' },
-    { src: '/images/proptii-hero/gis-flood-map.jpg', alt: 'Neighborhood resilience 3D map', tag: 'Climate Intel' },
-    { src: '/images/proptii-hero/man-blue-tablet.jpg', alt: 'Checking spatial elevation and transit', tag: 'Transit Score: 98' },
-    { src: '/images/realistic-image-of-a-clean-and-green-urban.png', alt: 'Green resilient urban district', tag: 'Green Factor' },
-    { src: '/images/proptii-hero/woman-sage.jpg', alt: 'Total environmental peace of mind', tag: 'Audited Safety' },
-    { src: '/images/proptii-hero/tenant-dog-owner.jpg', alt: 'Protected neighborhood living', tag: 'Air Quality: A+' },
-    { src: '/images/Luxcity-City-3.jpg', alt: 'City GIS analytics overlay', tag: 'Spatial Layer' }
+    { src: '/images/proptii-hero/exteriors/exterior-01.jpg', alt: 'Environment Agency flood zone 1 verified location', tag: 'Flood Zone 1 Verified' },
+    { src: '/images/proptii-hero/woman-green-tablet.jpg', alt: 'Tenant reviewing UK flood risk map on tablet', tag: 'Climate Intel' },
+    { src: '/images/proptii-hero/exteriors/exterior-10.jpg', alt: 'Environment Agency flood zone 1 verified residence', tag: 'Flood Zone 1 Verified' },
+    { src: '/images/proptii-hero/man-blue-tablet.jpg', alt: 'Checking spatial elevation and transit score', tag: 'Transit Score: 98' },
+    { src: '/images/proptii-hero/exteriors/exterior-02.jpg', alt: 'EPC Band A residential building envelope', tag: 'EPC Band A (94)' },
+    { src: '/images/Luxcity-City-3.jpg', alt: 'Urban spatial analytics and transit index', tag: 'Spatial GIS Model' },
+    { src: '/images/proptii-hero/exteriors/exterior-08.jpg', alt: 'Prime Chelsea red-brick residence', tag: 'Planning & Conservation' }
   ]
 };
 
@@ -117,40 +117,17 @@ export default function ProptiiNohoHero() {
     setMouseOffset({ x: 0, y: 0 });
   };
 
-  // Sticky scroll progress tracker
+  // Timed transitions for changing homepage text and images (every 5 seconds)
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const containerHeight = containerRef.current.offsetHeight - window.innerHeight;
-      
-      if (containerHeight <= 0) return;
+    const timer = setInterval(() => {
+      setActiveStage((prev) => (prev + 1) % STAGES.length);
+    }, 5000);
 
-      // Calculate progress from 0 (top of section) to 1 (bottom of section)
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / containerHeight));
-
-      if (progress < 0.33) {
-        setActiveStage(0);
-      } else if (progress < 0.67) {
-        setActiveStage(1);
-      } else {
-        setActiveStage(2);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => clearInterval(timer);
+  }, [activeStage]);
 
   const handleStageSelect = (stageIdx: number) => {
     setActiveStage(stageIdx);
-    if (!containerRef.current) return;
-    const containerTop = containerRef.current.offsetTop;
-    const containerHeight = containerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll = containerTop + (stageIdx / 2) * containerHeight;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
   };
 
   const currentStageData = STAGES[activeStage];
@@ -158,13 +135,13 @@ export default function ProptiiNohoHero() {
   return (
     <section 
       ref={containerRef}
-      className="relative bg-slate-950 text-white min-h-[160vh]"
+      className="relative bg-slate-950 text-white min-h-[calc(100vh-64px)] flex flex-col justify-between overflow-hidden"
     >
-      {/* Pinned Sticky Viewport with Interactive Mouse Tracking */}
+      {/* Viewport with Interactive Mouse Tracking */}
       <div 
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="sticky top-0 h-screen w-full flex flex-col justify-between overflow-hidden py-6 md:py-10 relative"
+        className="w-full flex-1 flex flex-col justify-between overflow-hidden py-4 sm:py-6 md:py-8 relative"
       >
         
         {/* Luxcity Signature Gradient Overlay (Matching other page headers & case study cover) */}
@@ -176,20 +153,8 @@ export default function ProptiiNohoHero() {
         <div className="absolute bottom-1/4 right-1/4 translate-x-1/3 translate-y-1/3 w-[560px] h-[560px] bg-blue-600/25 rounded-full blur-3xl pointer-events-none z-0 animate-orb-2" />
         <div className="absolute top-1/2 right-1/3 w-[420px] h-[420px] bg-indigo-500/15 rounded-full blur-3xl pointer-events-none z-0 animate-pulse" />
 
-        {/* Background Architectural Watermark (Hidden per user request) */}
-        {/* 
-        <div className="absolute top-2 sm:top-6 right-0 sm:right-4 w-[280px] sm:w-[420px] md:w-[520px] lg:w-[620px] pointer-events-none select-none z-0 overflow-hidden flex justify-end">
-          <img 
-            src="/images/proptii-hero/proptii-watermark.png" 
-            alt="Proptii Architectural Watermark" 
-            aria-hidden="true" 
-            className="w-full h-auto object-contain object-right-top opacity-25 sm:opacity-30 transition-opacity duration-300"
-          />
-        </div> 
-        */}
-
         {/* Clean Top Spacing */}
-        <div className="w-full pt-14 sm:pt-18 md:pt-20 z-20" />
+        <div className="w-full pt-10 sm:pt-14 md:pt-16 z-20" />
 
         {/* Main Hero Split Content (Inspired by Noho) */}
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center my-auto z-10 py-4">
@@ -208,7 +173,7 @@ export default function ProptiiNohoHero() {
                     : 'translate-y-12 opacity-0'
                 }`}
               >
-                With Proptii,
+                With Proptii...
               </h1>
             </div>
 
@@ -407,20 +372,30 @@ export default function ProptiiNohoHero() {
                 })}
               </div>
 
-              {/* Subtle Progress Bar Indicators */}
+              {/* Subtle Timed Progress Bar Indicators */}
               <div className="hidden sm:flex items-center gap-1.5">
-                {[0, 1, 2].map((idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleStageSelect(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeStage === idx 
-                        ? 'w-7 bg-[#DC5F12]' 
-                        : 'w-2 bg-white/25 hover:bg-white/40'
-                    }`}
-                    aria-label={`Jump to stage ${idx + 1}`}
-                  />
-                ))}
+                {[0, 1, 2].map((idx) => {
+                  const isSelected = activeStage === idx;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => handleStageSelect(idx)}
+                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer relative overflow-hidden ${
+                        isSelected 
+                          ? 'w-8 bg-white/20' 
+                          : 'w-2.5 bg-white/20 hover:bg-white/40'
+                      }`}
+                      aria-label={`Jump to stage ${idx + 1}`}
+                    >
+                      {isSelected && (
+                        <span 
+                          key={activeStage}
+                          className="absolute inset-0 bg-[#DC5F12] rounded-full animate-progress-fill"
+                        />
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

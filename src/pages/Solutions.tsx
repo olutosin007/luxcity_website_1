@@ -52,15 +52,15 @@ export default function Solutions() {
       image: "/images/proptii-interface.jpg"
     },
     {
-      name: "RentIntel",
-      headline: "Rental Market Intelligence at Your Fingertips",
-      description: "RentIntel empowers landlords and property managers with actionable insights to maximize rental income and identify growth opportunities.",
+      name: "Kompass",
+      headline: "Broker Case Management & Product Sourcing",
+      description: "Kompass streamlines broker workflows: manage active client cases, conduct digital fact find, generate audit-ready suitability reports, and discover optimal lending products.",
       benefits: [
-        { text: "Dynamic pricing models", icon: Zap },
-        { text: "Market trend analysis", icon: BarChart3 },
-        { text: "Opportunity mapping", icon: Brain }
+        { text: "Streamlined case pipeline", icon: Zap },
+        { text: "Automated digital fact find", icon: Brain },
+        { text: "One-click suitability reports", icon: BarChart3 }
       ],
-      image: "/images/rentintel-dashboard.jpg"
+      image: "/images/proptii-agent-analytics.png"
     }
   ];
 

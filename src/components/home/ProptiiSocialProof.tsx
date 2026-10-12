@@ -33,11 +33,11 @@ export default function ProptiiSocialProof() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-[42px] font-archivo font-bold text-gray-900 leading-tight">
+        <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-14">
+          <h2 className="text-3xl sm:text-4xl md:text-[46px] font-archivo font-normal text-[#2F7DB0] leading-[1.15] tracking-tight">
             Institutional Trust Backed by Ground-Truth Data
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed [text-wrap:balance]">
+          <p className="mt-3 text-base sm:text-lg text-gray-600 leading-relaxed [text-wrap:balance]">
             Proptii powers acquisition decisions for active residential landlords, family offices, and build-to-rent operators with verified statutory datasets.
           </p>
         </div>

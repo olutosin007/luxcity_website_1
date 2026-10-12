@@ -12,7 +12,9 @@ export default function CaseStudyDetail() {
   const isThrottledRef = useRef(false);
   const touchStartYRef = useRef(0);
 
-  const studyIndex = CASE_STUDIES.findIndex((s) => s.slug === slug);
+  const studyIndex = CASE_STUDIES.findIndex(
+    (s) => s.slug === slug || (slug === 'rentintel-pricing-intelligence' && s.id === 'kompass-broker-intelligence')
+  );
   const study = studyIndex !== -1 ? CASE_STUDIES[studyIndex] : null;
 
   const prevStudy = studyIndex > 0 ? CASE_STUDIES[studyIndex - 1] : CASE_STUDIES[CASE_STUDIES.length - 1];

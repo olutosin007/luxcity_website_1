@@ -199,3 +199,16 @@
 .animate-orb-2 {
   animation: orb-drift-2 15s ease-in-out infinite;
 }
+
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress-fill {
+  animation: progress-fill 5s linear forwards;
+}

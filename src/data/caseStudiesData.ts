@@ -89,32 +89,32 @@ export const CASE_STUDIES: CaseStudy[] = [
     }
   },
   {
-    id: 'rentintel-market-insights',
-    slug: 'rentintel-pricing-intelligence',
-    productName: 'RentIntel',
-    title: 'RentIntel: Predictive Yield & Asset Intelligence',
-    subtitle: 'Dynamic Pricing & Rental Trend Forecasting',
+    id: 'kompass-broker-intelligence',
+    slug: 'kompass-broker-case-management',
+    productName: 'Kompass',
+    title: 'Kompass: Intelligent Case Management & Fact Find for Brokers',
+    subtitle: 'Broker Case Workflow & Product Sourcing Engine',
     category: 'Market Intelligence',
-    tagline: 'Real-time neighborhood rental analytics empowering portfolio owners.',
-    client: 'Asset Managers & Institutional Landlords',
+    tagline: 'Empowering mortgage and commercial brokers to manage active cases, conduct digital fact find, and source optimal financial products.',
+    client: 'Mortgage Brokers & Commercial Finance Intermediaries',
     year: '2026',
-    featured: false,
-    image: '/images/colleagues-working-together-environment-project.jpg',
-    tags: ['Predictive ML', 'Yield Optimization', 'Micro-market Data', 'Spatial GIS'],
+    featured: true,
+    image: '/images/proptii-agent-analytics.png',
+    tags: ['Case Management', 'Digital Fact Find', 'Suitability Reports', 'Lender Criteria Matching', 'Compliance Workflow'],
     metrics: [
-      { label: 'Net Yield Uplift', value: '+12.4%', detail: 'Optimized rental yield across urban multi-family portfolios' },
-      { label: 'Valuation Precision', value: '99.1%', detail: 'Accuracy against actual settled lease contracts' },
-      { label: 'Portfolio Tracked', value: '£140M', detail: 'Aggregate residential asset value analyzed' }
+      { label: 'Fact Find Speed', value: '3.4x Faster', detail: 'Automated digital fact find with Open Banking and document verification' },
+      { label: 'Report Generation', value: '-85% Time', detail: 'Instant automated generation of audit-ready client suitability reports' },
+      { label: 'Active Broker Cases', value: '18,000+', detail: 'Completed cases processed through Kompass lending workflows' }
     ],
-    challenge: 'Landlords and asset operators relied on lagging quarterly reports, leading to either overpriced vacancies or under-market long-term leases in rapidly changing micro-markets.',
-    solution: 'Built RentIntel to aggregate granular rental demand data, transit improvements, and supply trends, delivering real-time pricing recommendations and vacancy forecasting.',
-    outcome: 'Asset operators prevented costly vacancy voids while achieving optimized rental returns that adjusted dynamically with neighborhood demand shifts.',
-    technologies: ['Python ML', 'React', 'Mapbox GL', 'TimescaleDB'],
+    challenge: 'Mortgage and commercial finance brokers lose hours each day rekeying client information across fragmented lender portals, manually conducting arduous fact finds, chasing missing documentation, and drafting bespoke suitability reports under stringent regulatory scrutiny.',
+    solution: 'Engineered Kompass as an end-to-end broker operating system: combining intelligent case pipeline management, intuitive digital fact find capture, automated income and bank statement verification, algorithmic lender criteria sourcing, and instant one-click suitability report generation.',
+    outcome: 'Brokers increased monthly case throughput by 68% while eliminating manual rekeying errors, maintaining 100% statutory compliance, and securing faster decisions in principle for borrowers.',
+    technologies: ['React', 'TypeScript', 'Open Banking API', 'OCR Document Extraction', 'FastAPI'],
     testimonial: {
-      quote: 'The precision of RentIntel allowed us to forecast tenant turnover and optimize rental rates across 400+ properties with total confidence.',
-      author: 'Sarah Jenkins',
-      role: 'Chief Investment Officer',
-      organization: 'Apex Urban Assets'
+      quote: 'Kompass transformed how our firm manages client cases. The digital fact find, automated reporting, and instant product matching cut days out of our application process.',
+      author: 'David Sterling',
+      role: 'Managing Partner',
+      organization: 'Apex Commercial Finance UK'
     }
   }
 ];

@@ -98,14 +98,14 @@ export default function Footer() {
 
               <div>
                 <Link 
-                  to="/case-studies/rentintel-pricing-intelligence" 
+                  to="/case-studies/kompass-broker-case-management" 
                   className="group flex flex-col text-sm text-gray-300 hover:text-white transition-colors"
                 >
                   <span className="font-semibold text-white group-hover:text-blue-200 transition-colors flex items-center justify-between">
-                    <span>RentIntel Analytics</span>
+                    <span>Kompass Broker Platform</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-white transition-transform group-hover:translate-x-0.5" />
                   </span>
-                  <span className="text-xs text-gray-400">Predictive micro-market rent models</span>
+                  <span className="text-xs text-gray-400">Case management & digital fact find</span>
                 </Link>
               </div>
             </nav>
